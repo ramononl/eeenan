@@ -21,7 +21,7 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     bodyAttrs: {
       class:
-        'antialiased text-gray-900 bg-gray-100 dark:bg-black h-screen w-screen overflow-hidden'
+        'antialiased text-gray-900 bg-gray-100 max-h-screen h-screen w-screen overflow-hidden'
     }
   },
   /*
@@ -36,7 +36,7 @@ export default {
    ** purgeCSS
    */
   purgeCSS: {
-    whitelist: ['dark-mode']
+    whitelist: []
   },
   /*
    ** Plugins to load before mounting the App
