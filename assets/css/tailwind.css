@@ -7,3 +7,16 @@
 .nuxt-link-exact-active {
   @apply text-orange-500;
 }
+
+.fade-enter-active {
+  @apply transition-opacity duration-300 ease-out;
+}
+
+.fade-leave-active {
+  @apply transition-opacity duration-200 ease-in;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
