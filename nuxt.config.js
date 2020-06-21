@@ -1,0 +1,96 @@
+export default {
+  mode: 'universal',
+  /*
+   ** Headers of the page
+   */
+  head: {
+    title: process.env.npm_package_name || '',
+    meta: [
+      { charset: 'utf-8' },
+      {
+        name: 'viewport',
+        content:
+          'width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no'
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: process.env.npm_package_description || ''
+      }
+    ],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    bodyAttrs: {
+      class:
+        'antialiased text-gray-900 bg-gray-100 dark:bg-black h-screen w-screen overflow-hidden'
+    }
+  },
+  /*
+   ** Customize the progress-bar color
+   */
+  loading: { color: '#fff' },
+  /*
+   ** Global CSS
+   */
+  css: ['typeface-inter'],
+  /*
+   ** purgeCSS
+   */
+  purgeCSS: {
+    whitelist: ['dark-mode']
+  },
+  /*
+   ** Plugins to load before mounting the App
+   */
+  plugins: [],
+  /*
+   ** Nuxt.js dev-modules
+   */
+  buildModules: [
+    // Doc: https://github.com/nuxt-community/eslint-module
+    '@nuxtjs/eslint-module',
+    // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
+    '@nuxtjs/tailwindcss',
+    // Doc: https://github.com/nuxt-community/color-mode-module
+    '@nuxtjs/color-mode'
+  ],
+  /*
+   ** Nuxt.js modules
+   */
+  modules: [
+    // Doc: https://axios.nuxtjs.org/usage
+    '@nuxtjs/axios',
+    '@nuxtjs/pwa'
+  ],
+  /*
+   ** Axios module configuration
+   ** See https://axios.nuxtjs.org/options
+   */
+  axios: {},
+  /*
+   ** Nuxt PWA module configuration
+   ** See https://pwa.nuxtjs.org/
+   */
+  pwa: {
+    meta: {
+      mobileAppIOS: true,
+      appleStatusBarStyle: 'default',
+      theme_color: '#000000'
+    }
+  },
+  /*
+   ** Dev server configuration
+   */
+  server: {
+    port: 8000, // default: 3000
+    host: '0.0.0.0' // default: localhost
+  },
+  /*
+   ** Build configuration
+   */
+  build: {
+    /*
+     ** You can extend webpack config here
+     */
+    extend(config, ctx) {}
+  }
+}
