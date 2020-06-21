@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-16 p-4 bg-white border-b dark:border-0 dark:bg-black dark:text-white"
+    class="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-16 p-4 bg-white border-b"
   >
     <h1 class="text-3xl font-bold leading-none">
       {{ title }}
@@ -19,7 +19,11 @@
           <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
       </span>
-      <span>
+      <button
+        type="button"
+        style="focus:outline-none focus:opacity-75"
+        @click="openSettings"
+      >
         <svg
           fill="none"
           stroke-linecap="round"
@@ -34,7 +38,7 @@
           ></path>
           <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
         </svg>
-      </span>
+      </button>
     </div>
   </div>
 </template>
@@ -45,6 +49,11 @@ export default {
     title: {
       type: String,
       default: 'Titel'
+    }
+  },
+  methods: {
+    openSettings() {
+      this.$store.commit('modals/toggleModal')
     }
   }
 }
