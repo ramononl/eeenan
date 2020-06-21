@@ -8,7 +8,6 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
   theme: {
-    darkSelector: '.dark-mode',
     extend: {
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans]
@@ -18,29 +17,33 @@ module.exports = {
       },
       inset: {
         ...defaultTheme.spacing
+      },
+      colors: {
+        gray: {
+          '100': '#f7fafc',
+          '200': '#edf2f7',
+          '300': '#e2e8f0',
+          '400': '#cbd5e0',
+          '500': '#a0aec0',
+          '600': '#718096',
+          '700': '#4a5568',
+          '800': '#2d3748',
+          '900': '#1a202c'
+        },
+        orange: {
+          '100': '#fffaf0',
+          '200': '#feebc8',
+          '300': '#fbd38d',
+          '400': '#f6ad55',
+          '500': '#ed8936',
+          '600': '#dd6b20',
+          '700': '#c05621',
+          '800': '#9c4221',
+          '900': '#7b341e'
+        }
       }
     }
   },
-  variants: {
-    backgroundColor: [
-      'dark',
-      'dark-hover',
-      'dark-group-hover',
-      'dark-even',
-      'dark-odd',
-      'hover',
-      'responsive'
-    ],
-    borderColor: [
-      'dark',
-      'dark-focus',
-      'dark-focus-within',
-      'hover',
-      'responsive'
-    ],
-    borderWidth: ['dark', 'responsive'],
-    borderRadius: ['dark', 'responsive'],
-    textColor: ['dark', 'dark-hover', 'dark-active', 'hover', 'responsive']
-  },
-  plugins: [require('tailwindcss-dark-mode')()]
+  variants: {},
+  plugins: [require('@tailwindcss/ui')]
 }
