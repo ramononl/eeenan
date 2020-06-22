@@ -34,7 +34,7 @@
       >
         <div class="relative h-full overflow-hidden">
           <div
-            class="absolute inset-x-0 flex items-baseline justify-between p-3 px-4 bg-white h-14"
+            class="absolute inset-x-0 flex items-center justify-between p-3 px-4 bg-white border-b h-14"
           >
             <span class="flex-1"></span>
             <h3 class="flex-1 text-lg font-semibold text-center">
