@@ -36,7 +36,7 @@ export default {
    ** purgeCSS
    */
   purgeCSS: {
-    whitelist: []
+    whitelist: ['text-orange-500']
   },
   /*
    ** Plugins to load before mounting the App
