@@ -36,7 +36,7 @@ export default {
    ** purgeCSS
    */
   purgeCSS: {
-    whitelist: ['text-orange-500']
+    whitelist: ['text-orange-500', 'nuxt-link-exact-active']
   },
   /*
    ** Plugins to load before mounting the App
