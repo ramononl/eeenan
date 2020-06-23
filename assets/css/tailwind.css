@@ -18,5 +18,48 @@
 
 .fade-enter,
 .fade-leave-to {
-  opacity: 0;
+  @apply opacity-0;
+}
+
+.fade-up-enter-active {
+  @apply transition duration-300 ease-out;
+}
+
+.fade-up-leave-active {
+  @apply transition duration-200 ease-in;
+}
+
+.fade-up-enter,
+.fade-up-leave-to {
+  @apply translate-y-4 opacity-0;
+}
+
+.slide-out-enter-active {
+  @apply transition duration-500 ease-in-out;
+}
+
+.slide-out-leave-active {
+  @apply transition duration-500 ease-in-out;
+}
+
+.slide-out-enter,
+.slide-out-leave-to {
+  @apply -translate-x-full opacity-0;
+}
+
+.slide-in-enter-active {
+  @apply transition duration-500 ease-in-out;
+}
+
+.slide-in-leave-active {
+  @apply transition duration-500 ease-in-out;
+}
+
+.slide-in-enter,
+.slide-in-leave-to {
+  @apply translate-x-full opacity-0;
+}
+
+.delay-leave-active {
+  @apply duration-200 ease-in;
 }
