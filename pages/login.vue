@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center justify-center h-screen max-h-screen px-4 py-12 overflow-y-auto sm:px-6 lg:px-8"
+    class="flex items-center justify-center h-screen max-h-screen px-4 py-12 overflow-y-auto"
   >
     <div class="w-full max-w-md">
       <div>
@@ -92,7 +92,7 @@
 
 <script>
 export default {
-  layout: 'setup'
+  layout: 'fullscreen'
 }
 </script>
 
