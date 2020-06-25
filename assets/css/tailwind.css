@@ -9,11 +9,11 @@
 }
 
 .fade-enter-active {
-  @apply transition-opacity duration-300 ease-out;
+  @apply duration-300 ease-out;
 }
 
 .fade-leave-active {
-  @apply transition-opacity duration-200 ease-in;
+  @apply duration-200 ease-in;
 }
 
 .fade-enter,
@@ -22,11 +22,11 @@
 }
 
 .fade-up-enter-active {
-  @apply transition duration-300 ease-out;
+  @apply duration-300 ease-out;
 }
 
 .fade-up-leave-active {
-  @apply transition duration-200 ease-in;
+  @apply duration-200 ease-in;
 }
 
 .fade-up-enter,
@@ -35,11 +35,11 @@
 }
 
 .slide-out-enter-active {
-  @apply transition duration-500 ease-in-out;
+  @apply duration-500 ease-in-out;
 }
 
 .slide-out-leave-active {
-  @apply transition duration-500 ease-in-out;
+  @apply duration-500 ease-in-out;
 }
 
 .slide-out-enter,
@@ -48,11 +48,11 @@
 }
 
 .slide-in-enter-active {
-  @apply transition duration-500 ease-in-out;
+  @apply duration-500 ease-in-out;
 }
 
 .slide-in-leave-active {
-  @apply transition duration-500 ease-in-out;
+  @apply duration-500 ease-in-out;
 }
 
 .slide-in-enter,
