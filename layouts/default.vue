@@ -8,7 +8,7 @@
 
 <script>
 import NavTabBar from '~/components/layout/NavTabBar'
-import ModalContainer from '~/components/ui/SettingsModal/ModalContainer'
+import ModalContainer from '~/components/common/ModalContainer'
 
 export default {
   components: {
