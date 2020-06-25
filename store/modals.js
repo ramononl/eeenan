@@ -1,9 +1,14 @@
 export const state = () => ({
-  settings: false
+  lastModal: null,
+  modalVisible: false
 })
 
 export const mutations = {
-  toggleModal(state) {
-    state.settings = !state.settings
+  closeModal(state) {
+    state.modalVisible = false
+  },
+  openModal(state, modalName) {
+    state.lastModal = modalName
+    state.modalVisible = true
   }
 }
