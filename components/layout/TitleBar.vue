@@ -6,7 +6,11 @@
       {{ title }}
     </h1>
     <div class="flex space-x-4">
-      <span>
+      <button
+        type="button"
+        style="focus:outline-none focus:opacity-75"
+        @click="openModal('SearchModal')"
+      >
         <svg
           fill="none"
           stroke-linecap="round"
@@ -18,11 +22,11 @@
         >
           <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
-      </span>
+      </button>
       <button
         type="button"
         style="focus:outline-none focus:opacity-75"
-        @click="openSettings"
+        @click="openModal('SettingsModal')"
       >
         <svg
           fill="none"
@@ -52,8 +56,8 @@ export default {
     }
   },
   methods: {
-    openSettings() {
-      this.$store.commit('modals/toggleModal')
+    openModal(modalName) {
+      this.$store.commit('modals/openModal', modalName)
     }
   }
 }
