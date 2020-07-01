@@ -1,14 +1,12 @@
 <template>
-  <div
-    class="flex items-center justify-center h-screen max-h-screen px-4 py-12 overflow-y-auto"
-  >
-    <div class="w-full max-w-md">
+  <div class="flex h-full px-4 py-12 overflow-y-auto">
+    <div class="w-full max-w-md m-auto">
       <div>
         <!-- <img
-          class="w-auto h-12 mx-auto"
-          src="/img/logos/workflow-mark-on-white.svg"
-          alt="Workflow"
-        /> -->
+            class="w-auto h-12 mx-auto"
+            src="/img/logos/workflow-mark-on-white.svg"
+            alt="Workflow"
+          /> -->
         <svg
           class="w-10 h-10 mx-auto text-orange-500"
           fill="currentColor"
@@ -30,7 +28,7 @@
           >
         </p>
       </div>
-      <form class="mt-8" action="#" method="POST">
+      <form class="mt-8 mb-4" action="#" method="POST">
         <input type="hidden" name="remember" value="true" />
         <div class="rounded-md shadow-sm">
           <div>
