@@ -2,13 +2,14 @@
   <PageContainer :title="title">
     <div class="pb-4 overflow-x-auto overflow-y-visible scrolling-touch">
       <div class="inline-flex flex-no-wrap px-4 space-x-4">
-        <div
+        <nuxt-link
           v-for="i in 6"
           :key="i"
+          to="/cards"
           class="flex-none w-48 h-20 px-3 py-2 bg-white rounded-md shadow-md"
         >
           HTML Tabellen
-        </div>
+        </nuxt-link>
       </div>
     </div>
     <div class="mt-4 space-y-4">
