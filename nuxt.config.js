@@ -21,7 +21,7 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     bodyAttrs: {
       class:
-        'antialiased text-gray-900 bg-gray-100 max-h-screen h-screen w-screen overflow-hidden'
+        'antialiased text-gray-900 bg-gray-100 max-h-screen h-screen w-screen overflow-hidden select-none'
     }
   },
   /*
@@ -41,7 +41,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~/plugins/globalComponents.js'],
   /*
    ** Nuxt.js dev-modules
    */
