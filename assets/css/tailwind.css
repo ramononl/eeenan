@@ -4,7 +4,7 @@
 /* purgecss end ignore */
 @import 'tailwindcss/utilities';
 
-.nuxt-link-exact-active {
+.nuxt-link-active {
   @apply text-orange-500;
 }
 
@@ -64,20 +64,20 @@
   @apply duration-200 ease-in;
 }
 
-.cards-enter-active,
-.cards-leave-active {
+.cards-swipe-enter-active,
+.cards-swipe-leave-active {
   @apply transition-all duration-500 ease-in-out;
 }
 
-.cards-enter {
+.cards-swipe-enter {
   @apply translate-x-full opacity-0;
 }
 
-.cards-leave-to {
+.cards-swipe-leave-to {
   @apply -translate-x-full opacity-0;
 }
 
-.cards-enter-to,
-.cards-leave {
+.cards-swipe-enter-to,
+.cards-swipe-leave {
   @apply translate-x-0 opacity-100;
 }
