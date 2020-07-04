@@ -10,12 +10,10 @@
 </template>
 
 <script>
-import PageContainer from '~/components/layout/PageContainer'
 import ListItem from '~/components/common/ListItem'
 
 export default {
   components: {
-    PageContainer,
     ListItem
   },
   data() {
