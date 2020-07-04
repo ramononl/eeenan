@@ -1,0 +1,10 @@
+query($id: ID!) {
+  topic(id: $id) {
+    id
+    title
+    subtopics {
+      id
+      title
+    }
+  }
+}

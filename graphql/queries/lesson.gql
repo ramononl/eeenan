@@ -1,0 +1,10 @@
+query($id: ID!) {
+  lesson(id: $id) {
+    id
+    title
+    stories {
+      id
+      description
+    }
+  }
+}
