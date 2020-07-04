@@ -1,3 +1,10 @@
+const config = {
+  gqlEndpoint:
+    process.env.NODE_ENV !== 'production'
+      ? 'http://mobl-app.test/graphql'
+      : 'http://178.62.13.109/graphql'
+}
+
 export default {
   mode: 'universal',
   /*
@@ -59,7 +66,8 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/apollo'
   ],
   /*
    ** Axios module configuration
@@ -92,5 +100,16 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  /*
+   ** Give apollo module options
+   */
+  apollo: {
+    includeNodeModules: true,
+    clientConfigs: {
+      default: {
+        httpEndpoint: config.gqlEndpoint
+      }
+    }
   }
 }
