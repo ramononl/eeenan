@@ -1,5 +1,9 @@
 <template>
-  <div class="flex items-center justify-between px-4 py-2 space-x-2 bg-white">
+  <nuxt-link
+    :to="link"
+    append
+    class="flex items-center justify-between px-4 py-2 space-x-2 bg-white"
+  >
     <div class="flex items-center space-x-2">
       <svg
         class="w-10 h-10 mx-auto text-orange-500"
@@ -8,7 +12,7 @@
       >
         <circle cx="10" cy="10" r="8" />
       </svg>
-      <p class="text-lg">Kategorie</p>
+      <p class="text-lg">{{ title }}</p>
     </div>
     <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
       <path
@@ -17,11 +21,22 @@
         clip-rule="evenodd"
       ></path>
     </svg>
-  </div>
+  </nuxt-link>
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    title: {
+      type: String,
+      default: 'Title'
+    },
+    link: {
+      type: String,
+      default: '/'
+    }
+  }
+}
 </script>
 
 <style></style>
