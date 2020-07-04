@@ -2,7 +2,7 @@ const config = {
   gqlEndpoint:
     process.env.NODE_ENV !== 'production'
       ? 'http://mobl-app.test/graphql'
-      : 'http://178.62.13.109/graphql'
+      : 'https://api-eeenan.ch/graphql'
 }
 
 export default {
@@ -43,7 +43,7 @@ export default {
    ** purgeCSS
    */
   purgeCSS: {
-    whitelist: ['nuxt-link-exact-active']
+    whitelist: ['nuxt-link-active']
   },
   /*
    ** Plugins to load before mounting the App
