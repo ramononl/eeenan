@@ -5,12 +5,7 @@
 </template>
 
 <script>
-import PageContainer from '~/components/layout/PageContainer'
-
 export default {
-  components: {
-    PageContainer
-  },
   data() {
     return {
       title: 'Aktivitäten'
