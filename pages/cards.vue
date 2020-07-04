@@ -4,16 +4,16 @@
       <div
         class="flex items-center justify-between font-semibold text-gray-100"
       >
-        <div class="flex-1">
-          <nuxt-link to="/">Zurück</nuxt-link>
-        </div>
+        <div class="flex-1">{{ currentCard }} / {{ numberOfCards }}</div>
         <div class="flex items-center justify-center flex-1">
-          <span>Kategorie</span>
+          <span>Thema</span>
           <AppIcon :size="5" icon="ChevronRight" />
           <span>Titel</span>
         </div>
         <div class="flex-1 text-right">
-          {{ currentCard }} / {{ numberOfCards }}
+          <nuxt-link to="/">
+            <AppIcon :size="8" icon="X" />
+          </nuxt-link>
         </div>
       </div>
       <div class="flex mt-6 space-x-2">
@@ -26,13 +26,13 @@
       </div>
     </div>
     <div class="relative flex-1 w-full mt-4">
-      <transition name="cards">
+      <transition name="cards-swipe">
         <div
-          :key="visibleCards[0]"
+          :key="currentCard"
           class="absolute inset-0 z-10 w-full p-4 overflow-y-auto origin-top transform bg-gray-100 rounded-lg"
         >
-          <p class="text-2xl font-semibold">{{ visibleCards[0] }}</p>
-          <p v-for="y in numberOfCards" :key="y">
+          <p class="text-2xl font-semibold">{{ currentCard }}</p>
+          <p v-for="i in numberOfCards" :key="i">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
             odit facere doloremque ad ratione fuga assumenda esse. Commodi nulla
             quod asperiores odio accusantium necessitatibus, tenetur incidunt,
@@ -40,18 +40,6 @@
           </p>
         </div>
       </transition>
-      <!-- <div
-        :class="[currentCard === 2 ? '' : 'opacity-75 -translate-y-4 scale-95']"
-        class="absolute inset-0 z-0 w-full p-4 overflow-y-auto transition-all duration-500 ease-in-out delay-150 origin-top transform bg-gray-100 rounded-lg"
-      >
-        <p class="text-2xl font-semibold">{{ i }}</p>
-        <p v-for="y in numberOfCards" :key="y">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum odit
-          facere doloremque ad ratione fuga assumenda esse. Commodi nulla quod
-          asperiores odio accusantium necessitatibus, tenetur incidunt,
-          voluptates hic, reiciendis suscipit.
-        </p>
-      </div> -->
     </div>
     <div class="flex justify-between mt-6">
       <AppButton @click.native="prevCard">
@@ -71,16 +59,6 @@ export default {
     return {
       numberOfCards: 9,
       currentCard: 1
-    }
-  },
-  computed: {
-    visibleCards() {
-      const visibleCards = []
-      visibleCards.push(this.currentCard)
-      if (this.currentCard < this.numberOfCards) {
-        visibleCards.push(this.currentCard + 1)
-      }
-      return visibleCards
     }
   },
   methods: {
