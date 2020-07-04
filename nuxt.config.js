@@ -43,7 +43,20 @@ export default {
    ** purgeCSS
    */
   purgeCSS: {
-    whitelist: ['nuxt-link-active']
+    extractors: [
+      {
+        extractor: class {
+          static extract(content) {
+            return content.match(/[A-Za-z0-9-_/:]*[A-Za-z0-9-_/]+/g) || []
+          }
+        }
+      }
+    ],
+    whitelistPatterns: [
+      /-(leave|enter|appear)(|-(to|from|active))$/,
+      /^(?!(|.*?:)cursor-move).+-move$/,
+      /^nuxt-link(|-exact)-active$/
+    ]
   },
   /*
    ** Plugins to load before mounting the App
