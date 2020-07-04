@@ -2,10 +2,17 @@
   <div
     class="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-16 p-4 bg-white border-b"
   >
-    <h1 class="text-3xl font-bold leading-none">
+    <div v-if="!primaryPage" class="flex-1">
+      <button type="button" @click="$router.back()">Zurück</button>
+    </div>
+    <h1
+      class="font-bold leading-none"
+      :class="[primaryPage ? 'text-3xl' : 'flex-1 text-center text-xl']"
+    >
       {{ title }}
     </h1>
-    <div class="flex space-x-4">
+    <div v-if="!primaryPage" class="flex-1"></div>
+    <div v-if="primaryPage" class="flex space-x-4">
       <button
         type="button"
         style="focus:outline-none focus:opacity-75"
@@ -53,6 +60,10 @@ export default {
     title: {
       type: String,
       default: 'Titel'
+    },
+    primaryPage: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {
