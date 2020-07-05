@@ -1,5 +1,5 @@
 <template>
-  <PageContainer :title="title" :primary-page="false">
+  <PageContainer title="title" :primary-page="false">
     <div>
       <!-- <div
         v-if="subtopic && subtopic.lessons.length > 0"
