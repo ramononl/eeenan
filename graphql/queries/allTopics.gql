@@ -1,6 +1,0 @@
-query {
-  allTopics {
-    id
-    title
-  }
-}

@@ -57,6 +57,7 @@
           <button
             type="submit"
             class="relative flex justify-center w-full px-4 py-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-orange-500 border border-transparent rounded-md group hover:bg-orange-400 focus:outline-none focus:border-orange-500 focus:shadow-outline-orange active:bg-orange-500"
+            @click="login"
           >
             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
               <svg
