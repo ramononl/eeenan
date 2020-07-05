@@ -71,8 +71,26 @@ export default {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+    ['@nuxtjs/axios'],
+    ['@nuxtjs/pwa'],
+    [
+      '@nuxtjs/firebase',
+      {
+        config: {
+          apiKey: 'AIzaSyCSXFHPsCaf9XAuMVIiQcPkMFkdGop-gsM',
+          authDomain: 'eeenan-dcf66.firebaseapp.com',
+          databaseURL: 'https://eeenan-dcf66.firebaseio.com',
+          projectId: 'eeenan-dcf66',
+          storageBucket: 'eeenan-dcf66.appspot.com',
+          messagingSenderId: '138888121820',
+          appId: '1:138888121820:web:5759a41811d733786cd319'
+          // measurementId: '<measurementId>'
+        },
+        services: {
+          firestore: true
+        }
+      }
+    ]
   ],
   /*
    ** Axios module configuration
