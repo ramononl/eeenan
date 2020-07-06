@@ -21,10 +21,10 @@
         </h2>
         <p class="mt-2 text-sm leading-5 text-center text-gray-600">
           Noch kein Account? Jetzt
-          <a
-            href="#"
+          <nuxt-link
+            to="register"
             class="font-medium text-orange-600 transition duration-150 ease-in-out hover:text-orange-500 focus:outline-none focus:underline"
-            >Registrieren</a
+            >Registrieren</nuxt-link
           >
         </p>
       </div>
