@@ -3,10 +3,10 @@
     <div>
       <div class="border-t border-b border-gray-300 divide-y divide-gray-300">
         <ListItem
-          v-for="subtopic in subtopics"
-          :key="subtopic.id"
-          :title="subtopic.title"
-          :link="subtopic.id"
+          v-for="lesson in lessons"
+          :key="lesson.id"
+          :title="lesson.title"
+          :link="lesson.id"
         />
       </div>
     </div>
@@ -22,16 +22,17 @@ export default {
   },
   // computed: {
   //   title() {
-  //     return this.topic ? this.topic.title : '...'
+  //     return this.subtopic ? this.subtopic.title : '...'
   //   }
   // },
   computed: {
-    subtopics() {
-      return this.$store.state.subtopics
+    lessons() {
+      return this.$store.state.lessons
     }
   },
   created() {
-    this.$store.dispatch('fetchSubtopics', {
+    this.$store.dispatch('fetchLessons', {
+      topic: this.$route.params.topic,
       subtopic: this.$route.params.subtopic
     })
   }
