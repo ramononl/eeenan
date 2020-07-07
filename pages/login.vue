@@ -28,11 +28,11 @@
           >
         </p>
       </div>
-      <form class="mt-8 mb-4" action="#" method="POST">
-        <input type="hidden" name="remember" value="true" />
+      <form class="mt-8 mb-4" @submit.prevent="login">
         <div class="rounded-md shadow-sm">
           <div>
             <input
+              v-model="form.email"
               aria-label="E-Mail-Ad­res­se"
               name="email"
               type="email"
@@ -43,6 +43,7 @@
           </div>
           <div class="-mt-px">
             <input
+              v-model="form.password"
               aria-label="Passwort"
               name="password"
               type="password"
@@ -57,7 +58,6 @@
           <button
             type="submit"
             class="relative flex justify-center w-full px-4 py-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-orange-500 border border-transparent rounded-md group hover:bg-orange-400 focus:outline-none focus:border-orange-500 focus:shadow-outline-orange active:bg-orange-500"
-            @click="login"
           >
             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
               <svg
@@ -91,7 +91,20 @@
 
 <script>
 export default {
-  layout: 'fullscreen'
+  layout: 'fullscreen',
+  data() {
+    return {
+      form: {
+        email: null,
+        password: null
+      }
+    }
+  },
+  methods: {
+    login() {
+      this.$store.dispatch('loginUser', this.form)
+    }
+  }
 }
 </script>
 
