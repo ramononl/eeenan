@@ -1,12 +1,15 @@
 <template>
   <PageContainer title="title" :primary-page="false">
     <div>
-      <div class="border-t border-b border-gray-300 divide-y divide-gray-300">
+      <div
+        v-if="lessons"
+        class="border-t border-b border-gray-300 divide-y divide-gray-300"
+      >
         <ListItem
-          v-for="lesson in lessons"
-          :key="lesson.id"
+          v-for="(lesson, name) in lessons"
+          :key="name"
           :title="lesson.title"
-          :link="lesson.id"
+          :link="name"
         />
       </div>
     </div>
@@ -27,10 +30,29 @@ export default {
   // },
   computed: {
     lessons() {
-      return this.$store.state.lessons
+      if (
+        this.$store.state.lessons[this.$route.params.topic] &&
+        this.$store.state.lessons[this.$route.params.topic][
+          this.$route.params.subtopic
+        ]
+      ) {
+        return this.$store.state.lessons[this.$route.params.topic][
+          this.$route.params.subtopic
+        ]
+      } else {
+        return false
+      }
     }
   },
   created() {
+    if (!Object.keys(this.$store.state.topics).length) {
+      this.$store.dispatch('fetchTopics')
+    }
+    if (!this.$store.state.subtopics[this.$route.params.topic]) {
+      this.$store.dispatch('fetchSubtopics', {
+        topic: this.$route.params.topic
+      })
+    }
     this.$store.dispatch('fetchLessons', {
       topic: this.$route.params.topic,
       subtopic: this.$route.params.subtopic

@@ -1,5 +1,5 @@
 <template>
-  <PageContainer title="title" :primary-page="false">
+  <PageContainer :title="title" :primary-page="false">
     <div>
       <div class="border-t border-b border-gray-300 divide-y divide-gray-300">
         <ListItem
@@ -20,20 +20,31 @@ export default {
   components: {
     ListItem
   },
-  // computed: {
-  //   title() {
-  //     return this.topic ? this.topic.title : '...'
-  //   }
-  // },
   computed: {
+    title() {
+      if (Object.keys(this.$store.state.topics).length) {
+        return this.$store.state.topics[this.$route.params.topic].title
+      } else {
+        return '...'
+      }
+    },
     subtopics() {
-      return this.$store.state.subtopics
+      if (this.$store.state.subtopics[this.$route.params.topic]) {
+        return this.$store.state.subtopics[this.$route.params.topic]
+      } else {
+        return false
+      }
     }
   },
   created() {
-    this.$store.dispatch('fetchSubtopics', {
-      topic: this.$route.params.topic
-    })
+    if (!Object.keys(this.$store.state.topics).length) {
+      this.$store.dispatch('fetchTopics')
+    }
+    if (!this.$store.state.subtopics[this.$route.params.topic]) {
+      this.$store.dispatch('fetchSubtopics', {
+        topic: this.$route.params.topic
+      })
+    }
   }
 }
 </script>

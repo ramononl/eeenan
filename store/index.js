@@ -1,20 +1,24 @@
+import Vue from 'vue'
+
 export const state = () => ({
-  topics: [],
-  subtopics: [],
-  lessons: [],
+  topics: {},
+  subtopics: {},
+  lessons: {},
   stories: [],
-  user: null
+  user: null,
+  isAuthenticated: false
 })
 
 export const mutations = {
   setTopics(state, payload) {
-    state.topics = payload
+    Vue.set(state, 'topics', payload)
   },
-  setSubtopics(state, payload) {
-    state.subtopics = payload
+  setSubtopics(state, { topic, subtopics }) {
+    Vue.set(state.subtopics, topic, subtopics)
   },
-  setLessons(state, payload) {
-    state.lessons = payload
+  setLessons(state, { topic, subtopic, lessons }) {
+    Vue.set(state.lessons, topic, {})
+    Vue.set(state.lessons[topic], subtopic, lessons)
   },
   setStories(state, payload) {
     state.stories = payload
@@ -25,24 +29,20 @@ export const mutations = {
 }
 
 export const actions = {
-  async fetchTopics({ commit }) {
-    const topics = []
-    try {
-      await this.$fireStore
-        .collection('topics')
-        .orderBy('ordering')
-        .get()
-        .then((res) => {
-          res.forEach((x) => {
-            const id = x.id
-            const data = x.data()
-            topics.push({ id, ...data })
-          })
-          commit('setTopics', topics)
+  fetchTopics({ commit }) {
+    const topics = {}
+    this.$fireStore
+      .collection('topics')
+      .orderBy('ordering')
+      .get()
+      .then((res) => {
+        res.forEach((x) => {
+          const id = x.id
+          const data = x.data()
+          topics[id] = data
         })
-    } catch (e) {
-      return Promise.reject(e)
-    }
+        commit('setTopics', topics)
+      })
   },
   fetchSubtopics({ commit }, { topic }) {
     const subtopics = []
@@ -58,11 +58,11 @@ export const actions = {
           const data = x.data()
           subtopics.push({ id, ...data })
         })
-        commit('setSubtopics', subtopics)
+        commit('setSubtopics', { topic, subtopics })
       })
   },
   fetchLessons({ commit }, { topic, subtopic }) {
-    const lessons = []
+    const lessons = {}
     this.$fireStore
       .collection('topics')
       .doc(topic)
@@ -75,9 +75,9 @@ export const actions = {
         res.forEach((x) => {
           const id = x.id
           const data = x.data()
-          lessons.push({ id, ...data })
+          lessons[id] = data
         })
-        commit('setLessons', lessons)
+        commit('setLessons', { topic, subtopic, lessons })
       })
   },
   fetchStories({ commit }, { topic, subtopic, lesson }) {
@@ -101,20 +101,29 @@ export const actions = {
         commit('setStories', stories)
       })
   },
-  async createUser({ commit }, { firstName, lastName, email }) {
-    try {
-      await this.$fireStore
-        .collection('users')
-        .add({
-          firstName,
-          lastName,
-          email
-        })
-        .then(() => {
-          commit('setUser', { firstName, lastName, email })
-        })
-    } catch (e) {
-      return Promise.reject(e)
-    }
-  }
+  registerUser({ commit }, { firstName, lastName, email, password }) {
+    this.$fireAuth
+      .createUserWithEmailAndPassword(email, password)
+      .then((data) => {
+        this.$fireStore
+          .collection('users')
+          .doc(data.user.uid)
+          .set({
+            firstName,
+            lastName,
+            email
+          })
+          .then(() => {
+            commit('setUser', { firstName, lastName, email })
+            this.$router.push('/')
+          })
+      })
+  },
+  loginUser({ commit }, { email, password }) {
+    this.$fireAuth.signInWithEmailAndPassword(email, password).then(() => {
+      commit('setUser', email)
+      this.$router.push('/')
+    })
+  },
+  logoutUser() {}
 }

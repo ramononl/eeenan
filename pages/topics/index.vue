@@ -10,10 +10,10 @@
     </div> -->
     <div class="grid grid-cols-2 gap-4 px-4">
       <TopicItem
-        v-for="topic in topics"
-        :key="topic.id"
+        v-for="(topic, name) in topics"
+        :key="name"
         :title="topic.title"
-        :link="topic.id"
+        :link="name"
       />
     </div>
   </PageContainer>
@@ -37,7 +37,9 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('fetchTopics')
+    if (!Object.keys(this.$store.state.topics).length) {
+      this.$store.dispatch('fetchTopics')
+    }
   }
 }
 </script>
