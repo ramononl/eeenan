@@ -19,6 +19,7 @@
         <SettingsItem @click.native="goToSecondary" />
         <SettingsItem @click.native="goToSecondary" />
         <SettingsItem @click.native="goToSecondary" />
+        <p>Abmelden</p>
       </div>
     </transition>
     <transition name="slide-in">
