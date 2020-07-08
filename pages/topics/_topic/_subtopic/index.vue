@@ -97,7 +97,7 @@ export default {
       }
     }
   },
-  created() {
+  mounted() {
     this.fetchTopics()
     this.fetchSubtopics()
     this.fetchLessons()

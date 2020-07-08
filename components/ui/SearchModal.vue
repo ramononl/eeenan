@@ -16,7 +16,7 @@ export default {
       title: 'Schnellsuche'
     }
   },
-  created() {
+  mounted() {
     this.$emit('get-title', this.title)
   }
 }

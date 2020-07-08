@@ -59,7 +59,7 @@ export default {
       title: 'Einstellungen'
     }
   },
-  created() {
+  mounted() {
     this.$emit('get-title', this.title)
   },
   methods: {
