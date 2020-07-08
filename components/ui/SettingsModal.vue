@@ -3,23 +3,29 @@
     <transition name="slide-out">
       <div
         v-show="!secondaryView"
-        class="h-full pt-2 pb-8 space-y-2 overflow-y-auto transition-all transform"
+        class="h-full pt-2 pb-8 overflow-y-auto transition-all transform"
       >
-        <SettingsItem @click.native="goToSecondary" />
-        <SettingsItem @click.native="goToSecondary" />
-        <SettingsItem @click.native="goToSecondary" />
-        <SettingsItem @click.native="goToSecondary" />
-        <SettingsItem @click.native="goToSecondary" />
-        <SettingsItem @click.native="goToSecondary" />
-        <SettingsItem @click.native="goToSecondary" />
-        <SettingsItem @click.native="goToSecondary" />
-        <SettingsItem @click.native="goToSecondary" />
-        <SettingsItem @click.native="goToSecondary" />
-        <SettingsItem @click.native="goToSecondary" />
-        <SettingsItem @click.native="goToSecondary" />
-        <SettingsItem @click.native="goToSecondary" />
-        <SettingsItem @click.native="goToSecondary" />
+        <div class="space-y-2">
+          <SettingsItem @click.native="goToSecondary" />
+          <SettingsItem @click.native="goToSecondary" />
+          <SettingsItem @click.native="goToSecondary" />
+          <SettingsItem @click.native="goToSecondary" />
+          <SettingsItem @click.native="goToSecondary" />
+          <SettingsItem @click.native="goToSecondary" />
+          <SettingsItem @click.native="goToSecondary" />
+          <SettingsItem @click.native="goToSecondary" />
+          <SettingsItem @click.native="goToSecondary" />
+          <SettingsItem @click.native="goToSecondary" />
+          <SettingsItem @click.native="goToSecondary" />
+          <SettingsItem @click.native="goToSecondary" />
+          <SettingsItem @click.native="goToSecondary" />
+          <SettingsItem @click.native="goToSecondary" />
+        </div>
         <p>Abmelden</p>
+        <div class="flex items-center justify-center mt-8 space-x-1">
+          <AppIcon :size="8" icon="Logo" color="gray-400" />
+          <span class="text-xl font-black text-gray-400">eeenan</span>
+        </div>
       </div>
     </transition>
     <transition name="slide-in">
