@@ -1,5 +1,11 @@
 <template>
-  <PageContainer title="title" :primary-page="false">
+  <PageContainer
+    :title="title"
+    :back-button="{
+      backText: topicTitle,
+      backLink: `/topics/${this.$route.params.topic}`
+    }"
+  >
     <div>
       <div
         v-if="lessons"
@@ -12,51 +18,89 @@
           :link="name"
         />
       </div>
+      <div v-else>Loading</div>
     </div>
   </PageContainer>
 </template>
 
 <script>
+import fetchDataDispatchers from '~/mixins/fetchDataDispatchers'
 import ListItem from '~/components/common/ListItem'
 
 export default {
   components: {
     ListItem
   },
+  mixins: [fetchDataDispatchers],
   // computed: {
   //   title() {
   //     return this.subtopic ? this.subtopic.title : '...'
   //   }
   // },
   computed: {
+    topicTitle() {
+      if (
+        Object.prototype.hasOwnProperty.call(
+          this.$store.state.topics,
+          this.$route.params.topic
+        )
+      ) {
+        return this.$store.state.topics[this.$route.params.topic].title
+      } else {
+        return '...'
+      }
+    },
+    title() {
+      if (
+        Object.prototype.hasOwnProperty.call(
+          this.$store.state.subtopics,
+          this.$route.params.topic
+        )
+      ) {
+        if (
+          Object.prototype.hasOwnProperty.call(
+            this.$store.state.subtopics[this.$route.params.topic],
+            this.$route.params.subtopic
+          )
+        ) {
+          return this.$store.state.subtopics[this.$route.params.topic][
+            this.$route.params.subtopic
+          ].title
+        } else {
+          return '...'
+        }
+      } else {
+        return '...'
+      }
+    },
     lessons() {
       if (
-        this.$store.state.lessons[this.$route.params.topic] &&
-        this.$store.state.lessons[this.$route.params.topic][
-          this.$route.params.subtopic
-        ]
+        Object.prototype.hasOwnProperty.call(
+          this.$store.state.lessons,
+          this.$route.params.topic
+        )
       ) {
-        return this.$store.state.lessons[this.$route.params.topic][
-          this.$route.params.subtopic
-        ]
+        if (
+          Object.prototype.hasOwnProperty.call(
+            this.$store.state.lessons[this.$route.params.topic],
+            this.$route.params.subtopic
+          )
+        ) {
+          return this.$store.state.lessons[this.$route.params.topic][
+            this.$route.params.subtopic
+          ]
+        } else {
+          return false
+        }
       } else {
         return false
       }
     }
   },
   created() {
-    if (!Object.keys(this.$store.state.topics).length) {
-      this.$store.dispatch('fetchTopics')
-    }
-    if (!this.$store.state.subtopics[this.$route.params.topic]) {
-      this.$store.dispatch('fetchSubtopics', {
-        topic: this.$route.params.topic
-      })
-    }
-    this.$store.dispatch('fetchLessons', {
-      topic: this.$route.params.topic,
-      subtopic: this.$route.params.subtopic
-    })
+    this.fetchTopics()
+    this.fetchSubtopics()
+    this.fetchLessons()
   }
 }
 </script>

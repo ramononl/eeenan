@@ -1,14 +1,6 @@
 <template>
   <PageContainer :title="title">
-    <!-- <div v-if="allTopics" class="grid grid-cols-2 gap-4 px-4">
-      <TopicItem
-        v-for="topic in allTopics"
-        :key="topic.id"
-        :title="topic.title"
-        :link="topic.slug"
-      />
-    </div> -->
-    <div class="grid grid-cols-2 gap-4 px-4">
+    <div v-if="topics" class="grid grid-cols-2 gap-4 px-4">
       <TopicItem
         v-for="(topic, name) in topics"
         :key="name"
@@ -16,16 +8,21 @@
         :link="name"
       />
     </div>
+    <div v-else>
+      Loading
+    </div>
   </PageContainer>
 </template>
 
 <script>
+import fetchDataDispatchers from '~/mixins/fetchDataDispatchers'
 import TopicItem from '~/components/common/TopicItem'
 
 export default {
   components: {
     TopicItem
   },
+  mixins: [fetchDataDispatchers],
   data() {
     return {
       title: 'Themen'
@@ -33,13 +30,15 @@ export default {
   },
   computed: {
     topics() {
-      return this.$store.state.topics
+      if (Object.keys(this.$store.state.topics).length !== 0) {
+        return this.$store.state.topics
+      } else {
+        return false
+      }
     }
   },
   created() {
-    if (!Object.keys(this.$store.state.topics).length) {
-      this.$store.dispatch('fetchTopics')
-    }
+    this.fetchTopics()
   }
 }
 </script>

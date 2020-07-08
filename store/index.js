@@ -17,15 +17,20 @@ export const mutations = {
     Vue.set(state.subtopics, topic, subtopics)
   },
   setLessons(state, { topic, subtopic, lessons }) {
-    Vue.set(state.lessons, topic, {})
-    Vue.set(state.lessons[topic], subtopic, lessons)
+    state.lessons = {
+      ...state.lessons,
+      [topic]: { ...state.lessons[topic], [subtopic]: lessons }
+    }
   },
   setStories(state, payload) {
     state.stories = payload
   },
-  setUser(state, payload) {
-    state.user = payload
+  removeStories(state) {
+    state.stories = []
   }
+  // setUser(state, payload) {
+  //   state.user = payload
+  // }
 }
 
 export const actions = {
@@ -45,7 +50,7 @@ export const actions = {
       })
   },
   fetchSubtopics({ commit }, { topic }) {
-    const subtopics = []
+    const subtopics = {}
     this.$fireStore
       .collection('topics')
       .doc(topic)
@@ -56,7 +61,7 @@ export const actions = {
         res.forEach((x) => {
           const id = x.id
           const data = x.data()
-          subtopics.push({ id, ...data })
+          subtopics[id] = data
         })
         commit('setSubtopics', { topic, subtopics })
       })

@@ -1,35 +1,54 @@
 <template>
-  <PageContainer :title="title" :primary-page="false">
+  <PageContainer
+    :title="title"
+    :back-button="{ backText: 'Themen', backLink: '/topics' }"
+  >
     <div>
-      <div class="border-t border-b border-gray-300 divide-y divide-gray-300">
+      <div
+        v-if="subtopics"
+        class="border-t border-b border-gray-300 divide-y divide-gray-300"
+      >
         <ListItem
-          v-for="subtopic in subtopics"
-          :key="subtopic.id"
+          v-for="(subtopic, name) in subtopics"
+          :key="name"
           :title="subtopic.title"
-          :link="subtopic.id"
+          :link="name"
         />
       </div>
+      <div v-else>Loading</div>
     </div>
   </PageContainer>
 </template>
 
 <script>
+import fetchDataDispatchers from '~/mixins/fetchDataDispatchers'
 import ListItem from '~/components/common/ListItem'
 
 export default {
   components: {
     ListItem
   },
+  mixins: [fetchDataDispatchers],
   computed: {
     title() {
-      if (Object.keys(this.$store.state.topics).length) {
+      if (
+        Object.prototype.hasOwnProperty.call(
+          this.$store.state.topics,
+          this.$route.params.topic
+        )
+      ) {
         return this.$store.state.topics[this.$route.params.topic].title
       } else {
         return '...'
       }
     },
     subtopics() {
-      if (this.$store.state.subtopics[this.$route.params.topic]) {
+      if (
+        Object.prototype.hasOwnProperty.call(
+          this.$store.state.subtopics,
+          this.$route.params.topic
+        )
+      ) {
         return this.$store.state.subtopics[this.$route.params.topic]
       } else {
         return false
@@ -37,14 +56,8 @@ export default {
     }
   },
   created() {
-    if (!Object.keys(this.$store.state.topics).length) {
-      this.$store.dispatch('fetchTopics')
-    }
-    if (!this.$store.state.subtopics[this.$route.params.topic]) {
-      this.$store.dispatch('fetchSubtopics', {
-        topic: this.$route.params.topic
-      })
-    }
+    this.fetchTopics()
+    this.fetchSubtopics()
   }
 }
 </script>
