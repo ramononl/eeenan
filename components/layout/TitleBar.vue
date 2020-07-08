@@ -2,17 +2,24 @@
   <div
     class="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-16 p-4 bg-white border-b"
   >
-    <div v-if="!primaryPage" class="flex-1">
-      <button type="button" @click="$router.back()">Zurück</button>
+    <div v-if="backButton" class="flex-1">
+      <button
+        class="flex items-center"
+        type="button"
+        @click="$router.push(backButton.backLink)"
+      >
+        <AppIcon :size="8" icon="ChevronLeft" />
+        <span>{{ backButton.backText }}</span>
+      </button>
     </div>
     <h1
       class="font-bold leading-none"
-      :class="[primaryPage ? 'text-3xl' : 'flex-1 text-center text-xl']"
+      :class="[!backButton ? 'text-3xl' : 'flex-1 text-center text-xl']"
     >
       {{ title }}
     </h1>
-    <div v-if="!primaryPage" class="flex-1"></div>
-    <div v-if="primaryPage" class="flex space-x-4">
+    <div v-if="backButton" class="flex-1"></div>
+    <div v-if="!backButton" class="flex space-x-4">
       <button
         type="button"
         style="focus:outline-none focus:opacity-75"
@@ -61,9 +68,9 @@ export default {
       type: String,
       default: 'Titel'
     },
-    primaryPage: {
-      type: Boolean,
-      default: true
+    backButton: {
+      type: Object,
+      default: null
     }
   },
   methods: {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TitleBar :title="title" :primary-page="primaryPage" />
+    <TitleBar :title="title" :back-button="backButton" />
     <ContentBox>
       <slot />
     </ContentBox>
@@ -21,9 +21,9 @@ export default {
       type: String,
       default: 'Titel'
     },
-    primaryPage: {
-      type: Boolean,
-      default: true
+    backButton: {
+      type: Object,
+      default: null
     }
   }
 }
