@@ -1,10 +1,14 @@
 export const state = () => ({
-  user: null
+  user: null,
+  message: null
 })
 
 export const mutations = {
   setUser(state, payload) {
     state.user = payload
+  },
+  setMessage(state, payload) {
+    state.message = payload
   }
 }
 
@@ -19,6 +23,9 @@ export const actions = {
     try {
       await this.$fireAuth.createUserWithEmailAndPassword(email, password)
       const user = this.$fireAuth.currentUser
+      await user.updateProfile({
+        displayName: firstName
+      })
       await this.$fireStore
         .collection('users')
         .doc(user.uid)
@@ -28,13 +35,11 @@ export const actions = {
           email
         })
       await user.sendEmailVerification()
+      commit('setMessage', null)
       commit('setUser', user.uid)
     } catch (error) {
-      if (error.code === 'auth/email-already-in-use') {
-        throw new Error('User mit E-Mail bereits registriert')
-      } else {
-        throw new Error('Ein Fehler ist aufgetreten: ', error)
-      }
+      commit('setMessage', error.code)
+      throw new Error('Ein Fehler ist aufgetreten: ', error)
     }
   },
   async login({ commit }, { email, password }) {
@@ -43,35 +48,20 @@ export const actions = {
         email,
         password
       )
+      commit('setMessage', null)
       commit('setUser', user.user.uid)
     } catch (error) {
+      commit('setMessage', error.code)
+      throw new Error('Ein Fehler ist aufgetreten: ', error)
+    }
+  },
+  async resetPassword({ commit }, { email }) {
+    try {
+      await this.$fireAuth.sendPasswordResetEmail(email)
+      commit('setMessage', 'reset-done')
+    } catch (error) {
+      commit('setMessage', error.code)
       throw new Error('Ein Fehler ist aufgetreten: ', error)
     }
   }
 }
-
-// registerUser({ commit }, { firstName, lastName, email, password }) {
-//   this.$fireAuth
-//     .createUserWithEmailAndPassword(email, password)
-//     .then((data) => {
-//       this.$fireStore
-//         .collection('users')
-//         .doc(data.user.uid)
-//         .set({
-//           firstName,
-//           lastName,
-//           email
-//         })
-//         .then(() => {
-//           commit('setUser', { firstName, lastName, email })
-//           this.$router.push('/')
-//         })
-//     })
-// },
-// loginUser({ commit }, { email, password }) {
-//   this.$fireAuth.signInWithEmailAndPassword(email, password).then(() => {
-//     commit('setUser', email)
-//     this.$router.push('/')
-//   })
-// },
-// logoutUser() {}
