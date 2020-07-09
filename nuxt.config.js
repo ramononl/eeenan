@@ -176,7 +176,10 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/globalComponents.js'],
+  plugins: [
+    { src: '~/plugins/globalComponents.js' },
+    { src: '~/plugins/persistedState.js', mode: 'client' }
+  ],
   /*
    ** Nuxt.js dev-modules
    */
