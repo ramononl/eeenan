@@ -2,18 +2,7 @@
   <div class="flex h-full px-4 py-12 overflow-y-auto">
     <div class="w-full max-w-md m-auto">
       <div>
-        <!-- <img
-            class="w-auto h-12 mx-auto"
-            src="/img/logos/workflow-mark-on-white.svg"
-            alt="Workflow"
-          /> -->
-        <svg
-          class="w-10 h-10 mx-auto text-orange-500"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          <circle cx="10" cy="10" r="8" />
-        </svg>
+        <Logo class="w-40 h-40 max-w-full mx-auto" />
         <h2
           class="mt-6 text-3xl font-extrabold leading-9 text-center text-gray-900"
         >
@@ -76,6 +65,8 @@
           </div>
         </div>
 
+        <FormMessage :message="message" />
+
         <div class="mt-6">
           <LoginRegisterButton :loading="loading" text="Registrieren" />
         </div>
@@ -85,10 +76,14 @@
 </template>
 
 <script>
+import Logo from '~/components/common/svg/logo'
+import FormMessage from '~/components/common/FormMessage'
 import LoginRegisterButton from '~/components/common/LoginRegisterButton'
 
 export default {
   components: {
+    Logo,
+    FormMessage,
     LoginRegisterButton
   },
   layout: 'fullscreen',
@@ -100,6 +95,40 @@ export default {
         lastName: null,
         email: null,
         password: null
+      }
+    }
+  },
+  computed: {
+    message() {
+      if (this.$store.state.auth.message) {
+        const message = this.$store.state.auth.message
+        if (message === 'auth/invalid-email') {
+          return {
+            text:
+              'Die angegebene E-Mail-Adresse ist ungültig. Versuche es nochmals.',
+            success: false
+          }
+        } else if (message === 'auth/weak-password') {
+          return {
+            text:
+              'Das angegebene Passwort ist zu schwach. Verwende darin mindestens 6 Zeichen.',
+            success: false
+          }
+        } else if (message === 'auth/email-already-in-use') {
+          return {
+            text:
+              'Die angegebene E-Mail-Adresse ist bereits mit einem Nutzerkonto verknnüpft.',
+            success: false
+          }
+        } else {
+          return {
+            text:
+              'Es ist ein unbekannter Fehler aufgetreten. Bitte versuche es später erneut.',
+            success: false
+          }
+        }
+      } else {
+        return null
       }
     }
   },

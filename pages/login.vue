@@ -2,18 +2,7 @@
   <div class="flex h-full px-4 py-12 overflow-y-auto">
     <div class="w-full max-w-md m-auto">
       <div>
-        <!-- <img
-            class="w-auto h-12 mx-auto"
-            src="/img/logos/workflow-mark-on-white.svg"
-            alt="Workflow"
-          /> -->
-        <svg
-          class="w-10 h-10 mx-auto text-orange-500"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          <circle cx="10" cy="10" r="8" />
-        </svg>
+        <Logo class="w-40 h-40 max-w-full mx-auto" />
         <h2
           class="mt-6 text-3xl font-extrabold leading-9 text-center text-gray-900"
         >
@@ -54,9 +43,7 @@
           </div>
         </div>
 
-        <div v-if="errorMessage">
-          {{ errorMessage }}
-        </div>
+        <FormMessage :message="message" />
 
         <div class="mt-6">
           <LoginRegisterButton :loading="loading" text="Anmelden" />
@@ -64,7 +51,7 @@
         <div class="flex items-center justify-center mt-6">
           <div class="text-sm leading-5">
             <nuxt-link
-              to="/"
+              to="reset-password"
               class="font-medium text-orange-600 transition duration-150 ease-in-out hover:text-orange-500 focus:outline-none focus:underline"
               >Passwort vergessen?</nuxt-link
             >
@@ -76,20 +63,57 @@
 </template>
 
 <script>
+import Logo from '~/components/common/svg/logo'
+import FormMessage from '~/components/common/FormMessage'
 import LoginRegisterButton from '~/components/common/LoginRegisterButton'
 
 export default {
   components: {
+    Logo,
+    FormMessage,
     LoginRegisterButton
   },
   layout: 'fullscreen',
   data() {
     return {
       loading: false,
-      errorMessage: null,
       form: {
         email: null,
         password: null
+      }
+    }
+  },
+  computed: {
+    message() {
+      if (this.$store.state.auth.message) {
+        const message = this.$store.state.auth.message
+        if (message === 'auth/wrong-password') {
+          return {
+            text:
+              'Deine Anmeldedaten sind nicht korrekt. Versuche es nochmals.',
+            success: false
+          }
+        } else if (message === 'auth/user-not-found') {
+          return {
+            text:
+              'Es wurde kein User mit der angegebenen E-Mail-Adresse gefunden. Versuche es nochmals.',
+            success: false
+          }
+        } else if (message === 'reset-done') {
+          return {
+            text:
+              'Eine E-Mail mit Link zum Zurücksetzen des Passworts wurde an dich versendet.',
+            success: true
+          }
+        } else {
+          return {
+            text:
+              'Es ist ein unbekannter Fehler aufgetreten. Bitte versuche es später erneut.',
+            success: false
+          }
+        }
+      } else {
+        return null
       }
     }
   },
@@ -101,10 +125,7 @@ export default {
         this.$router.push('/')
       } catch (error) {
         this.loading = false
-        // auth/wrong-password
-        // console.log(error.code)
         console.error(error.message)
-        console.error(error)
       }
     }
   }
