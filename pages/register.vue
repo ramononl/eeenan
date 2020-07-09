@@ -8,12 +8,14 @@
         >
           Registrieren
         </h2>
-        <p class="mt-2 text-sm leading-5 text-center text-gray-600">
-          Du hast bereits ein Konto? Jetzt
+        <p
+          class="flex flex-wrap items-center justify-center mt-2 space-x-1 text-sm leading-5 text-center text-gray-600"
+        >
+          <span class="flex-none">Du hast bereits ein Konto?</span>
           <nuxt-link
             to="login"
-            class="font-medium text-orange-600 transition duration-150 ease-in-out hover:text-orange-500 focus:outline-none focus:underline"
-            >Anmelden</nuxt-link
+            class="flex-none font-medium text-orange-600 transition duration-150 ease-in-out hover:text-orange-500 focus:outline-none focus:underline"
+            >Jetzt Anmelden</nuxt-link
           >
         </p>
       </div>
