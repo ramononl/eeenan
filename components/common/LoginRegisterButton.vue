@@ -4,7 +4,7 @@
     class="flex justify-center w-full"
     :disabled="loading"
   >
-    <div v-if="loading">
+    <div v-if="loading" class="flex items-center">
       <span>&nbsp;</span>
       <AppIcon :size="5" icon="Spinner" class="spin-animation" />
       <span>&nbsp;</span>
