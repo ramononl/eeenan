@@ -77,25 +77,7 @@
         </div>
 
         <div class="mt-6">
-          <button
-            type="submit"
-            class="relative flex justify-center w-full px-4 py-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-orange-500 border border-transparent rounded-md group hover:bg-orange-400 focus:outline-none focus:border-orange-500 focus:shadow-outline-orange active:bg-orange-500"
-          >
-            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-              <svg
-                class="w-5 h-5 text-orange-400 transition duration-150 ease-in-out group-hover:text-orange-300"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </span>
-            Registrieren
-          </button>
+          <LoginRegisterButton :loading="loading" text="Registrieren" />
         </div>
       </form>
     </div>
@@ -103,10 +85,16 @@
 </template>
 
 <script>
+import LoginRegisterButton from '~/components/common/LoginRegisterButton'
+
 export default {
+  components: {
+    LoginRegisterButton
+  },
   layout: 'fullscreen',
   data() {
     return {
+      loading: false,
       form: {
         firstName: null,
         lastName: null,
@@ -116,8 +104,15 @@ export default {
     }
   },
   methods: {
-    register() {
-      this.$store.dispatch('registerUser', this.form)
+    async register() {
+      try {
+        this.loading = true
+        await this.$store.dispatch('auth/register', this.form)
+        this.$router.push('/')
+      } catch (error) {
+        this.loading = false
+        console.error(error.message)
+      }
     }
   }
 }
