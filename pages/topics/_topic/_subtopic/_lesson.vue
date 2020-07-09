@@ -73,7 +73,8 @@ export default {
   },
   beforeDestroy() {
     this.$store.commit('removeStories')
-  }
+  },
+  middleware: 'auth'
 }
 </script>
 

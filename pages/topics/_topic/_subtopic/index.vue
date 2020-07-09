@@ -101,7 +101,8 @@ export default {
     this.fetchTopics()
     this.fetchSubtopics()
     this.fetchLessons()
-  }
+  },
+  middleware: 'auth'
 }
 </script>
 

@@ -10,6 +10,7 @@ export default {
     return {
       title: 'Aktivitäten'
     }
-  }
+  },
+  middleware: 'auth'
 }
 </script>

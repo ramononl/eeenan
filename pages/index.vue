@@ -53,6 +53,7 @@ export default {
     return {
       title: 'Startseite'
     }
-  }
+  },
+  middleware: 'auth'
 }
 </script>

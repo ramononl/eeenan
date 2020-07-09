@@ -39,6 +39,7 @@ export default {
   },
   mounted() {
     this.fetchTopics()
-  }
+  },
+  middleware: 'auth'
 }
 </script>

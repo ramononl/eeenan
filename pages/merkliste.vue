@@ -20,6 +20,7 @@ export default {
     return {
       title: 'Merkliste'
     }
-  }
+  },
+  middleware: 'auth'
 }
 </script>

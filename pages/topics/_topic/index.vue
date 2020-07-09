@@ -58,7 +58,8 @@ export default {
   mounted() {
     this.fetchTopics()
     this.fetchSubtopics()
-  }
+  },
+  middleware: 'auth'
 }
 </script>
 

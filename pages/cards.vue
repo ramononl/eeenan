@@ -12,7 +12,7 @@
         </div>
         <div class="flex-1 text-right">
           <nuxt-link to="/">
-            <AppIcon :size="8" icon="X" />
+            <AppIcon :size="8" icon="X" color="gray-100" />
           </nuxt-link>
         </div>
       </div>
