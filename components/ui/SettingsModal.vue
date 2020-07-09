@@ -21,7 +21,7 @@
           <SettingsItem @click.native="goToSecondary" />
           <SettingsItem @click.native="goToSecondary" />
         </div>
-        <p>Abmelden</p>
+        <p @click="logout">Abmelden</p>
         <div class="flex items-center justify-center mt-8 space-x-1">
           <AppIcon :size="8" icon="Logo" color="gray-400" />
           <span class="text-xl font-black text-gray-400">eeenan</span>
@@ -65,6 +65,14 @@ export default {
   methods: {
     goToSecondary() {
       this.$emit('secondary-view', true)
+    },
+    async logout() {
+      try {
+        await this.$store.dispatch('auth/logout')
+        this.$router.push('/login')
+      } catch (error) {
+        console.error(error.message)
+      }
     }
   }
 }
