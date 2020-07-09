@@ -1,13 +1,15 @@
 import Vue from 'vue'
 
-export const state = () => ({
-  topics: {},
-  subtopics: {},
-  lessons: {},
-  stories: [],
-  user: null,
-  isAuthenticated: false
-})
+const getDefaultState = () => {
+  return {
+    topics: {},
+    subtopics: {},
+    lessons: {},
+    stories: []
+  }
+}
+
+export const state = () => getDefaultState()
 
 export const mutations = {
   setTopics(state, payload) {
@@ -27,13 +29,16 @@ export const mutations = {
   },
   removeStories(state) {
     state.stories = []
+  },
+  resetState(state) {
+    Object.assign(state, getDefaultState())
   }
-  // setUser(state, payload) {
-  //   state.user = payload
-  // }
 }
 
 export const actions = {
+  resetState({ commit }) {
+    commit('resetState')
+  },
   fetchTopics({ commit }) {
     const topics = {}
     this.$fireStore
@@ -105,30 +110,5 @@ export const actions = {
         })
         commit('setStories', stories)
       })
-  },
-  registerUser({ commit }, { firstName, lastName, email, password }) {
-    this.$fireAuth
-      .createUserWithEmailAndPassword(email, password)
-      .then((data) => {
-        this.$fireStore
-          .collection('users')
-          .doc(data.user.uid)
-          .set({
-            firstName,
-            lastName,
-            email
-          })
-          .then(() => {
-            commit('setUser', { firstName, lastName, email })
-            this.$router.push('/')
-          })
-      })
-  },
-  loginUser({ commit }, { email, password }) {
-    this.$fireAuth.signInWithEmailAndPassword(email, password).then(() => {
-      commit('setUser', email)
-      this.$router.push('/')
-    })
-  },
-  logoutUser() {}
+  }
 }
