@@ -32,7 +32,7 @@ export default {
     color: {
       type: String,
       required: false,
-      default: 'text-gray-900'
+      default: 'gray-900'
     }
   },
   computed: {
