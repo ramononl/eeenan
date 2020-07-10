@@ -17,6 +17,7 @@ export const actions = {
     await this.$fireAuth.signOut()
     await dispatch('resetState', null, { root: true })
     await dispatch('modals/resetState', null, { root: true })
+    await dispatch('progress/resetState', null, { root: true })
     commit('setUser', null)
   },
   async register({ commit }, { firstName, lastName, email, password }) {
