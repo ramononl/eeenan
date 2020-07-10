@@ -4,10 +4,12 @@
     class="flex justify-center w-full"
     :disabled="loading"
   >
-    <div v-if="loading" class="flex items-center">
-      <span>&nbsp;</span>
-      <AppIcon :size="5" icon="Spinner" class="spin-animation" />
-      <span>&nbsp;</span>
+    <div v-if="loading">
+      <div class="flex items-center">
+        <span>&nbsp;</span>
+        <AppIcon :size="5" icon="Spinner" class="spin-animation" />
+        <span>&nbsp;</span>
+      </div>
     </div>
     <span v-else>{{ text }}</span>
   </AppButton>
