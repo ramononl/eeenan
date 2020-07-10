@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-16 p-4 bg-white border-b"
+    class="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-16 px-2 py-4 bg-white border-b"
   >
     <div v-if="backButton" class="flex-1">
       <button
@@ -14,12 +14,12 @@
     </div>
     <h1
       class="font-bold leading-none"
-      :class="[!backButton ? 'text-3xl' : 'flex-1 text-center text-xl']"
+      :class="[!backButton ? 'text-3xl pl-2' : 'flex-1 text-center text-xl']"
     >
       {{ title }}
     </h1>
     <div v-if="backButton" class="flex-1"></div>
-    <div v-if="!backButton" class="flex space-x-4">
+    <div v-if="!backButton" class="flex pr-2 space-x-4">
       <button
         type="button"
         style="focus:outline-none focus:opacity-75"
