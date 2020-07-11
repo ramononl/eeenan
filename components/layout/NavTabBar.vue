@@ -42,7 +42,7 @@
       ></nuxt-link
     >
     <nuxt-link
-      to="/merkliste"
+      to="/bookmarks"
       class="flex items-center justify-center flex-1 text-xs font-semibold"
       ><span class="flex flex-col items-center"
         ><svg
@@ -61,7 +61,7 @@
       ></nuxt-link
     >
     <nuxt-link
-      to="/aktivitaeten"
+      to="/activities"
       class="flex items-center justify-center flex-1 text-xs font-semibold"
       ><span class="flex flex-col items-center"
         ><svg
