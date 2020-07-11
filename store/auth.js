@@ -15,9 +15,8 @@ export const mutations = {
 export const actions = {
   async logout({ commit, dispatch }) {
     await this.$fireAuth.signOut()
-    await dispatch('resetState', null, { root: true })
     await dispatch('modals/resetState', null, { root: true })
-    await dispatch('progress/resetState', null, { root: true })
+    await dispatch('user/resetState', null, { root: true })
     commit('setUser', null)
   },
   async register({ commit }, { firstName, lastName, email, password }) {
@@ -33,7 +32,9 @@ export const actions = {
         .set({
           firstName,
           lastName,
-          email
+          email,
+          finishedStories: {},
+          bookmarks: []
         })
       await user.sendEmailVerification()
       commit('setMessage', null)
