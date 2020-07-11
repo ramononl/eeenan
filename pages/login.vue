@@ -2,7 +2,7 @@
   <div class="flex h-full px-4 py-12 overflow-y-auto">
     <div class="w-full max-w-md m-auto">
       <div>
-        <Logo class="w-40 h-40 max-w-full mx-auto" />
+        <LogoColor class="w-40 h-40 max-w-full mx-auto" />
         <h2
           class="mt-6 text-3xl font-extrabold leading-9 text-center text-gray-900"
         >
@@ -61,17 +61,38 @@
         </div>
       </form>
     </div>
+    <div v-if="showInstallMessage" class="fixed inset-x-0 bottom-0 p-4">
+      <div class="p-3 bg-gray-600 rounded-md shadow-lg">
+        <div class="flex items-center justify-between space-x-3">
+          <div class="flex flex-shrink-0 p-2 bg-gray-800 rounded-md">
+            <AppIcon :size="6" icon="Download" color="gray-300" />
+          </div>
+          <p class="text-sm font-medium leading-tight text-white">
+            Installiere diese App, indem du sie zum Homescreen hinzufügst.
+          </p>
+          <div class="flex-shrink-0">
+            <button
+              type="button"
+              class="flex p-2 -mr-1 focus:outline-none"
+              @click="hideInstallMessage"
+            >
+              <AppIcon :size="6" icon="X" color="gray-100" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import Logo from '~/components/common/svg/logo'
+import LogoColor from '~/components/common/svg/LogoColor'
 import FormMessage from '~/components/common/FormMessage'
 import LoginRegisterButton from '~/components/common/LoginRegisterButton'
 
 export default {
   components: {
-    Logo,
+    LogoColor,
     FormMessage,
     LoginRegisterButton
   },
@@ -86,6 +107,9 @@ export default {
     }
   },
   computed: {
+    showInstallMessage() {
+      return this.$store.state.showInstallMessage
+    },
     message() {
       if (this.$store.state.auth.message) {
         const message = this.$store.state.auth.message
@@ -119,6 +143,9 @@ export default {
       }
     }
   },
+  beforeDestroy() {
+    this.$store.commit('auth/setMessage', null)
+  },
   methods: {
     async login() {
       try {
@@ -129,6 +156,9 @@ export default {
         this.loading = false
         console.error(error.message)
       }
+    },
+    hideInstallMessage() {
+      this.$store.commit('showInstallMessage', false)
     }
   }
 }
