@@ -2,7 +2,7 @@
   <div class="flex h-full px-4 py-12 overflow-y-auto">
     <div class="w-full max-w-md m-auto">
       <div>
-        <Logo class="w-40 h-40 max-w-full mx-auto" />
+        <LogoColor class="w-40 h-40 max-w-full mx-auto" />
         <h2
           class="mt-6 text-3xl font-extrabold leading-9 text-center text-gray-900"
         >
@@ -50,13 +50,13 @@
 </template>
 
 <script>
-import Logo from '~/components/common/svg/logo'
+import LogoColor from '~/components/common/svg/LogoColor'
 import FormMessage from '~/components/common/FormMessage'
 import LoginRegisterButton from '~/components/common/LoginRegisterButton'
 
 export default {
   components: {
-    Logo,
+    LogoColor,
     FormMessage,
     LoginRegisterButton
   },
