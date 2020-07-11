@@ -2,10 +2,10 @@
   <PageContainer :title="title">
     <div v-if="topics" class="grid grid-cols-2 gap-4 px-4">
       <TopicItem
-        v-for="(topic, name) in topics"
-        :key="name"
+        v-for="topic in topics"
+        :key="topic.id"
         :title="topic.title"
-        :link="name"
+        :link="topic.id"
       />
     </div>
     <div v-else>
@@ -15,14 +15,12 @@
 </template>
 
 <script>
-import fetchDataDispatchers from '~/mixins/fetchDataDispatchers'
 import TopicItem from '~/components/common/TopicItem'
 
 export default {
   components: {
     TopicItem
   },
-  mixins: [fetchDataDispatchers],
   data() {
     return {
       title: 'Themen'
@@ -31,14 +29,16 @@ export default {
   computed: {
     topics() {
       if (Object.keys(this.$store.state.topics).length !== 0) {
-        return this.$store.state.topics
+        const topics = this.$store.state.topics
+        const topicsArray = Object.keys(topics).map((key) => {
+          return { id: key, ...topics[key] }
+        })
+        topicsArray.sort((a, b) => (a.ordering > b.ordering ? 1 : -1))
+        return topicsArray
       } else {
         return false
       }
     }
-  },
-  mounted() {
-    this.fetchTopics()
   },
   middleware: 'auth'
 }
