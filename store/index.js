@@ -1,11 +1,10 @@
-import Vue from 'vue'
-
 const getDefaultState = () => {
   return {
     topics: {},
     subtopics: {},
     lessons: {},
-    stories: []
+    stories: {},
+    showInstallMessage: false
   }
 }
 
@@ -13,22 +12,19 @@ export const state = () => getDefaultState()
 
 export const mutations = {
   setTopics(state, payload) {
-    Vue.set(state, 'topics', payload)
+    state.topics = payload
   },
-  setSubtopics(state, { topic, subtopics }) {
-    Vue.set(state.subtopics, topic, subtopics)
+  setSubtopics(state, payload) {
+    state.subtopics = payload
   },
-  setLessons(state, { topic, subtopic, lessons }) {
-    state.lessons = {
-      ...state.lessons,
-      [topic]: { ...state.lessons[topic], [subtopic]: lessons }
-    }
+  setLessons(state, payload) {
+    state.lessons = payload
   },
   setStories(state, payload) {
     state.stories = payload
   },
-  removeStories(state) {
-    state.stories = []
+  showInstallMessage(state, payload) {
+    state.showInstallMessage = payload
   },
   resetState(state) {
     Object.assign(state, getDefaultState())
@@ -43,7 +39,6 @@ export const actions = {
     const topics = {}
     this.$fireStore
       .collection('topics')
-      .orderBy('ordering')
       .get()
       .then((res) => {
         res.forEach((x) => {
@@ -54,59 +49,44 @@ export const actions = {
         commit('setTopics', topics)
       })
   },
-  fetchSubtopics({ commit }, { topic }) {
+  fetchSubtopics({ commit }) {
     const subtopics = {}
     this.$fireStore
-      .collection('topics')
-      .doc(topic)
       .collection('subtopics')
-      .orderBy('ordering')
       .get()
       .then((res) => {
-        res.forEach((x) => {
-          const id = x.id
-          const data = x.data()
+        res.docs.map((doc) => {
+          const id = doc.id
+          const data = doc.data()
           subtopics[id] = data
         })
-        commit('setSubtopics', { topic, subtopics })
+        commit('setSubtopics', subtopics)
       })
   },
-  fetchLessons({ commit }, { topic, subtopic }) {
+  fetchLessons({ commit }) {
     const lessons = {}
     this.$fireStore
-      .collection('topics')
-      .doc(topic)
-      .collection('subtopics')
-      .doc(subtopic)
       .collection('lessons')
-      .orderBy('ordering')
       .get()
       .then((res) => {
-        res.forEach((x) => {
-          const id = x.id
-          const data = x.data()
+        res.docs.map((doc) => {
+          const id = doc.id
+          const data = doc.data()
           lessons[id] = data
         })
-        commit('setLessons', { topic, subtopic, lessons })
+        commit('setLessons', lessons)
       })
   },
-  fetchStories({ commit }, { topic, subtopic, lesson }) {
-    const stories = []
+  fetchStories({ commit }) {
+    const stories = {}
     this.$fireStore
-      .collection('topics')
-      .doc(topic)
-      .collection('subtopics')
-      .doc(subtopic)
-      .collection('lessons')
-      .doc(lesson)
       .collection('stories')
-      .orderBy('ordering')
       .get()
       .then((res) => {
-        res.forEach((x) => {
-          const id = x.id
-          const data = x.data()
-          stories.push({ id, ...data })
+        res.docs.map((doc) => {
+          const id = doc.id
+          const data = doc.data()
+          stories[id] = data
         })
         commit('setStories', stories)
       })
