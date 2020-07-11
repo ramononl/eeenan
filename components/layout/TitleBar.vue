@@ -4,7 +4,7 @@
   >
     <div v-if="backButton" class="flex-1">
       <button
-        class="flex items-center"
+        class="flex items-center focus:outline-none"
         type="button"
         @click="$router.push(backButton.backLink)"
       >
