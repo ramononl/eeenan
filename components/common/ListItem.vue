@@ -5,13 +5,6 @@
     class="flex items-center justify-between px-4 py-3 space-x-2 bg-white"
   >
     <div class="flex items-center space-x-2">
-      <!-- <svg
-        class="w-10 h-10 mx-auto text-orange-500"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-      >
-        <circle cx="10" cy="10" r="8" />
-      </svg> -->
       <AppIcon
         v-if="finished"
         :size="10"
