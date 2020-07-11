@@ -3,10 +3,12 @@ import Vue from 'vue'
 import AppButton from '~/components/ui/AppButton.vue'
 import AppIcon from '~/components/common/icons/AppIcon.vue'
 import PageContainer from '~/components/layout/PageContainer'
+import MissingContent from '~/components/common/MissingContent'
 
 Vue.component('AppButton', AppButton)
 Vue.component('AppIcon', AppIcon)
 Vue.component('PageContainer', PageContainer)
+Vue.component('MissingContent', MissingContent)
 
 const ComponentContext = require.context(
   '~/components/common/icons/svg',
