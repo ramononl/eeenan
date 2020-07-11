@@ -54,9 +54,6 @@ export default {
       title: 'Startseite'
     }
   },
-  middleware: 'auth',
-  mounted() {
-    this.$store.dispatch('progress/setFinishedStories')
-  }
+  middleware: 'auth'
 }
 </script>
