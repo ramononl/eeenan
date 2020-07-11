@@ -41,6 +41,11 @@ module.exports = {
           '800': '#9c4221',
           '900': '#7b341e'
         }
+      },
+      stroke: {
+        gray: {
+          ...defaultTheme.colors.gray
+        }
       }
     }
   },
