@@ -178,7 +178,9 @@ export default {
    */
   plugins: [
     { src: '~/plugins/globalComponents.js' },
-    { src: '~/plugins/persistedState.js', mode: 'client' }
+    { src: '~/plugins/persistedState.js', mode: 'client' },
+    { src: '~/plugins/fetchData.js', mode: 'client' },
+    { src: '~/plugins/pwaBanner.js', mode: 'client' }
   ],
   /*
    ** Nuxt.js dev-modules
