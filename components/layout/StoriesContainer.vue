@@ -5,7 +5,32 @@
         class="flex items-center justify-between font-semibold text-gray-100"
       >
         <div class="flex-1">
-          {{ storiesData.currentStory }} / {{ storiesData.numberOfStories }}
+          <button
+            v-if="bookmarked"
+            type="button"
+            class="focus:outline-none"
+            @click="removeBookmark"
+          >
+            <AppIcon
+              :size="8"
+              icon="Bookmark"
+              color="gray-100"
+              class="stroke-gray-100"
+            />
+          </button>
+          <button
+            v-else
+            type="button"
+            class="focus:outline-none"
+            @click="addBookmark"
+          >
+            <AppIcon
+              :size="8"
+              icon="BookmarkOutline"
+              color="transparent"
+              class="stroke-gray-100"
+            />
+          </button>
         </div>
         <div class="flex items-center justify-center flex-1 text-gray-100">
           <span>{{ storiesData.subtopic }}</span>
@@ -13,7 +38,7 @@
           <span>{{ storiesData.lesson }}</span>
         </div>
         <div class="flex-1 text-right">
-          <button @click="closeStories">
+          <button class="focus:outline-none" @click="closeStories">
             <AppIcon :size="8" icon="X" color="gray-100" />
           </button>
         </div>
@@ -60,31 +85,11 @@
         class="flex items-center justify-center flex-1 h-full focus:outline-none"
         @click="finishLesson"
       >
-        <span class="font-medium text-orange-100">Lektion abschliessen</span>
+        <span class="font-medium leading-none text-orange-100"
+          >Lektion abschliessen</span
+        >
       </button>
     </div>
-    <!-- <div
-      class="flex mt-6"
-      :class="[
-        storiesData.currentStory === 1 ? 'justify-end' : 'justify-between'
-      ]"
-    >
-      <AppButton
-        v-if="storiesData.currentStory !== 1"
-        @click.native="prevStory"
-      >
-        <AppIcon :size="5" icon="ArrowLeft" color="orange-100" />
-      </AppButton>
-      <AppButton
-        v-if="storiesData.currentStory < storiesData.numberOfStories"
-        @click.native="nextStory"
-      >
-        <AppIcon :size="5" icon="ArrowRight" color="orange-100" />
-      </AppButton>
-      <AppButton v-else>
-        <span>Lektion abschliessen</span>
-      </AppButton>
-    </div> -->
   </div>
 </template>
 
@@ -102,8 +107,22 @@ export default {
           subtopic: 'Subtopic',
           lesson: 'Lesson',
           numberOfStories: 2,
-          currentStory: 1
+          currentStory: 1,
+          currentStoryId: null
         }
+      }
+    }
+  },
+  computed: {
+    bookmarked() {
+      if (
+        this.$store.state.user.bookmarks.includes(
+          this.storiesData.currentStoryId
+        )
+      ) {
+        return true
+      } else {
+        return false
       }
     }
   },
@@ -118,13 +137,20 @@ export default {
         this.$emit('prev-story')
       }
     },
+    addBookmark() {
+      this.$store.dispatch('user/addBookmark', this.storiesData.currentStoryId)
+    },
+    removeBookmark() {
+      this.$store.dispatch(
+        'user/removeBookmark',
+        this.storiesData.currentStoryId
+      )
+    },
     finishLesson() {
       this.$emit('finish-lesson')
-      this.$store.dispatch('progress/setFinishedStories')
       this.$router.push(this.closeLink)
     },
     closeStories() {
-      this.$store.dispatch('progress/setFinishedStories')
       this.$router.push(this.closeLink)
     }
   }
