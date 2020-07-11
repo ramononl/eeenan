@@ -14,6 +14,14 @@ export default {
   components: {
     NavTabBar,
     ModalContainer
+  },
+  mounted() {
+    if (Object.keys(this.$store.state.user.finishedStories).length === 0) {
+      this.$store.dispatch('user/setFinishedStories')
+    }
+    if (Object.keys(this.$store.state.user.bookmarks).length === 0) {
+      this.$store.dispatch('user/setBookmarks')
+    }
   }
 }
 </script>
