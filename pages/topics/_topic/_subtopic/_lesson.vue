@@ -1,13 +1,14 @@
 <template>
   <StoriesContainer
+    v-if="stories"
     :close-link="closeLink"
     :stories-data="storiesData"
     @next-story="nextStory"
     @prev-story="prevStory"
     @finish-lesson="finishLesson"
   >
-    <div v-if="stories">
-      <p>{{ currentStoryData.content }}</p>
+    <div>
+      <p>{{ currentStoryData }}</p>
     </div>
   </StoriesContainer>
   <!-- <div>
@@ -23,7 +24,6 @@
 </template>
 
 <script>
-import fetchDataDispatchers from '~/mixins/fetchDataDispatchers'
 import StoriesContainer from '~/components/layout/StoriesContainer'
 
 export default {
@@ -31,7 +31,6 @@ export default {
   components: {
     StoriesContainer
   },
-  mixins: [fetchDataDispatchers],
   data() {
     return {
       currentStory: 1
@@ -41,86 +40,81 @@ export default {
     closeLink() {
       return `/topics/${this.$route.params.topic}/${this.$route.params.subtopic}`
     },
-    topicTitle() {
-      if (
-        Object.prototype.hasOwnProperty.call(
-          this.$store.state.topics,
-          this.$route.params.topic
-        )
-      ) {
-        return this.$store.state.topics[this.$route.params.topic].title
+    subtopicTitle() {
+      if (Object.keys(this.$store.state.subtopics).length !== 0) {
+        return this.$store.state.subtopics[this.$route.params.topic][
+          this.$route.params.subtopic
+        ].title
       } else {
         return '...'
       }
     },
-    subtopicTitle() {
-      if (
-        Object.prototype.hasOwnProperty.call(
-          this.$store.state.subtopics,
-          this.$route.params.topic
-        )
-      ) {
-        if (
-          Object.prototype.hasOwnProperty.call(
-            this.$store.state.subtopics[this.$route.params.topic],
-            this.$route.params.subtopic
-          )
-        ) {
-          return this.$store.state.subtopics[this.$route.params.topic][
-            this.$route.params.subtopic
-          ].title
-        } else {
-          return '...'
-        }
+    lessonTitle() {
+      if (Object.keys(this.$store.state.lessons).length !== 0) {
+        return this.$store.state.lessons[this.$route.params.topic][
+          this.$route.params.subtopic
+        ][this.$route.params.lesson].title
       } else {
         return '...'
       }
     },
     stories() {
-      if (this.$store.state.stories.length > 0) {
-        return this.$store.state.stories
+      if (
+        Object.prototype.hasOwnProperty.call(
+          this.$store.state.stories[this.$route.params.topic][
+            this.$route.params.subtopic
+          ],
+          this.$route.params.lesson
+        )
+      ) {
+        const stories = this.$store.state.stories[this.$route.params.topic][
+          this.$route.params.subtopic
+        ][this.$route.params.lesson]
+        const storiesArray = Object.keys(stories).map((key) => {
+          return { id: key, ...stories[key] }
+        })
+        storiesArray.sort((a, b) => (a.ordering > b.ordering ? 1 : -1))
+        return storiesArray
       } else {
         return false
       }
     },
     currentStoryData() {
-      if (this.$store.state.stories.length > 0) {
-        return this.$store.state.stories[this.currentStory - 1]
+      if (this.stories) {
+        return this.stories[this.currentStory - 1]
       } else {
         return false
       }
     },
     storiesData() {
       return {
-        subtopic: this.topicTitle,
-        lesson: this.subtopicTitle,
-        numberOfStories: Object.keys(this.stories).length,
-        currentStory: this.currentStory
+        subtopic: this.subtopicTitle,
+        lesson: this.lessonTitle,
+        numberOfStories: this.stories.length,
+        currentStory: this.currentStory,
+        currentStoryId: this.currentStoryData.id
       }
     }
   },
-  mounted() {
-    this.fetchStories()
-  },
-  beforeDestroy() {
-    this.$store.commit('removeStories')
-  },
   methods: {
+    dateInSeconds() {
+      return Math.floor(Date.now() / 1000)
+    },
     nextStory() {
-      this.$store.dispatch(
-        'progress/addFinishedStory',
-        this.currentStoryData.id
-      )
+      this.$store.dispatch('user/addFinishedStory', {
+        key: this.currentStoryData.id,
+        date: this.dateInSeconds()
+      })
       this.currentStory++
     },
     prevStory() {
       this.currentStory--
     },
     finishLesson() {
-      this.$store.dispatch(
-        'progress/addFinishedStory',
-        this.currentStoryData.id
-      )
+      this.$store.dispatch('user/addFinishedStory', {
+        key: this.currentStoryData.id,
+        date: this.dateInSeconds()
+      })
     }
   },
   middleware: 'auth'
