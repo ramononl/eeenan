@@ -12,7 +12,6 @@ const isInStandaloneMode = () =>
 export default ({ store }) => {
   // Checks if should display install popup notification:
   if (isIos() && !isInStandaloneMode()) {
-    console.log('is ios, not in standalone')
     store.commit('showInstallMessage', true)
   }
 }
