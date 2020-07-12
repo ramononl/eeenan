@@ -3,8 +3,7 @@
     class="fixed inset-x-0 bottom-0 z-10 flex items-stretch w-full h-24 pb-4 bg-white shadow-top"
   >
     <nuxt-link
-      to="/"
-      exact
+      to="/start"
       class="flex items-center justify-center flex-1 text-xs font-semibold"
       ><span class="flex flex-col items-center"
         ><svg

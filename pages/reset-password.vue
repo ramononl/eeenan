@@ -36,10 +36,10 @@
         <div class="flex items-center justify-center mt-6">
           <div class="text-sm leading-5">
             <nuxt-link
-              to="login"
+              to="/"
               class="flex items-center font-medium text-orange-600 transition duration-150 ease-in-out hover:text-orange-500 focus:outline-none focus:underline"
             >
-              <AppIcon :size="5" icon="ChevronLeft" />
+              <AppIcon :size="5" icon="ChevronLeft" color="orange-600" />
               <span>Zurück zum Login</span>
             </nuxt-link>
           </div>
@@ -96,7 +96,7 @@ export default {
       try {
         this.loading = true
         await this.$store.dispatch('auth/resetPassword', this.form)
-        this.$router.push('/login')
+        this.$router.push('/')
       } catch (error) {
         this.loading = false
         console.error(error.message)

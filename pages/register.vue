@@ -13,7 +13,7 @@
         >
           <span class="flex-none">Du hast bereits ein Konto?</span>
           <nuxt-link
-            to="login"
+            to="/"
             class="flex-none font-medium text-orange-600 transition duration-150 ease-in-out hover:text-orange-500 focus:outline-none focus:underline"
             >Jetzt Anmelden</nuxt-link
           >
@@ -142,7 +142,7 @@ export default {
       try {
         this.loading = true
         await this.$store.dispatch('auth/register', this.form)
-        this.$router.push('/')
+        this.$router.push('/start')
       } catch (error) {
         this.loading = false
         console.error(error.message)
