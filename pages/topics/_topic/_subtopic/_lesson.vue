@@ -1,7 +1,6 @@
 <template>
   <StoriesContainer
     v-if="stories"
-    :close-link="closeLink"
     :stories-data="storiesData"
     @next-story="nextStory"
     @prev-story="prevStory"
@@ -11,16 +10,6 @@
       <p>{{ currentStoryData }}</p>
     </div>
   </StoriesContainer>
-  <!-- <div>
-    <div class="border-t border-b border-gray-300 divide-y divide-gray-300">
-      <div class="flex items-center justify-center">
-        <span>{{ topicTitle }}</span>
-        <AppIcon :size="8" icon="ChevronRight" />
-        <span>{{ subtopicTitle }}</span>
-      </div>
-      {{ stories }}
-    </div>
-  </div> -->
 </template>
 
 <script>
@@ -37,39 +26,30 @@ export default {
     }
   },
   computed: {
-    closeLink() {
-      return `/topics/${this.$route.params.topic}/${this.$route.params.subtopic}`
-    },
-    subtopicTitle() {
-      if (Object.keys(this.$store.state.subtopics).length !== 0) {
-        return this.$store.state.subtopics[this.$route.params.topic][
-          this.$route.params.subtopic
-        ].title
-      } else {
-        return '...'
-      }
-    },
     lessonTitle() {
-      if (Object.keys(this.$store.state.lessons).length !== 0) {
-        return this.$store.state.lessons[this.$route.params.topic][
-          this.$route.params.subtopic
-        ][this.$route.params.lesson].title
+      const lessonsStore = this.$store.state.lessons
+      const lesson = this.$getNested(
+        lessonsStore,
+        this.$route.params.topic,
+        this.$route.params.subtopic,
+        this.$route.params.lesson
+      )
+      if (lesson) {
+        return lesson.title
       } else {
         return '...'
       }
     },
     stories() {
-      if (
-        Object.prototype.hasOwnProperty.call(
-          this.$store.state.stories[this.$route.params.topic][
-            this.$route.params.subtopic
-          ],
-          this.$route.params.lesson
-        )
-      ) {
-        const stories = this.$store.state.stories[this.$route.params.topic][
-          this.$route.params.subtopic
-        ][this.$route.params.lesson]
+      const storiesStore = this.$store.state.stories
+      const stories = this.$getNested(
+        storiesStore,
+        this.$route.params.topic,
+        this.$route.params.subtopic,
+        this.$route.params.lesson
+      )
+
+      if (stories) {
         const storiesArray = Object.keys(stories).map((key) => {
           return { id: key, ...stories[key] }
         })
@@ -79,24 +59,41 @@ export default {
         return false
       }
     },
+    storiesData() {
+      return {
+        lesson: this.lessonTitle,
+        numberOfStories: this.stories.length,
+        currentStory: this.currentStory,
+        currentStoryId: this.currentStoryData.id
+      }
+    },
     currentStoryData() {
       if (this.stories) {
         return this.stories[this.currentStory - 1]
       } else {
         return false
       }
-    },
-    storiesData() {
-      return {
-        subtopic: this.subtopicTitle,
-        lesson: this.lessonTitle,
-        numberOfStories: this.stories.length,
-        currentStory: this.currentStory,
-        currentStoryId: this.currentStoryData.id
-      }
     }
   },
+  watch: {
+    stories() {
+      this.checkQuery()
+    }
+  },
+  mounted() {
+    this.checkQuery()
+  },
   methods: {
+    checkQuery() {
+      if (
+        this.stories.length > 0 &&
+        Object.hasOwnProperty.call(this.$route.query, 'start')
+      ) {
+        const query = this.$route.query.start
+        const index = this.stories.findIndex((element) => element.id === query)
+        this.currentStory = index + 1
+      }
+    },
     dateInSeconds() {
       return Math.floor(Date.now() / 1000)
     },

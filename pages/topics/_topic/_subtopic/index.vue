@@ -14,11 +14,13 @@
         <ListItem
           v-for="lesson in lessons"
           :key="lesson.id"
-          :title="lesson.title"
-          :link="lesson.id"
+          :link="
+            `/topics/${$route.params.topic}/${$route.params.subtopic}/${lesson.id}`
+          "
+          :query="startWithStory(lesson.id)"
           :finished="finished(lesson.id)"
-        />
-        <!-- :finished="true" -->
+          >{{ lesson.title }}</ListItem
+        >
       </div>
       <div v-else>Loading</div>
     </div>
@@ -34,45 +36,42 @@ export default {
   },
   computed: {
     topicTitle() {
-      if (Object.keys(this.$store.state.topics).length !== 0) {
-        return this.$store.state.topics[this.$route.params.topic].title
+      const topicsStore = this.$store.state.topics
+      const topic = this.$getNested(topicsStore, this.$route.params.topic)
+
+      if (topic) {
+        return topic.title
       } else {
         return '...'
       }
     },
     title() {
-      if (Object.keys(this.$store.state.subtopics).length !== 0) {
-        return this.$store.state.subtopics[this.$route.params.topic][
-          this.$route.params.subtopic
-        ].title
+      const subtopicsStore = this.$store.state.subtopics
+      const subtopic = this.$getNested(
+        subtopicsStore,
+        this.$route.params.topic,
+        this.$route.params.subtopic
+      )
+
+      if (subtopic) {
+        return subtopic.title
       } else {
         return '...'
       }
     },
     lessons() {
-      if (
-        Object.prototype.hasOwnProperty.call(
-          this.$store.state.lessons,
-          this.$route.params.topic
-        )
-      ) {
-        if (
-          Object.prototype.hasOwnProperty.call(
-            this.$store.state.lessons[this.$route.params.topic],
-            this.$route.params.subtopic
-          )
-        ) {
-          const lessons = this.$store.state.lessons[this.$route.params.topic][
-            this.$route.params.subtopic
-          ]
-          const lessonsArray = Object.keys(lessons).map((key) => {
-            return { id: key, ...lessons[key] }
-          })
-          lessonsArray.sort((a, b) => (a.ordering > b.ordering ? 1 : -1))
-          return lessonsArray
-        } else {
-          return false
-        }
+      const lessonsStore = this.$store.state.lessons
+      const lessons = this.$getNested(
+        lessonsStore,
+        this.$route.params.topic,
+        this.$route.params.subtopic
+      )
+      if (lessons) {
+        const lessonsArray = Object.keys(lessons).map((key) => {
+          return { id: key, ...lessons[key] }
+        })
+        lessonsArray.sort((a, b) => (a.ordering > b.ordering ? 1 : -1))
+        return lessonsArray
       } else {
         return false
       }
@@ -80,18 +79,64 @@ export default {
   },
   methods: {
     finished(lessonId) {
-      const topic = this.$route.params.topic
-      const subtopic = this.$route.params.subtopic
-      const storiesInLesson = Object.keys(
-        this.$store.state.stories[topic][subtopic][lessonId]
+      const storiesInLesson = this.$getNested(
+        this.$store.state.stories,
+        this.$route.params.topic,
+        this.$route.params.subtopic,
+        lessonId
       )
-      const finishedStories = Object.keys(
-        this.$store.state.user.finishedStories
+      if (storiesInLesson) {
+        const storiesInLessonArray = Object.keys(storiesInLesson)
+        const finishedStories = Object.keys(
+          this.$store.state.user.finishedStories
+        )
+        const allStoriesFinished = storiesInLessonArray.every((val) =>
+          finishedStories.includes(val)
+        )
+        return allStoriesFinished
+      } else {
+        return false
+      }
+    },
+    startWithStory(lessonId) {
+      const storiesInLesson = this.$getNested(
+        this.$store.state.stories,
+        this.$route.params.topic,
+        this.$route.params.subtopic,
+        lessonId
       )
-      const allStoriesFinished = storiesInLesson.every((val) =>
-        finishedStories.includes(val)
-      )
-      return allStoriesFinished
+
+      if (storiesInLesson) {
+        const finishedStories = Object.keys(
+          this.$store.state.user.finishedStories
+        )
+        const storiesInLessonArray = []
+
+        Object.keys(storiesInLesson).forEach((key) => {
+          const storyObj = {}
+          storyObj.key = key
+          storyObj.ordering = storiesInLesson[key].ordering
+          storyObj.finished = finishedStories.includes(key)
+          storiesInLessonArray.push(storyObj)
+        })
+
+        storiesInLessonArray.sort((a, b) => (a.ordering > b.ordering ? 1 : -1))
+
+        const allFinished = storiesInLessonArray.every(
+          (element) => element.finished === true
+        )
+
+        if (allFinished) {
+          return null
+        } else {
+          const firstUnfinished = storiesInLessonArray.find(
+            (element) => element.finished === false
+          )
+          return { query: 'start', value: firstUnfinished.key }
+        }
+      } else {
+        return null
+      }
     }
   }
 }

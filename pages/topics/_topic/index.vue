@@ -11,10 +11,10 @@
         <ListItem
           v-for="subtopic in subtopics"
           :key="subtopic.id"
-          :title="subtopic.title"
-          :link="subtopic.id"
+          :link="`/topics/${$route.params.topic}/${subtopic.id}`"
           :finished="finished(subtopic.id)"
-        />
+          >{{ subtopic.title }}</ListItem
+        >
       </div>
       <div v-else>Loading</div>
     </div>
@@ -30,15 +30,23 @@ export default {
   },
   computed: {
     title() {
-      if (Object.keys(this.$store.state.topics).length !== 0) {
-        return this.$store.state.topics[this.$route.params.topic].title
+      const topicsStore = this.$store.state.topics
+      const topic = this.$getNested(topicsStore, this.$route.params.topic)
+
+      if (topic) {
+        return topic.title
       } else {
         return '...'
       }
     },
     subtopics() {
-      if (Object.keys(this.$store.state.subtopics).length !== 0) {
-        const subtopics = this.$store.state.subtopics[this.$route.params.topic]
+      const subtopicsStore = this.$store.state.subtopics
+      const subtopics = this.$getNested(
+        subtopicsStore,
+        this.$route.params.topic
+      )
+
+      if (subtopics) {
         const subtopicsArray = Object.keys(subtopics).map((key) => {
           return { id: key, ...subtopics[key] }
         })
@@ -51,21 +59,29 @@ export default {
   },
   methods: {
     finished(subtopicId) {
-      const topic = this.$route.params.topic
-      const storiesInSubtopic = this.$store.state.stories[topic][subtopicId]
-      const stories = []
-      Object.keys(storiesInSubtopic).forEach((lesson) => {
-        Object.keys(storiesInSubtopic[lesson]).forEach((story) => {
-          stories.push(story)
+      const storiesStore = this.$store.state.stories
+      const storiesInSubtopic = this.$getNested(
+        storiesStore,
+        this.$route.params.topic,
+        subtopicId
+      )
+      if (storiesInSubtopic) {
+        const stories = []
+        Object.keys(storiesInSubtopic).forEach((lesson) => {
+          Object.keys(storiesInSubtopic[lesson]).forEach((story) => {
+            stories.push(story)
+          })
         })
-      })
-      const finishedStories = Object.keys(
-        this.$store.state.user.finishedStories
-      )
-      const allStoriesFinished = stories.every((val) =>
-        finishedStories.includes(val)
-      )
-      return allStoriesFinished
+        const finishedStories = Object.keys(
+          this.$store.state.user.finishedStories
+        )
+        const allStoriesFinished = stories.every((val) =>
+          finishedStories.includes(val)
+        )
+        return allStoriesFinished
+      } else {
+        return false
+      }
     }
   }
 }
