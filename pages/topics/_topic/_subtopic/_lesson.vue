@@ -116,8 +116,7 @@ export default {
         date: this.dateInSeconds()
       })
     }
-  },
-  middleware: 'auth'
+  }
 }
 </script>
 

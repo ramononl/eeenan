@@ -93,8 +93,7 @@ export default {
       )
       return allStoriesFinished
     }
-  },
-  middleware: 'auth'
+  }
 }
 </script>
 

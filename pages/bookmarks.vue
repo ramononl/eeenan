@@ -36,7 +36,6 @@ export default {
         return false
       }
     }
-  },
-  middleware: 'auth'
+  }
 }
 </script>
