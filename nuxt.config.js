@@ -172,6 +172,7 @@ export default {
       /^(?!(|.*?:)cursor-move).+-move$/,
       /^nuxt-link(|-exact)-active$/,
       /^w-/,
+      /^text-transparent/,
       /^text-gray-/,
       /^bg-gray-/,
       /^text-orange-/,
@@ -242,8 +243,8 @@ export default {
       description: 'eeenan App',
       theme_color: '#00C58E',
       background_color: '#ffffff',
-      display: 'fullscreen'
-      // start_url: 'https://eeenan.ch/'
+      display: 'fullscreen',
+      start_url: 'https://eeenan.ch/'
     },
     meta: {
       viewport: 'width=device-width, initial-scale=1, user-scalable=no',
