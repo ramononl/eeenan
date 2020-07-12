@@ -170,7 +170,12 @@ export default {
     whitelistPatterns: [
       /-(leave|enter|appear)(|-(to|from|active))$/,
       /^(?!(|.*?:)cursor-move).+-move$/,
-      /^nuxt-link(|-exact)-active$/
+      /^nuxt-link(|-exact)-active$/,
+      /^w-/,
+      /^text-gray-/,
+      /^bg-gray-/,
+      /^text-orange-/,
+      /^bg-orange-/
     ]
   },
   /*
@@ -180,7 +185,8 @@ export default {
     { src: '~/plugins/globalComponents.js' },
     { src: '~/plugins/persistedState.js', mode: 'client' },
     { src: '~/plugins/fetchData.js', mode: 'client' },
-    { src: '~/plugins/pwaBanner.js', mode: 'client' }
+    { src: '~/plugins/pwaBanner.js', mode: 'client' },
+    { src: '~/plugins/checkAuth.js', mode: 'client' }
   ],
   /*
    ** Nuxt.js dev-modules
