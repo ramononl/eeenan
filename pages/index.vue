@@ -64,7 +64,7 @@
     <div v-if="showInstallMessage" class="fixed inset-x-0 bottom-0 p-4">
       <div class="p-3 bg-gray-600 rounded-md shadow-lg">
         <div class="flex items-center justify-between space-x-3">
-          <div class="flex flex-shrink-0 p-2 bg-gray-800 rounded-md">
+          <div class="flex-shrink-0 p-2 leading-none bg-gray-800 rounded-md">
             <AppIcon :size="6" icon="Download" color="gray-300" />
           </div>
           <p class="text-sm font-medium leading-tight text-white">
