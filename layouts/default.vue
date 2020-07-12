@@ -1,9 +1,11 @@
 <template>
-  <div>
-    <nuxt />
-    <NavTabBar />
-    <ModalContainer />
-  </div>
+  <client-only>
+    <div>
+      <nuxt />
+      <NavTabBar />
+      <ModalContainer />
+    </div>
+  </client-only>
 </template>
 
 <script>
@@ -16,11 +18,13 @@ export default {
     ModalContainer
   },
   mounted() {
-    if (Object.keys(this.$store.state.user.finishedStories).length === 0) {
-      this.$store.dispatch('user/setFinishedStories')
-    }
-    if (Object.keys(this.$store.state.user.bookmarks).length === 0) {
-      this.$store.dispatch('user/setBookmarks')
+    if (this.$store.state.auth.user) {
+      if (Object.keys(this.$store.state.user.finishedStories).length === 0) {
+        this.$store.dispatch('user/setFinishedStories')
+      }
+      if (Object.keys(this.$store.state.user.bookmarks).length === 0) {
+        this.$store.dispatch('user/setBookmarks')
+      }
     }
   }
 }
