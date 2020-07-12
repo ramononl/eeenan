@@ -94,21 +94,21 @@
 <script>
 export default {
   props: {
-    closeLink: {
-      type: String,
-      default: '/'
-    },
     storiesData: {
       type: Object,
       default() {
         return {
-          subtopic: 'Subtopic',
           lesson: 'Lesson',
           numberOfStories: 2,
           currentStory: 1,
           currentStoryId: null
         }
       }
+    }
+  },
+  data() {
+    return {
+      from: null
     }
   },
   computed: {
@@ -146,10 +146,10 @@ export default {
     },
     finishLesson() {
       this.$emit('finish-lesson')
-      this.$router.push(this.closeLink)
+      this.$router.go(-1)
     },
     closeStories() {
-      this.$router.push(this.closeLink)
+      this.$router.go(-1)
     }
   }
 }
