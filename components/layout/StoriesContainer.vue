@@ -33,8 +33,6 @@
           </button>
         </div>
         <div class="flex items-center justify-center flex-1 text-gray-100">
-          <span>{{ storiesData.subtopic }}</span>
-          <AppIcon :size="5" icon="ChevronRight" color="gray-100" />
           <span>{{ storiesData.lesson }}</span>
         </div>
         <div class="flex-1 text-right">
