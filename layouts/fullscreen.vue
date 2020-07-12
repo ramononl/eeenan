@@ -1,7 +1,9 @@
 <template>
-  <div class="overflow-hidden custom-h-screen">
-    <nuxt />
-  </div>
+  <client-only>
+    <div class="overflow-hidden custom-h-screen">
+      <nuxt />
+    </div>
+  </client-only>
 </template>
 
 <script>
