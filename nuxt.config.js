@@ -187,7 +187,8 @@ export default {
     { src: '~/plugins/persistedState.js', mode: 'client' },
     { src: '~/plugins/fetchData.js', mode: 'client' },
     { src: '~/plugins/pwaBanner.js', mode: 'client' },
-    { src: '~/plugins/checkAuth.js', mode: 'client' }
+    { src: '~/plugins/checkAuth.js', mode: 'client' },
+    { src: '~/plugins/utils.js', mode: 'client' }
   ],
   /*
    ** Nuxt.js dev-modules
