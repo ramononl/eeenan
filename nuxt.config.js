@@ -188,7 +188,8 @@ export default {
     { src: '~/plugins/fetchData.js', mode: 'client' },
     { src: '~/plugins/pwaBanner.js', mode: 'client' },
     { src: '~/plugins/checkAuth.js', mode: 'client' },
-    { src: '~/plugins/utils.js', mode: 'client' }
+    { src: '~/plugins/utils.js', mode: 'client' },
+    { src: '~/plugins/vueTrendChart.js', mode: 'client' }
   ],
   /*
    ** Nuxt.js dev-modules
@@ -198,9 +199,15 @@ export default {
     '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
-    // Doc: https://github.com/nuxt-community/color-mode-module
-    '@nuxtjs/color-mode'
+    // Doc: https://github.com/nuxt-community/date-fns-module
+    '@nuxtjs/date-fns'
   ],
+  /*
+   ** date-fns module options
+   */
+  dateFns: {
+    defaultLocale: 'de'
+  },
   /*
    ** Nuxt.js modules
    */
