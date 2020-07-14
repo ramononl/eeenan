@@ -1,28 +1,45 @@
 <template>
   <PageContainer :title="title">
-    <div v-if="bookmarksSorted">
-      <div v-for="(topic, name) in bookmarksSorted" :key="name">
-        <div class="px-4 uppercase">{{ name }}</div>
+    <div v-if="bookmarksSorted.length > 0" class="space-y-6">
+      <div v-for="topic in bookmarksSorted" :key="topic.id">
+        <div
+          class="px-4 text-sm font-semibold tracking-wide text-gray-700 uppercase"
+        >
+          {{ topic.title }}
+        </div>
         <div
           class="mt-1 border-t border-b border-gray-300 divide-y divide-gray-300"
         >
-          <ListItem
-            v-for="story in topic"
-            :key="story.id"
-            :link="`/topics/${name}/${story.subtopic}/${story.lesson}`"
-            :query="startWithStory(story.id)"
+          <div
+            v-for="subtopic in topic.subtopics"
+            :key="subtopic.id"
+            class="divide-y divide-gray-300"
           >
-            <div class="flex items-center">
-              <span>{{ story.subtopic }}</span>
-              <span class="px-2 font-bold text-gray-400">/</span>
-              <span>{{ story.lesson }}</span>
-              <div
-                class="flex items-center justify-center w-6 h-6 ml-2 text-base font-semibold text-gray-100 bg-gray-700 rounded-full"
+            <div
+              v-for="lesson in subtopic.lessons"
+              :key="lesson.id"
+              class="divide-y divide-gray-300"
+            >
+              <ListItem
+                v-for="story in lesson.stories"
+                :key="story.id"
+                :link="`/topics/${topic.id}/${subtopic.id}/${lesson.id}`"
+                :query="startWithStory(story.id)"
+                :finished="true"
               >
-                <span>{{ story.ordering }}</span>
-              </div>
+                <div class="flex items-center">
+                  <span>{{ subtopic.title }}</span>
+                  <span class="px-2 font-bold text-gray-400">/</span>
+                  <span>{{ lesson.title }}</span>
+                  <div
+                    class="flex items-center justify-center w-6 h-6 ml-2 text-sm font-semibold leading-none text-orange-500 border-2 border-orange-500 rounded-md"
+                  >
+                    <span>{{ story.ordering }}</span>
+                  </div>
+                </div>
+              </ListItem>
             </div>
-          </ListItem>
+          </div>
         </div>
       </div>
     </div>
@@ -44,8 +61,11 @@ export default {
   },
   computed: {
     bookmarksSorted() {
+      const topics = this.$store.state.topics
+      const subtopics = this.$store.state.subtopics
+      const lessons = this.$store.state.lessons
       const bookmarks = this.$store.state.user.bookmarks
-      const bookmarksSorted = {}
+      const bookmarksSorted = []
       const storiesStore = JSON.parse(JSON.stringify(this.$store.state.stories))
       if (Object.keys(storiesStore).length > 0) {
         Object.keys(storiesStore).forEach((topic) => {
@@ -54,13 +74,51 @@ export default {
               Object.keys(storiesStore[topic][subtopic][lesson]).forEach(
                 function(story) {
                   if (bookmarks.includes(story)) {
-                    if (!Object.hasOwnProperty.call(bookmarksSorted, topic)) {
-                      bookmarksSorted[topic] = []
+                    let topicIndex = bookmarksSorted.findIndex(
+                      (el) => el.id === topic
+                    )
+                    if (topicIndex === -1) {
+                      topicIndex =
+                        bookmarksSorted.push({
+                          id: topic,
+                          title: topics[topic].title,
+                          ordering: topics[topic].ordering,
+                          subtopics: []
+                        }) - 1
                     }
-                    bookmarksSorted[topic].push({
+
+                    let subtopicIndex = bookmarksSorted[
+                      topicIndex
+                    ].subtopics.findIndex((el) => el.id === subtopic)
+                    if (subtopicIndex === -1) {
+                      subtopicIndex =
+                        bookmarksSorted[topicIndex].subtopics.push({
+                          id: subtopic,
+                          title: subtopics[topic][subtopic].title,
+                          ordering: subtopics[topic][subtopic].ordering,
+                          lessons: []
+                        }) - 1
+                    }
+
+                    let lessonIndex = bookmarksSorted[topicIndex].subtopics[
+                      subtopicIndex
+                    ].lessons.findIndex((el) => el.id === lesson)
+                    if (lessonIndex === -1) {
+                      lessonIndex =
+                        bookmarksSorted[topicIndex].subtopics[
+                          subtopicIndex
+                        ].lessons.push({
+                          id: lesson,
+                          title: lessons[topic][subtopic][lesson].title,
+                          ordering: lessons[topic][subtopic][lesson].ordering,
+                          stories: []
+                        }) - 1
+                    }
+
+                    bookmarksSorted[topicIndex].subtopics[
+                      subtopicIndex
+                    ].lessons[lessonIndex].stories.push({
                       id: story,
-                      subtopic,
-                      lesson,
                       ordering:
                         storiesStore[topic][subtopic][lesson][story].ordering
                     })
@@ -70,9 +128,21 @@ export default {
             })
           })
         })
+
+        bookmarksSorted.sort((a, b) => (a.ordering > b.ordering ? 1 : -1))
+        bookmarksSorted.forEach((topic) => {
+          topic.subtopics.sort((a, b) => (a.ordering > b.ordering ? 1 : -1))
+          topic.subtopics.forEach((subtopic) => {
+            subtopic.lessons.sort((a, b) => (a.ordering > b.ordering ? 1 : -1))
+            subtopic.lessons.forEach((lesson) => {
+              lesson.stories.sort((a, b) => (a.ordering > b.ordering ? 1 : -1))
+            })
+          })
+        })
+
         return bookmarksSorted
       } else {
-        return false
+        return []
       }
     }
   },
