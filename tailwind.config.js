@@ -45,6 +45,9 @@ module.exports = {
       stroke: {
         gray: {
           ...defaultTheme.colors.gray
+        },
+        orange: {
+          ...defaultTheme.colors.orange
         }
       }
     }
