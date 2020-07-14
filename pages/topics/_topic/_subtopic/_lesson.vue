@@ -10,6 +10,7 @@
       <p>{{ currentStoryData }}</p>
     </div>
   </StoriesContainer>
+  <MissingContent v-else />
 </template>
 
 <script>
@@ -91,26 +92,32 @@ export default {
       ) {
         const query = this.$route.query.start
         const index = this.stories.findIndex((element) => element.id === query)
-        this.currentStory = index + 1
+        if (index !== -1) {
+          this.currentStory = index + 1
+        }
       }
     },
     dateInSeconds() {
       return Math.floor(Date.now() / 1000)
     },
     nextStory() {
-      this.$store.dispatch('user/addFinishedStory', {
-        key: this.currentStoryData.id,
-        date: this.dateInSeconds()
-      })
+      this.dispatchFinishedStory()
       this.currentStory++
     },
     prevStory() {
       this.currentStory--
     },
     finishLesson() {
+      this.dispatchFinishedStory()
+    },
+    dispatchFinishedStory() {
       this.$store.dispatch('user/addFinishedStory', {
         key: this.currentStoryData.id,
-        date: this.dateInSeconds()
+        payload: {
+          timestamp: {
+            seconds: this.dateInSeconds()
+          }
+        }
       })
     }
   }

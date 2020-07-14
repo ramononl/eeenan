@@ -16,8 +16,8 @@ export const mutations = {
   setFinishedStories(state, payload) {
     state.finishedStories = payload
   },
-  addFinishedStory(state, { key, timestamp }) {
-    Vue.set(state.finishedStories, key, timestamp)
+  addFinishedStory(state, { key, payload }) {
+    Vue.set(state.finishedStories, key, payload)
   },
   setBookmarks(state, payload) {
     state.bookmarks = payload
@@ -55,7 +55,7 @@ export const actions = {
         commit('setFinishedStories', finishedStories)
       })
   },
-  addFinishedStory({ commit, rootState }, { key, date }) {
+  addFinishedStory({ commit, rootState }, { key, payload }) {
     const user = rootState.auth.user
     const field = 'finishedStories.' + key
     this.$fireStore
@@ -66,7 +66,7 @@ export const actions = {
           timestamp: this.$fireStoreObj.FieldValue.serverTimestamp()
         }
       })
-    commit('addFinishedStory', { key, timestamp: { seconds: date } })
+    commit('addFinishedStory', { key, payload })
   },
   setBookmarks({ commit, rootState }) {
     const user = rootState.auth.user
