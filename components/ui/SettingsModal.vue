@@ -22,7 +22,8 @@
           <SettingsItem @click.native="goToSecondary" />
         </div>
         <p @click="logout">Abmelden</p>
-        <p @click="resetFinishedStories">Nutzerdaten zurücksetzen</p>
+        <p @click="resetBookmarks">Merkliste zurücksetzen</p>
+        <p @click="resetFinishedStories">Aktivitäten zurücksetzen</p>
         <div class="flex items-center justify-center mt-8 space-x-1">
           <AppIcon :size="8" icon="Logo" color="gray-400" />
           <span class="text-xl font-black text-gray-400">eeenan</span>
@@ -69,6 +70,8 @@ export default {
     },
     resetFinishedStories() {
       this.$store.dispatch('user/resetFinishedStories')
+    },
+    resetBookmarks() {
       this.$store.dispatch('user/resetBookmarks')
     },
     async logout() {
