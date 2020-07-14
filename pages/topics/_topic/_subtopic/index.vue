@@ -6,24 +6,22 @@
       backLink: `/topics/${this.$route.params.topic}`
     }"
   >
-    <div>
-      <div
-        v-if="lessons"
-        class="border-t border-b border-gray-300 divide-y divide-gray-300"
+    <div
+      v-if="lessons"
+      class="border-t border-b border-gray-300 divide-y divide-gray-300"
+    >
+      <ListItem
+        v-for="lesson in lessons"
+        :key="lesson.id"
+        :link="
+          `/topics/${$route.params.topic}/${$route.params.subtopic}/${lesson.id}`
+        "
+        :query="startWithStory(lesson.id)"
+        :finished="finished(lesson.id)"
+        >{{ lesson.title }}</ListItem
       >
-        <ListItem
-          v-for="lesson in lessons"
-          :key="lesson.id"
-          :link="
-            `/topics/${$route.params.topic}/${$route.params.subtopic}/${lesson.id}`
-          "
-          :query="startWithStory(lesson.id)"
-          :finished="finished(lesson.id)"
-          >{{ lesson.title }}</ListItem
-        >
-      </div>
-      <div v-else>Loading</div>
     </div>
+    <MissingContent v-else />
   </PageContainer>
 </template>
 
