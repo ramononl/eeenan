@@ -1,11 +1,12 @@
 <template>
   <PageContainer :title="title">
-    <div v-if="topics" class="grid grid-cols-2 gap-4 px-4">
+    <div v-if="topics" class="px-4 space-y-4">
       <TopicItem
         v-for="topic in topics"
         :key="topic.id"
         :title="topic.title"
         :link="topic.id"
+        :img="topic.id"
       />
     </div>
     <div v-else>

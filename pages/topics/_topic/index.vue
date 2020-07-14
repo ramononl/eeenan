@@ -3,21 +3,22 @@
     :title="title"
     :back-button="{ backText: 'Themen', backLink: '/topics' }"
   >
-    <div>
-      <div
-        v-if="subtopics"
-        class="border-t border-b border-gray-300 divide-y divide-gray-300"
-      >
-        <ListItem
-          v-for="subtopic in subtopics"
-          :key="subtopic.id"
-          :link="`/topics/${$route.params.topic}/${subtopic.id}`"
-          :finished="finished(subtopic.id)"
-          >{{ subtopic.title }}</ListItem
-        >
+    <div
+      v-if="subtopics"
+      class="border-t border-b border-gray-300 divide-y divide-gray-300"
+    >
+      <div class="bg-gray-500">
+        <img :src="imagePath" class="mb-6 -mt-16 opacity-75" />
       </div>
-      <div v-else>Loading</div>
+      <ListItem
+        v-for="subtopic in subtopics"
+        :key="subtopic.id"
+        :link="`/topics/${$route.params.topic}/${subtopic.id}`"
+        :finished="finished(subtopic.id)"
+        >{{ subtopic.title }}</ListItem
+      >
     </div>
+    <MissingContent v-else />
   </PageContainer>
 </template>
 
@@ -55,6 +56,9 @@ export default {
       } else {
         return false
       }
+    },
+    imagePath() {
+      return require(`~/assets/images/topics/${this.$route.params.topic}.png`)
     }
   },
   methods: {
