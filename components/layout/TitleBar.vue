@@ -9,11 +9,11 @@
         @click="$router.push(backButton.backLink)"
       >
         <AppIcon :size="8" icon="ChevronLeft" />
-        <span>{{ backButton.backText }}</span>
+        <span class="leading-tight text-left">{{ backButton.backText }}</span>
       </button>
     </div>
     <h1
-      class="font-bold leading-none"
+      class="leading-none"
       :class="[!backButton ? 'text-3xl pl-2' : 'flex-1 text-center text-xl']"
     >
       {{ title }}
