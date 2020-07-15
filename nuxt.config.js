@@ -1,5 +1,6 @@
 export default {
-  mode: 'universal',
+  mode: 'spa',
+  target: 'static',
   /*
    ** Headers of the page
    */
@@ -143,7 +144,7 @@ export default {
     ],
     bodyAttrs: {
       class:
-        'antialiased text-gray-900 bg-gray-100 max-h-screen h-screen w-screen overflow-hidden select-none'
+        'antialiased text-gray-900 bg-white max-h-screen h-screen w-screen overflow-hidden select-none'
     }
   },
   /*
@@ -176,7 +177,12 @@ export default {
       /^text-gray-/,
       /^bg-gray-/,
       /^text-orange-/,
-      /^bg-orange-/
+      /^bg-orange-/,
+      /^bg-red-400/,
+      /^bg-blue-400/,
+      /^bg-yellow-400/,
+      /^bg-purple-400/,
+      /^bg-green-400/
     ]
   },
   /*
@@ -187,7 +193,6 @@ export default {
     { src: '~/plugins/persistedState.js', mode: 'client' },
     { src: '~/plugins/fetchData.js', mode: 'client' },
     { src: '~/plugins/pwaBanner.js', mode: 'client' },
-    { src: '~/plugins/checkAuth.js', mode: 'client' },
     { src: '~/plugins/utils.js', mode: 'client' },
     { src: '~/plugins/vueTrendChart.js', mode: 'client' }
   ],
@@ -235,6 +240,12 @@ export default {
     ]
   ],
   /*
+   ** Router Options
+   */
+  router: {
+    middleware: ['checkAuth']
+  },
+  /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
@@ -249,7 +260,6 @@ export default {
       short_name: 'eeenan',
       lang: 'de',
       description: 'eeenan App',
-      theme_color: '#00C58E',
       background_color: '#ffffff',
       display: 'fullscreen',
       start_url: 'https://eeenan.ch/'
