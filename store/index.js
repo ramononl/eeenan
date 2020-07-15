@@ -4,7 +4,8 @@ const getDefaultState = () => {
     subtopics: {},
     lessons: {},
     stories: {},
-    showInstallMessage: false
+    showInstallMessage: false,
+    classes: {}
   }
 }
 
@@ -22,6 +23,12 @@ export const mutations = {
   },
   setStories(state, payload) {
     state.stories = payload
+  },
+  setClasses(state, payload) {
+    state.classes = payload
+  },
+  setTodos(state, payload) {
+    state.todos = payload
   },
   showInstallMessage(state, payload) {
     state.showInstallMessage = payload
@@ -89,6 +96,20 @@ export const actions = {
           stories[id] = data
         })
         commit('setStories', stories)
+      })
+  },
+  fetchClasses({ commit }) {
+    const classes = {}
+    this.$fireStore
+      .collection('classes')
+      .get()
+      .then((res) => {
+        res.docs.map((doc) => {
+          const id = doc.id
+          const data = doc.data()
+          classes[id] = data
+        })
+        commit('setClasses', classes)
       })
   }
 }

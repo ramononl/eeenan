@@ -19,7 +19,10 @@ export const actions = {
     await dispatch('user/resetState', null, { root: true })
     commit('setUser', null)
   },
-  async register({ commit }, { firstName, lastName, email, password }) {
+  async register(
+    { commit },
+    { firstName, lastName, immClass, email, password }
+  ) {
     try {
       await this.$fireAuth.createUserWithEmailAndPassword(email, password)
       const user = this.$fireAuth.currentUser
@@ -32,9 +35,11 @@ export const actions = {
         .set({
           firstName,
           lastName,
+          immClass,
           email,
           finishedStories: {},
-          bookmarks: []
+          bookmarks: [],
+          doneTodos: []
         })
       await user.sendEmailVerification()
       commit('setMessage', null)

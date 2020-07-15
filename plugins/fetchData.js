@@ -11,4 +11,7 @@ export default ({ store }) => {
   if (Object.keys(store.state.stories).length === 0) {
     store.dispatch('fetchStories')
   }
+  if (Object.keys(store.state.classes).length === 0) {
+    store.dispatch('fetchClasses')
+  }
 }

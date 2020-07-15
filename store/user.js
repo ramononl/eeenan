@@ -3,7 +3,8 @@ import Vue from 'vue'
 const getDefaultState = () => {
   return {
     finishedStories: {},
-    bookmarks: []
+    bookmarks: [],
+    immClass: null
   }
 }
 
@@ -21,6 +22,9 @@ export const mutations = {
   },
   setBookmarks(state, payload) {
     state.bookmarks = payload
+  },
+  setClass(state, payload) {
+    state.immClass = payload
   },
   addBookmark(state, payload) {
     state.bookmarks.push(payload)
@@ -77,6 +81,17 @@ export const actions = {
       .then((doc) => {
         const bookmarks = doc.data().bookmarks
         commit('setBookmarks', bookmarks)
+      })
+  },
+  setClass({ commit, rootState }) {
+    const user = rootState.auth.user
+    this.$fireStore
+      .collection('users')
+      .doc(user)
+      .get()
+      .then((doc) => {
+        const immClass = doc.data().immClass
+        commit('setClass', immClass)
       })
   },
   addBookmark({ commit, rootState }, key) {
