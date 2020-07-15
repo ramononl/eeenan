@@ -173,6 +173,7 @@ export default {
       /^(?!(|.*?:)cursor-move).+-move$/,
       /^nuxt-link(|-exact)-active$/,
       /^w-/,
+      /^h-/,
       /^text-transparent/,
       /^text-gray-/,
       /^bg-gray-/,
