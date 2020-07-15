@@ -1,10 +1,10 @@
 <template>
   <nav
-    class="fixed inset-x-0 bottom-0 z-10 flex items-stretch w-full h-24 pb-4 bg-white shadow-top"
+    class="fixed inset-x-0 bottom-0 z-10 flex items-stretch w-full h-24 pb-4 bg-white border-t"
   >
     <nuxt-link
       to="/start"
-      class="flex items-center justify-center flex-1 text-xs font-semibold"
+      class="flex items-center justify-center flex-1 text-xs font-semibold text-gray-700"
       ><span class="flex flex-col items-center"
         ><svg
           fill="none"
@@ -23,7 +23,7 @@
     >
     <nuxt-link
       to="/topics"
-      class="flex items-center justify-center flex-1 text-xs font-semibold"
+      class="flex items-center justify-center flex-1 text-xs font-semibold text-gray-700"
       ><span class="flex flex-col items-center"
         ><svg
           fill="none"
@@ -42,7 +42,7 @@
     >
     <nuxt-link
       to="/bookmarks"
-      class="flex items-center justify-center flex-1 text-xs font-semibold"
+      class="flex items-center justify-center flex-1 text-xs font-semibold text-gray-700"
       ><span class="flex flex-col items-center"
         ><svg
           fill="none"
@@ -61,7 +61,7 @@
     >
     <nuxt-link
       to="/activities"
-      class="flex items-center justify-center flex-1 text-xs font-semibold"
+      class="flex items-center justify-center flex-1 text-xs font-semibold text-gray-700"
       ><span class="flex flex-col items-center"
         ><svg
           fill="none"
