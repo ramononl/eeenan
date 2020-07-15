@@ -38,8 +38,7 @@ export const actions = {
           immClass,
           email,
           finishedStories: {},
-          bookmarks: [],
-          doneTodos: []
+          bookmarks: []
         })
       await user.sendEmailVerification()
       commit('setMessage', null)
