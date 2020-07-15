@@ -2,7 +2,7 @@
   <nuxt-link
     :to="link"
     append
-    class="block overflow-hidden rounded-md shadow-md"
+    class="block overflow-hidden rounded-lg shadow-md"
   >
     <div class="relative bg-gray-500">
       <img :src="imagePath" class="opacity-75" />
