@@ -12,10 +12,10 @@ module.exports = {
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans]
       },
-      boxShadow: {
-        top: '0 -4px 6px 0 rgba(0, 0, 0, .1), 0 -2px 4px 0 rgba(0, 0, 0, .05)'
-      },
       inset: {
+        ...defaultTheme.spacing
+      },
+      minHeight: {
         ...defaultTheme.spacing
       },
       colors: {
@@ -54,7 +54,8 @@ module.exports = {
   },
   variants: {
     backgroundColor: ['responsive', 'hover', 'focus', 'disabled'],
-    cursor: ['responsive', 'disabled']
+    cursor: ['responsive', 'disabled'],
+    padding: ['responsive', 'last']
   },
   plugins: [require('@tailwindcss/ui')]
 }
