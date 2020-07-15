@@ -25,6 +25,9 @@ export default {
       if (Object.keys(this.$store.state.user.bookmarks).length === 0) {
         this.$store.dispatch('user/setBookmarks')
       }
+      if (!this.$store.state.user.immClass) {
+        this.$store.dispatch('user/setClass')
+      }
     }
   }
 }
