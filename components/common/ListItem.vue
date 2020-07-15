@@ -1,23 +1,6 @@
 <template>
-  <nuxt-link
-    :to="nuxtLink"
-    class="flex items-center justify-between px-4 py-3 space-x-2 bg-white"
-  >
-    <div class="flex items-center space-x-2">
-      <AppIcon
-        v-if="finished"
-        :size="10"
-        icon="CheckCircle"
-        color="orange-500"
-      />
-      <AppIcon v-else :size="10" icon="Play" color="gray-300" />
-      <p class="text-lg">
-        <slot />
-      </p>
-    </div>
-    <div>
-      <AppIcon :size="8" icon="ChevronRight" />
-    </div>
+  <nuxt-link :to="nuxtLink" class="block px-4 py-3 bg-white">
+    <slot />
   </nuxt-link>
 </template>
 
@@ -31,10 +14,6 @@ export default {
     link: {
       type: String,
       default: '/'
-    },
-    finished: {
-      type: Boolean,
-      default: false
     },
     query: {
       type: Object,
