@@ -1,7 +1,7 @@
 <template>
-  <PageContainer :title="title">
-    <div v-if="finishedStories" class="px-4 space-y-6">
-      <div class="p-4 space-y-4 bg-white rounded-md shadow-md">
+  <PageContainer :title="title" :padding-x="true">
+    <div v-if="finishedStories" class="space-y-6">
+      <ContentCard>
         <div>
           <h2>Letzte 7 Tage</h2>
           <p class="text-sm text-gray-700">
@@ -9,7 +9,7 @@
             Lern-Stories)
           </p>
         </div>
-        <div class="h-48">
+        <div class="h-48 mt-4">
           <TrendChart
             :datasets="[
               {
@@ -31,11 +31,55 @@
           >
           </TrendChart>
         </div>
-      </div>
-      <div class="p-4 space-y-4 bg-white rounded-md shadow-md">
-        <h2>Total angesehene Stories</h2>
-        <p>{{ finishedStories }}</p>
-      </div>
+      </ContentCard>
+      <ContentCard>
+        <div class="flex items-center justify-between ">
+          <div>
+            <h2>Total</h2>
+            <p class="text-sm text-gray-700">
+              Angesehene Stories
+            </p>
+          </div>
+          <div>
+            <span class="text-5xl font-semibold leading-none text-gray-700">{{
+              numberOfFinishedStories
+            }}</span>
+          </div>
+        </div>
+      </ContentCard>
+      <ContentCard>
+        <div>
+          <h2>Aktivität nach Thema</h2>
+          <p class="text-sm text-gray-700">
+            Folgende Anzahl an Stories hast du dir in dem jeweiligen
+            Themenbereich angesehen
+          </p>
+        </div>
+        <div class="pt-4 divide-y">
+          <div
+            v-for="topic in finishedStoriesSorted"
+            :key="topic.id"
+            class="flex items-center justify-between py-2 last:pb-0"
+          >
+            <div class="flex items-center space-x-2">
+              <div
+                class="flex-none w-6 h-6 rounded-lg"
+                :class="`bg-${topic.color}-400`"
+              ></div>
+              <div>
+                <span class="font-semibold leading-tight">{{
+                  topic.title
+                }}</span>
+              </div>
+            </div>
+            <div>
+              <span class="font-semibold text-gray-600">{{
+                topic.stories
+              }}</span>
+            </div>
+          </div>
+        </div>
+      </ContentCard>
     </div>
     <MissingContent v-else />
     <svg
@@ -67,6 +111,14 @@ export default {
         return finishedStories
       } else {
         return false
+      }
+    },
+    numberOfFinishedStories() {
+      const numberOfFinishedStories = Object.keys(this.finishedStories).length
+      if (numberOfFinishedStories !== 0) {
+        return numberOfFinishedStories
+      } else {
+        return 0
       }
     },
     finishedStoriesWeek() {
@@ -115,6 +167,57 @@ export default {
         data: weekdayCounter,
         xLabels: weekdays
       }
+    },
+    finishedStoriesSorted() {
+      const topics = this.$store.state.topics
+      const finishedStories = Object.keys(
+        this.$store.state.user.finishedStories
+      )
+      const finishedStoriesSorted = []
+      const storiesStore = JSON.parse(JSON.stringify(this.$store.state.stories))
+      if (Object.keys(storiesStore).length > 0) {
+        Object.keys(storiesStore).forEach((topic) => {
+          Object.keys(storiesStore[topic]).forEach((subtopic) => {
+            Object.keys(storiesStore[topic][subtopic]).forEach((lesson) => {
+              Object.keys(storiesStore[topic][subtopic][lesson]).forEach(
+                function(story) {
+                  if (finishedStories.includes(story)) {
+                    let topicIndex = finishedStoriesSorted.findIndex(
+                      (el) => el.id === topic
+                    )
+                    if (topicIndex === -1) {
+                      topicIndex =
+                        finishedStoriesSorted.push({
+                          id: topic,
+                          title: topics[topic].title,
+                          ordering: topics[topic].ordering,
+                          color: topics[topic].color,
+                          stories: []
+                        }) - 1
+                    }
+
+                    finishedStoriesSorted[topicIndex].stories.push({
+                      id: story
+                    })
+                  }
+                }
+              )
+            })
+          })
+        })
+
+        finishedStoriesSorted.sort((a, b) => (a.ordering > b.ordering ? 1 : -1))
+
+        finishedStoriesSorted.forEach((topic, index) => {
+          const numberOfFinishedStoriesInTopic =
+            finishedStoriesSorted[index].stories.length
+          finishedStoriesSorted[index].stories = numberOfFinishedStoriesInTopic
+        })
+
+        return finishedStoriesSorted
+      } else {
+        return false
+      }
     }
   }
 }
@@ -134,6 +237,10 @@ export default {
 }
 
 .labels .label line {
-  display: none;
+  @apply hidden;
+}
+
+.grid line {
+  @apply stroke-gray-300;
 }
 </style>
