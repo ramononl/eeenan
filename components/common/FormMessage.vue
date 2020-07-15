@@ -4,7 +4,7 @@
     :class="[
       message.success ? 'text-green-800 bg-green-50' : 'text-red-800 bg-red-50'
     ]"
-    class="flex items-center px-3 py-2 mt-4 space-x-2 text-sm font-medium leading-tight rounded-md"
+    class="flex items-center px-3 py-2 mt-4 space-x-2 text-sm font-medium leading-tight rounded-lg"
   >
     <AppIcon
       v-if="message.success"

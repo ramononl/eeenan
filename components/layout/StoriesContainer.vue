@@ -62,7 +62,7 @@
       </transition>
     </div>
     <div
-      class="flex items-center mt-4 overflow-hidden bg-orange-500 divide-x divide-orange-100 rounded-md h-14"
+      class="flex items-center mt-4 overflow-hidden bg-orange-500 divide-x divide-orange-100 rounded-lg h-14"
     >
       <button
         v-if="storiesData.currentStory !== 1"

@@ -3,7 +3,7 @@
     <input
       id="search"
       type="search"
-      class="block w-full px-3 py-4 text-base leading-6 appearance-none rounded-b-md focus:outline-none"
+      class="block w-full px-3 py-4 text-base leading-6 rounded-b-lg appearance-none focus:outline-none"
       placeholder="Suchen..."
     />
   </div>

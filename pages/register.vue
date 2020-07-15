@@ -20,7 +20,7 @@
         </p>
       </div>
       <form class="mt-8 mb-4" @submit.prevent="register">
-        <div class="rounded-md shadow-sm">
+        <div class="rounded-lg shadow-sm">
           <div>
             <input
               v-model="form.firstName"
@@ -28,7 +28,7 @@
               name="firstName"
               type="text"
               required
-              class="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:outline-none focus:shadow-outline-orange focus:border-orange-300 focus:z-10 sm:text-sm sm:leading-5"
+              class="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none rounded-t-lg appearance-none focus:outline-none focus:shadow-outline-orange focus:border-orange-300 focus:z-10 sm:text-sm sm:leading-5"
               placeholder="Vorname"
             />
           </div>
@@ -42,6 +42,23 @@
               class="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none focus:outline-none focus:shadow-outline-orange focus:border-orange-300 focus:z-10 sm:text-sm sm:leading-5"
               placeholder="Nachname"
             />
+          </div>
+          <div class="-mt-px">
+            <select
+              v-model="form.immClass"
+              aria-label="Klasse"
+              name="immClass"
+              required
+              class="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none focus:outline-none focus:shadow-outline-orange focus:border-orange-300 focus:z-10 sm:text-sm sm:leading-5 form-select"
+            >
+              <option value="" disabled>Klasse</option>
+              <option
+                v-for="(immClass, key) in immClasses"
+                :key="key"
+                :value="key"
+                >{{ immClass.name }}</option
+              >
+            </select>
           </div>
           <div class="-mt-px">
             <input
@@ -61,7 +78,7 @@
               name="password"
               type="password"
               required
-              class="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-b-md focus:outline-none focus:shadow-outline-orange focus:border-orange-300 focus:z-10 sm:text-sm sm:leading-5"
+              class="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none rounded-b-lg appearance-none focus:outline-none focus:shadow-outline-orange focus:border-orange-300 focus:z-10 sm:text-sm sm:leading-5"
               placeholder="Passwort"
             />
           </div>
@@ -95,6 +112,7 @@ export default {
       form: {
         firstName: null,
         lastName: null,
+        immClass: '',
         email: null,
         password: null
       }
@@ -132,6 +150,9 @@ export default {
       } else {
         return null
       }
+    },
+    immClasses() {
+      return this.$store.state.classes
     }
   },
   beforeDestroy() {

@@ -14,7 +14,7 @@
         </p>
       </div>
       <form class="mt-8 mb-4" @submit.prevent="resetPassword">
-        <div class="rounded-md shadow-sm">
+        <div class="rounded-lg shadow-sm">
           <div>
             <input
               v-model="form.email"
@@ -22,7 +22,7 @@
               name="email"
               type="email"
               required
-              class="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:shadow-outline-orange focus:border-orange-300 focus:z-10 sm:text-sm sm:leading-5"
+              class="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg appearance-none focus:outline-none focus:shadow-outline-orange focus:border-orange-300 focus:z-10 sm:text-sm sm:leading-5"
               placeholder="E-Mail-Ad­res­se"
             />
           </div>
