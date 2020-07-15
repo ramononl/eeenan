@@ -25,18 +25,14 @@
                 :key="story.id"
                 :link="`/topics/${topic.id}/${subtopic.id}/${lesson.id}`"
                 :query="startWithStory(story.id)"
-                :finished="true"
               >
-                <div class="flex items-center">
-                  <span>{{ subtopic.title }}</span>
-                  <span class="px-2 font-bold text-gray-400">/</span>
-                  <span>{{ lesson.title }}</span>
-                  <div
-                    class="flex items-center justify-center w-6 h-6 ml-2 text-sm font-semibold leading-none text-orange-500 border-2 border-orange-500 rounded-md"
-                  >
-                    <span>{{ story.ordering }}</span>
+                <ListItemBookmark :ordering="story.ordering">
+                  <div>
+                    <span>{{ subtopic.title }}</span>
+                    <span class="px-1 font-bold text-gray-400">/</span>
+                    <span>{{ lesson.title }}</span>
                   </div>
-                </div>
+                </ListItemBookmark>
               </ListItem>
             </div>
           </div>
@@ -49,10 +45,12 @@
 
 <script>
 import ListItem from '~/components/common/ListItem'
+import ListItemBookmark from '~/components/common/ListItemBookmark'
 
 export default {
   components: {
-    ListItem
+    ListItem,
+    ListItemBookmark
   },
   data() {
     return {
@@ -83,6 +81,7 @@ export default {
                           id: topic,
                           title: topics[topic].title,
                           ordering: topics[topic].ordering,
+                          color: topics[topic].color,
                           subtopics: []
                         }) - 1
                     }

@@ -16,9 +16,12 @@
         :link="
           `/topics/${$route.params.topic}/${$route.params.subtopic}/${lesson.id}`
         "
-        :query="startWithStory(lesson.id)"
-        :finished="finished(lesson.id)"
-        >{{ lesson.title }}</ListItem
+        :query="
+          startWithStory($route.params.topic, $route.params.subtopic, lesson.id)
+        "
+        ><ListItemTopic :finished="finished(lesson.id)">{{
+          lesson.title
+        }}</ListItemTopic></ListItem
       >
     </div>
     <MissingContent v-else />
@@ -26,12 +29,16 @@
 </template>
 
 <script>
+import startWithStory from '~/mixins/startWithStory'
 import ListItem from '~/components/common/ListItem'
+import ListItemTopic from '~/components/common/ListItemTopic'
 
 export default {
   components: {
-    ListItem
+    ListItem,
+    ListItemTopic
   },
+  mixins: [startWithStory],
   computed: {
     topicTitle() {
       const topicsStore = this.$store.state.topics
@@ -94,46 +101,6 @@ export default {
         return allStoriesFinished
       } else {
         return false
-      }
-    },
-    startWithStory(lessonId) {
-      const storiesInLesson = this.$getNested(
-        this.$store.state.stories,
-        this.$route.params.topic,
-        this.$route.params.subtopic,
-        lessonId
-      )
-
-      if (storiesInLesson) {
-        const finishedStories = Object.keys(
-          this.$store.state.user.finishedStories
-        )
-        const storiesInLessonArray = []
-
-        Object.keys(storiesInLesson).forEach((key) => {
-          const storyObj = {}
-          storyObj.key = key
-          storyObj.ordering = storiesInLesson[key].ordering
-          storyObj.finished = finishedStories.includes(key)
-          storiesInLessonArray.push(storyObj)
-        })
-
-        storiesInLessonArray.sort((a, b) => (a.ordering > b.ordering ? 1 : -1))
-
-        const allFinished = storiesInLessonArray.every(
-          (element) => element.finished === true
-        )
-
-        if (allFinished) {
-          return null
-        } else {
-          const firstUnfinished = storiesInLessonArray.find(
-            (element) => element.finished === false
-          )
-          return { query: 'start', value: firstUnfinished.key }
-        }
-      } else {
-        return null
       }
     }
   }

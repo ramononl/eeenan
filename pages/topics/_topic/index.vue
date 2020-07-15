@@ -14,8 +14,10 @@
         v-for="subtopic in subtopics"
         :key="subtopic.id"
         :link="`/topics/${$route.params.topic}/${subtopic.id}`"
-        :finished="finished(subtopic.id)"
-        >{{ subtopic.title }}</ListItem
+        ><ListItemTopic
+          :finished="subtopicFinished(subtopic.id, $route.params.topic)"
+          >{{ subtopic.title }}</ListItemTopic
+        ></ListItem
       >
     </div>
     <MissingContent v-else />
@@ -23,12 +25,16 @@
 </template>
 
 <script>
+import subtopicFinished from '~/mixins/subtopicFinished'
 import ListItem from '~/components/common/ListItem'
+import ListItemTopic from '~/components/common/ListItemTopic'
 
 export default {
   components: {
-    ListItem
+    ListItem,
+    ListItemTopic
   },
+  mixins: [subtopicFinished],
   computed: {
     title() {
       const topicsStore = this.$store.state.topics
@@ -59,33 +65,6 @@ export default {
     },
     imagePath() {
       return require(`~/assets/images/topics/${this.$route.params.topic}.png`)
-    }
-  },
-  methods: {
-    finished(subtopicId) {
-      const storiesStore = this.$store.state.stories
-      const storiesInSubtopic = this.$getNested(
-        storiesStore,
-        this.$route.params.topic,
-        subtopicId
-      )
-      if (storiesInSubtopic) {
-        const stories = []
-        Object.keys(storiesInSubtopic).forEach((lesson) => {
-          Object.keys(storiesInSubtopic[lesson]).forEach((story) => {
-            stories.push(story)
-          })
-        })
-        const finishedStories = Object.keys(
-          this.$store.state.user.finishedStories
-        )
-        const allStoriesFinished = stories.every((val) =>
-          finishedStories.includes(val)
-        )
-        return allStoriesFinished
-      } else {
-        return false
-      }
     }
   }
 }
