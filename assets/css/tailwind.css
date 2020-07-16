@@ -35,11 +35,11 @@
 }
 
 .slide-out-enter-active {
-  @apply duration-500 ease-in-out;
+  @apply duration-300 ease-in-out;
 }
 
 .slide-out-leave-active {
-  @apply duration-500 ease-in-out;
+  @apply duration-300 ease-in-out;
 }
 
 .slide-out-enter,
@@ -48,11 +48,11 @@
 }
 
 .slide-in-enter-active {
-  @apply duration-500 ease-in-out;
+  @apply duration-300 ease-in-out;
 }
 
 .slide-in-leave-active {
-  @apply duration-500 ease-in-out;
+  @apply duration-300 ease-in-out;
 }
 
 .slide-in-enter,
