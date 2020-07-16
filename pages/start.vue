@@ -28,7 +28,7 @@
         <div class="flex items-center justify-between">
           <h2>To-Dos</h2>
           <span
-            class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold leading-4 bg-orange-300 text-orange-800"
+            class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold leading-4 bg-gray-600 text-gray-100"
           >
             {{ immClass }}
           </span>
@@ -70,7 +70,7 @@
         </div>
         <div v-else class="mt-3">
           <p class="text-sm text-gray-700">
-            Es gibt momentan keine To-Dos
+            Es gibt momentan keine To-Dos für dich
           </p>
         </div>
       </ContentCard>
