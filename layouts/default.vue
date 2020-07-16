@@ -28,6 +28,15 @@ export default {
       if (!this.$store.state.user.immClass) {
         this.$store.dispatch('user/setClass')
       }
+      if (
+        !this.$store.state.user.firstName &&
+        !this.$store.state.user.lastName
+      ) {
+        this.$store.dispatch('user/setNames')
+      }
+      if (!this.$store.state.user.email) {
+        this.$store.dispatch('user/setEmail')
+      }
     }
   }
 }
