@@ -2,7 +2,7 @@
   <div class="flex h-full px-4 py-12 overflow-y-auto">
     <div class="w-full max-w-md m-auto">
       <div>
-        <LogoColor class="w-40 h-40 max-w-full mx-auto" />
+        <LogoColor class="w-32 h-32 max-w-full mx-auto" />
         <h2
           class="mt-6 text-3xl font-extrabold leading-9 text-center text-gray-900"
         >
@@ -48,18 +48,18 @@
         <FormMessage :message="message" />
 
         <div class="mt-6">
-          <LoginRegisterButton :loading="loading" text="Anmelden" />
-        </div>
-        <div class="flex items-center justify-center mt-6">
-          <div class="text-sm leading-5">
-            <nuxt-link
-              to="reset-password"
-              class="font-medium text-orange-600 transition duration-150 ease-in-out hover:text-orange-500 focus:outline-none focus:underline"
-              >Passwort vergessen?</nuxt-link
-            >
-          </div>
+          <SubmitButton :loading="loading" text="Anmelden" />
         </div>
       </form>
+      <div class="flex items-center justify-center mt-6">
+        <div class="text-sm leading-5">
+          <nuxt-link
+            to="reset-password"
+            class="font-medium text-orange-600 transition duration-150 ease-in-out hover:text-orange-500 focus:outline-none focus:underline"
+            >Passwort vergessen?</nuxt-link
+          >
+        </div>
+      </div>
     </div>
     <div v-if="showInstallMessage" class="fixed inset-x-0 bottom-0 p-4">
       <div class="p-3 bg-gray-600 rounded-lg shadow-lg">
@@ -88,13 +88,13 @@
 <script>
 import LogoColor from '~/components/common/svg/LogoColor'
 import FormMessage from '~/components/common/FormMessage'
-import LoginRegisterButton from '~/components/common/LoginRegisterButton'
+import SubmitButton from '~/components/common/SubmitButton'
 
 export default {
   components: {
     LogoColor,
     FormMessage,
-    LoginRegisterButton
+    SubmitButton
   },
   layout: 'fullscreen',
   data() {

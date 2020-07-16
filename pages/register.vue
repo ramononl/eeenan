@@ -2,7 +2,7 @@
   <div class="flex h-full px-4 py-12 overflow-y-auto">
     <div class="w-full max-w-md m-auto">
       <div>
-        <LogoColor class="w-40 h-40 max-w-full mx-auto" />
+        <LogoColor class="w-32 h-32 max-w-full mx-auto" />
         <h2
           class="mt-6 text-3xl font-extrabold leading-9 text-center text-gray-900"
         >
@@ -87,7 +87,7 @@
         <FormMessage :message="message" />
 
         <div class="mt-6">
-          <LoginRegisterButton :loading="loading" text="Registrieren" />
+          <SubmitButton :loading="loading" text="Registrieren" />
         </div>
       </form>
     </div>
@@ -97,13 +97,13 @@
 <script>
 import LogoColor from '~/components/common/svg/LogoColor'
 import FormMessage from '~/components/common/FormMessage'
-import LoginRegisterButton from '~/components/common/LoginRegisterButton'
+import SubmitButton from '~/components/common/SubmitButton'
 
 export default {
   components: {
     LogoColor,
     FormMessage,
-    LoginRegisterButton
+    SubmitButton
   },
   layout: 'fullscreen',
   data() {
@@ -131,7 +131,7 @@ export default {
         } else if (message === 'auth/weak-password') {
           return {
             text:
-              'Das angegebene Passwort ist zu schwach. Verwende darin mindestens 6 Zeichen.',
+              'Das angegebene Passwort ist zu schwach. Verwende mindestens 6 Zeichen.',
             success: false
           }
         } else if (message === 'auth/email-already-in-use') {
