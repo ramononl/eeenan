@@ -1,15 +1,12 @@
 export default {
   methods: {
     startWithStory(topicId, subtopicId, lessonId) {
-      console.log(topicId, subtopicId, lessonId)
       const storiesInLesson = this.$getNested(
         this.$store.state.stories,
         topicId,
         subtopicId,
         lessonId
       )
-
-      console.log(storiesInLesson)
 
       if (storiesInLesson) {
         const finishedStories = Object.keys(
