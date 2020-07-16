@@ -1,14 +1,10 @@
 <template>
-  <div class="flex items-center justify-between space-x-2">
+  <div class="flex items-center justify-between py-2 space-x-2">
     <div class="flex items-center space-x-2">
-      <svg
-        class="w-10 h-10 mx-auto text-blue-500"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-      >
-        <circle cx="10" cy="10" r="8" />
-      </svg>
-      <p class="text-lg">Item Einstellungen</p>
+      <AppIcon :size="6" :icon="icon" color="gray-700" />
+      <p class="font-medium">
+        <slot />
+      </p>
     </div>
     <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
       <path
@@ -19,3 +15,14 @@
     </svg>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    icon: {
+      type: String,
+      default: 'X'
+    }
+  }
+}
+</script>
