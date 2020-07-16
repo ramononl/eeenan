@@ -35,6 +35,21 @@
       <ContentCard>
         <div class="flex items-center justify-between ">
           <div>
+            <h2>Diese Woche</h2>
+            <p class="text-sm text-gray-700">
+              Angesehene Stories
+            </p>
+          </div>
+          <div>
+            <span class="text-5xl font-semibold leading-none text-gray-700">{{
+              finishedStoriesWeek.total
+            }}</span>
+          </div>
+        </div>
+      </ContentCard>
+      <ContentCard>
+        <div class="flex items-center justify-between ">
+          <div>
             <h2>Total</h2>
             <p class="text-sm text-gray-700">
               Angesehene Stories
@@ -55,7 +70,7 @@
             Themenbereich angesehen
           </p>
         </div>
-        <div class="pt-4 divide-y">
+        <div class="pt-2 divide-y">
           <div
             v-for="topic in finishedStoriesSorted"
             :key="topic.id"
@@ -165,7 +180,8 @@ export default {
 
       return {
         data: weekdayCounter,
-        xLabels: weekdays
+        xLabels: weekdays,
+        total: weekdayCounter.reduce((a, b) => a + b, 0)
       }
     },
     finishedStoriesSorted() {
