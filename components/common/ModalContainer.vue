@@ -2,7 +2,7 @@
   <transition name="delay">
     <div
       v-show="modalVisible"
-      class="fixed inset-0 z-20 h-full px-4 pt-24 pb-40 transition"
+      class="fixed inset-0 z-20 h-full px-4 pt-20 transition pb-28"
     >
       <transition name="fade">
         <div v-show="modalVisible" class="fixed inset-0 transition-opacity">
@@ -11,7 +11,7 @@
       </transition>
       <transition name="fade-up">
         <div
-          v-show="modalVisible"
+          v-if="modalVisible"
           class="overflow-hidden transition-all transform bg-white rounded-lg shadow-xl"
           :class="[modalName === 'SettingsModal' ? 'h-full' : '']"
         >
