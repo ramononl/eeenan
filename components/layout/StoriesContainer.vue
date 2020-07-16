@@ -66,21 +66,21 @@
     >
       <button
         v-if="storiesData.currentStory !== 1"
-        class="flex items-center justify-center flex-1 h-full focus:outline-none"
+        class="flex items-center justify-center flex-1 h-full p-2 focus:outline-none"
         @click="prevStory"
       >
         <AppIcon :size="5" icon="ArrowLeft" color="orange-100" />
       </button>
       <button
         v-if="storiesData.currentStory < storiesData.numberOfStories"
-        class="flex items-center justify-center flex-1 h-full focus:outline-none"
+        class="flex items-center justify-center flex-1 h-full p-2 focus:outline-none"
         @click="nextStory"
       >
         <AppIcon :size="5" icon="ArrowRight" color="orange-100" />
       </button>
       <button
         v-else
-        class="flex items-center justify-center flex-1 h-full focus:outline-none"
+        class="flex items-center justify-center flex-1 h-full p-2 focus:outline-none"
         @click="finishLesson"
       >
         <span class="font-medium leading-none text-orange-100"
