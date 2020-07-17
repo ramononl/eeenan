@@ -1,8 +1,11 @@
 <template>
-  <div class="flex items-center justify-between py-2 space-x-2">
+  <button
+    type="button"
+    class="flex items-center justify-between w-full py-2 space-x-2 focus:outline-none"
+  >
     <div class="flex items-center space-x-2">
       <AppIcon :size="6" :icon="icon" color="gray-700" />
-      <p class="font-medium">
+      <p class="font-medium leading-tight">
         <slot />
       </p>
     </div>
@@ -13,7 +16,7 @@
         clip-rule="evenodd"
       ></path>
     </svg>
-  </div>
+  </button>
 </template>
 
 <script>
