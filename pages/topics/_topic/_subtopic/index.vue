@@ -10,6 +10,12 @@
       v-if="lessons"
       class="border-t border-b border-gray-300 divide-y divide-gray-300"
     >
+      <div class="bg-gray-500">
+        <div
+          class="h-48 -mt-16 bg-right bg-no-repeat bg-cover opacity-75"
+          :style="backgroundImage"
+        ></div>
+      </div>
       <ListItem
         v-for="lesson in lessons"
         :key="lesson.id"
@@ -79,6 +85,12 @@ export default {
         return lessonsArray
       } else {
         return false
+      }
+    },
+    backgroundImage() {
+      const path = require(`~/assets/images/topics/${this.$route.params.topic}.png`)
+      return {
+        backgroundImage: `url(${path})`
       }
     }
   },
