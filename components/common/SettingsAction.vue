@@ -1,59 +1,62 @@
 <template>
   <div>
     <div v-if="item">
-      <button
-        v-if="!confirmPrompt"
-        type="button"
-        class="flex items-center w-full py-2 space-x-2 focus:outline-none"
-        @click="showConfirm"
-      >
-        <div
-          class="flex items-center justify-center space-x-1 rounded w-7 h-7"
-          :class="`bg-${color}-300`"
+      <transition name="fade" mode="out-in">
+        <button
+          v-if="!confirmPrompt"
+          type="button"
+          class="flex items-center w-full py-2 space-x-2 focus:outline-none"
+          @click="showConfirm"
         >
-          <AppIcon :size="5" :icon="icon" :color="`${color}-600`" />
-        </div>
-        <span
-          class="font-semibold leading-tight text-left"
-          :class="`text-${color}-600`"
-        >
-          <slot />
-        </span>
-      </button>
-      <div v-else class="flex items-center w-full py-2 space-x-2">
-        <div
-          class="flex items-center w-full space-x-1 rounded focus:outline-none"
-        >
-          <button
-            class="flex items-center justify-center flex-1 bg-gray-300 rounded h-7 focus:outline-none"
-            @click="cancelConfirm"
+          <div
+            class="flex items-center justify-center space-x-1 rounded w-7 h-7"
+            :class="`bg-${color}-300`"
           >
-            <span class="font-semibold leading-tight text-left text-gray-700"
-              >Abbrechen</span
-            >
-          </button>
-          <button
-            class="flex items-center justify-center flex-1 rounded h-7 focus:outline-none"
-            :class="[success ? 'bg-green-300' : `bg-${color}-300`]"
-            @click="confirm"
+            <AppIcon :size="5" :icon="icon" :color="`${color}-600`" />
+          </div>
+          <span
+            class="font-semibold leading-tight text-left"
+            :class="`text-${color}-600`"
           >
-            <div
-              v-if="!success"
-              class="flex items-center justify-center space-x-1"
+            <slot />
+          </span>
+        </button>
+        <div v-else class="flex items-center w-full py-2 space-x-2">
+          <div
+            class="flex items-center w-full space-x-1 rounded focus:outline-none"
+          >
+            <button
+              class="flex items-center justify-center flex-1 bg-gray-300 rounded h-7 focus:outline-none"
+              @click="cancelConfirm"
             >
-              <AppIcon :size="5" :icon="icon" :color="`${color}-600`" />
               <span
-                class="font-semibold leading-tight text-left"
-                :class="`text-${color}-700`"
-                >Löschen</span
+                class="text-sm font-semibold leading-none text-left text-gray-700"
+                >Abbrechen</span
               >
-            </div>
-            <div v-else class="flex items-center justify-center">
-              <AppIcon :size="5" icon="Check" color="green-600" />
-            </div>
-          </button>
+            </button>
+            <button
+              class="flex items-center justify-center flex-1 rounded h-7 focus:outline-none"
+              :class="[success ? 'bg-green-300' : `bg-${color}-300`]"
+              @click="confirm"
+            >
+              <div
+                v-if="!success"
+                class="flex items-center justify-center space-x-1"
+              >
+                <AppIcon :size="5" :icon="icon" :color="`${color}-600`" />
+                <span
+                  class="text-sm font-semibold leading-none text-left"
+                  :class="`text-${color}-700`"
+                  >Löschen</span
+                >
+              </div>
+              <div v-else class="flex items-center justify-center">
+                <AppIcon :size="5" icon="Check" color="green-600" />
+              </div>
+            </button>
+          </div>
         </div>
-      </div>
+      </transition>
     </div>
     <div v-else>
       <button
