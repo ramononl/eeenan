@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="px-4">
     <transition name="slide-out">
       <div
         v-show="!secondaryView"
