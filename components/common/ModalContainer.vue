@@ -12,8 +12,8 @@
       <transition name="fade-up">
         <div
           v-if="modalVisible"
-          class="overflow-hidden transition-all transform bg-white rounded-lg shadow-xl"
-          :class="[modalName === 'SettingsModal' ? 'h-full' : '']"
+          class="overflow-hidden transition-all transform bg-white border rounded-lg shadow-xl"
+          :class="[modalName === 'SettingsModal' ? 'h-full' : 'max-h-full']"
         >
           <div class="relative h-full overflow-hidden">
             <ModalTitle
@@ -24,7 +24,7 @@
             <div class="relative h-full pt-14">
               <component
                 :is="modalName"
-                class="max-h-full px-4 overflow-y-auto"
+                class="max-h-full overflow-y-auto"
                 :secondary-view="secondaryView"
                 @secondary-view="secondaryView = $event"
                 @get-title="modalTitle = $event"
@@ -65,4 +65,60 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="postcss">
+.fade-enter-active {
+  @apply duration-300 ease-out;
+}
+
+.fade-leave-active {
+  @apply duration-200 ease-in;
+}
+
+.fade-enter,
+.fade-leave-to {
+  @apply opacity-0;
+}
+
+.fade-up-enter-active {
+  @apply duration-300 ease-out;
+}
+
+.fade-up-leave-active {
+  @apply duration-200 ease-in;
+}
+
+.fade-up-enter,
+.fade-up-leave-to {
+  @apply translate-y-4 opacity-0;
+}
+
+.slide-out-enter-active {
+  @apply duration-300 ease-in-out;
+}
+
+.slide-out-leave-active {
+  @apply duration-300 ease-in-out;
+}
+
+.slide-out-enter,
+.slide-out-leave-to {
+  @apply -translate-x-full opacity-0;
+}
+
+.slide-in-enter-active {
+  @apply duration-300 ease-in-out;
+}
+
+.slide-in-leave-active {
+  @apply duration-300 ease-in-out;
+}
+
+.slide-in-enter,
+.slide-in-leave-to {
+  @apply translate-x-full opacity-0;
+}
+
+.delay-leave-active {
+  @apply duration-200 ease-in;
+}
+</style>
