@@ -184,7 +184,8 @@ export default {
       /^bg-blue-400/,
       /^bg-yellow-400/,
       /^bg-purple-400/,
-      /^bg-green-400/
+      /^bg-green-400/,
+      /^hljs/
     ]
   },
   /*
@@ -196,7 +197,8 @@ export default {
     { src: '~/plugins/fetchData.js', mode: 'client' },
     { src: '~/plugins/pwaBanner.js', mode: 'client' },
     { src: '~/plugins/utils.js', mode: 'client' },
-    { src: '~/plugins/vueTrendChart.js', mode: 'client' }
+    { src: '~/plugins/vueTrendChart.js', mode: 'client' },
+    { src: '~/plugins/vueHighlightjs.js', mode: 'client' }
   ],
   /*
    ** Nuxt.js dev-modules
