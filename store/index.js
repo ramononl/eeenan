@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 const getDefaultState = () => {
   return {
     topics: {},
@@ -5,7 +7,8 @@ const getDefaultState = () => {
     lessons: {},
     stories: {},
     showInstallMessage: false,
-    classes: {}
+    classes: {},
+    searchObject: {}
   }
 }
 
@@ -30,6 +33,9 @@ export const mutations = {
   setTodos(state, payload) {
     state.todos = payload
   },
+  setSearchObject(state, { key, searchArray }) {
+    Vue.set(state.searchObject, key, searchArray)
+  },
   showInstallMessage(state, payload) {
     state.showInstallMessage = payload
   },
@@ -42,7 +48,7 @@ export const actions = {
   resetState({ commit }) {
     commit('resetState')
   },
-  fetchTopics({ commit }) {
+  fetchTopics({ commit, dispatch }) {
     const topics = {}
     this.$fireStore
       .collection('topics')
@@ -54,9 +60,10 @@ export const actions = {
           topics[id] = data
         })
         commit('setTopics', topics)
+        dispatch('setSearchObject', 'topics')
       })
   },
-  fetchSubtopics({ commit }) {
+  fetchSubtopics({ commit, dispatch }) {
     const subtopics = {}
     this.$fireStore
       .collection('subtopics')
@@ -68,9 +75,10 @@ export const actions = {
           subtopics[id] = data
         })
         commit('setSubtopics', subtopics)
+        dispatch('setSearchObject', 'subtopics')
       })
   },
-  fetchLessons({ commit }) {
+  fetchLessons({ commit, dispatch }) {
     const lessons = {}
     this.$fireStore
       .collection('lessons')
@@ -82,6 +90,7 @@ export const actions = {
           lessons[id] = data
         })
         commit('setLessons', lessons)
+        dispatch('setSearchObject', 'lessons')
       })
   },
   fetchStories({ commit }) {
@@ -111,5 +120,52 @@ export const actions = {
         })
         commit('setClasses', classes)
       })
+  },
+  setSearchObject({ commit, rootState }, key) {
+    const searchArray = []
+    if (key === 'topics') {
+      const topics = rootState.topics
+      Object.keys(topics).forEach((topic) => {
+        searchArray.push({
+          type: 'topic',
+          id: `/topics/${topic}`,
+          title: topics[topic].title,
+          titleLower: topics[topic].title.toLowerCase()
+        })
+      })
+    } else if (key === 'subtopics') {
+      const topics = rootState.topics
+      const subtopics = rootState.subtopics
+      Object.keys(subtopics).forEach((topic) => {
+        Object.keys(subtopics[topic]).forEach((subtopic) => {
+          searchArray.push({
+            type: 'subtopic',
+            id: `/topics/${topic}/${subtopic}`,
+            topicTitle: topics[topic].title,
+            title: subtopics[topic][subtopic].title,
+            titleLower: subtopics[topic][subtopic].title.toLowerCase()
+          })
+        })
+      })
+    } else if (key === 'lessons') {
+      const topics = rootState.topics
+      const subtopics = rootState.subtopics
+      const lessons = rootState.lessons
+      Object.keys(lessons).forEach((topic) => {
+        Object.keys(lessons[topic]).forEach((subtopic) => {
+          Object.keys(lessons[topic][subtopic]).forEach((lesson) => {
+            searchArray.push({
+              type: 'lesson',
+              id: `/topics/${topic}/${subtopic}/${lesson}`,
+              topicTitle: topics[topic].title,
+              subtopicTitle: subtopics[topic][subtopic].title,
+              title: lessons[topic][subtopic][lesson].title,
+              titleLower: lessons[topic][subtopic][lesson].title.toLowerCase()
+            })
+          })
+        })
+      })
+    }
+    commit('setSearchObject', { key, searchArray })
   }
 }
