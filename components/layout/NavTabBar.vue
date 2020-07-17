@@ -85,4 +85,8 @@
 export default {}
 </script>
 
-<style></style>
+<style scoped>
+.nuxt-link-active {
+  @apply text-orange-500;
+}
+</style>
