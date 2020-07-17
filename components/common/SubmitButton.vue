@@ -29,3 +29,19 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss">
+.spin-animation {
+  @apply transform;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
