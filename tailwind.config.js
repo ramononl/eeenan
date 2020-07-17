@@ -55,7 +55,8 @@ module.exports = {
   variants: {
     backgroundColor: ['responsive', 'hover', 'focus', 'disabled'],
     cursor: ['responsive', 'disabled'],
-    padding: ['responsive', 'last']
+    padding: ['responsive', 'last'],
+    borderWidth: ['responsive', 'last']
   },
   plugins: [require('@tailwindcss/ui')]
 }
