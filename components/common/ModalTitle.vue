@@ -3,7 +3,11 @@
     class="absolute inset-x-0 z-40 flex items-center justify-between p-3 px-4 bg-white border-b h-14"
   >
     <div v-show="secondaryView" class="flex flex-1">
-      <div class="flex items-center -ml-2 -space-x-1" @click="goBack">
+      <button
+        type="button"
+        class="flex items-center -ml-2 -space-x-1 focus:outline-none"
+        @click="goBack"
+      >
         <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
           <path
             fill-rule="evenodd"
@@ -12,7 +16,7 @@
           ></path>
         </svg>
         <span>Zurück</span>
-      </div>
+      </button>
     </div>
     <div v-show="!secondaryView" class="flex-1"></div>
     <h3 class="flex-1 text-lg font-semibold text-center">
