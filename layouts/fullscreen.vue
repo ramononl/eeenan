@@ -1,6 +1,8 @@
 <template>
   <client-only>
-    <div class="overflow-hidden custom-h-screen">
+    <div
+      class="fixed inset-0 overflow-x-hidden overflow-y-auto custom-h-screen"
+    >
       <nuxt />
     </div>
   </client-only>
