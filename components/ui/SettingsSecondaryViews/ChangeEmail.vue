@@ -21,12 +21,12 @@
         <div class="-mt-px">
           <input
             v-model="form.password"
-            aria-label="Aktuelles Passwort"
+            aria-label="Passwort"
             name="password"
             type="password"
             required
             class="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none focus:outline-none focus:shadow-outline-orange focus:border-orange-300 focus:z-10 sm:text-sm sm:leading-5"
-            placeholder="Aktuelles Passwort"
+            placeholder="Passwort"
           />
         </div>
         <div class="-mt-px">
