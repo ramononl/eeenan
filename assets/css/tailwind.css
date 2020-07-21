@@ -61,7 +61,7 @@ h2 {
 }
 
 .hljs {
-  @apply block p-4 overflow-x-auto text-sm text-gray-200 bg-gray-800;
+  @apply block p-4 mt-2 overflow-x-auto text-sm text-gray-200 bg-gray-800;
 }
 
 .hljs-emphasis {
