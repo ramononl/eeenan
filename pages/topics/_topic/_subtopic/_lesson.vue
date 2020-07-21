@@ -17,33 +17,40 @@
             v-for="story in stories"
             v-show="story.ordering === currentStory"
             :key="story.ordering"
-            class="absolute inset-0 w-full py-6 overflow-y-auto transform bg-gray-100 border border-gray-400 rounded-lg"
+            class="absolute inset-0 w-full py-6 overflow-y-auto transform bg-gray-100 border-2 rounded-lg"
+            :class="classObject"
           >
-            <!-- <div class="px-4">
-              <p>{{ story }}</p>
-              <p>
-                No matter how complex or simple, most websites are written in
-                HTML.
-              </p>
-              <p>Let's have a look behind the scenes of this website.</p>
+            <!-- <p>{{ story }}</p> -->
+            <div v-if="story.type === 'text'">
+              <div class="px-4">
+                <p>
+                  No matter how complex or simple, most websites are written in
+                  HTML.
+                </p>
+                <p>Let's have a look behind the scenes of this website.</p>
+              </div>
+              <pre
+                v-highlightjs
+              ><code class="html">&lt;html&gt;&lt;body&gt;Welcome, friend!&lt;/body&gt;&lt;/html&gt;</code></pre>
             </div>
-            <pre
-              v-highlightjs
-            ><code class="html">&lt;html&gt;&lt;body&gt;Welcome, friend!&lt;/body&gt;&lt;/html&gt;</code></pre> -->
-            <!-- <div class="px-4">
+            <div v-if="story.type === 'quiz'" class="px-4">
               <p>Can you remember another tag?</p>
               <div class="mt-4 space-y-2">
-                <div
+                <button
                   v-for="i in 4"
                   :key="i"
-                  class="px-4 py-3 bg-white border rounded-lg shadow-sm"
-                  :class="[i === 2 ? 'border-gray-700 bg-gray-300' : '']"
+                  type="button"
+                  class="px-4 py-3 bg-white border rounded-lg shadow-sm focus:outline-none"
+                  :class="[
+                    selectedAnswer === i ? 'border-gray-700 bg-gray-300' : ''
+                  ]"
+                  @click="selectAnswer(i)"
                 >
                   <span>Das ist die {{ i }}. Antwortmöglichkeit</span>
-                </div>
+                </button>
               </div>
-            </div> -->
-            <div class="px-4">
+            </div>
+            <div v-if="story.type === 'sort'" class="px-4">
               <p>Sort this</p>
               <div class="mt-4 overflow-hidden rounded-lg shadow-sm">
                 <draggable>
@@ -68,6 +75,36 @@
             </div>
           </div>
         </transition-group>
+        <div
+          class="absolute bottom-0 flex items-center justify-center w-full mb-px transform translate-y-1/2"
+        >
+          <div
+            class="flex items-center py-1 pl-2 pr-3 space-x-2 bg-green-500 rounded-full"
+          >
+            <div
+              class="flex items-center justify-center w-4 h-4 bg-green-100 rounded-full"
+            >
+              <AppIcon :size="3" icon="Check" color="green-500" />
+            </div>
+            <span
+              class="text-xs font-semibold leading-none tracking-wide text-green-100 uppercase"
+              >Korrekt</span
+            >
+          </div>
+          <div
+            class="flex items-center py-1 pl-2 pr-3 space-x-2 bg-red-500 rounded-full"
+          >
+            <div
+              class="flex items-center justify-center w-4 h-4 bg-red-100 rounded-full"
+            >
+              <AppIcon :size="3" icon="X" color="red-500" />
+            </div>
+            <span
+              class="text-xs font-semibold leading-none tracking-wide text-red-100 uppercase"
+              >Falsch</span
+            >
+          </div>
+        </div>
       </div>
       <div
         class="flex items-center mt-4 overflow-hidden bg-orange-500 divide-x divide-orange-100 rounded-lg h-14"
@@ -113,10 +150,20 @@ export default {
   data() {
     return {
       currentStory: 1,
-      transitionName: 'cards-next'
+      transitionName: 'cards-next',
+      isCorrect: false,
+      isWrong: false,
+      selectedAnswer: null
     }
   },
   computed: {
+    classObject() {
+      return {
+        'border-gray-400': !this.isCorrect && !this.isWrong,
+        'border-green-500': this.isCorrect,
+        'border-red-500': this.isWrong
+      }
+    },
     lastStory() {
       return this.currentStory >= this.stories.length
     },
@@ -218,6 +265,9 @@ export default {
           }
         }
       })
+    },
+    selectAnswer(i) {
+      this.selectedAnswer = i
     }
   }
 }
