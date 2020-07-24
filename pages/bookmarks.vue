@@ -26,7 +26,7 @@
                 :link="`/topics/${topic.id}/${subtopic.id}/${lesson.id}`"
                 :query="startWithStory(story.id)"
               >
-                <ListItemBookmark :ordering="story.ordering">
+                <ListItemBookmark :ordering="story.ordering" :type="story.type">
                   <div>
                     <span>{{ subtopic.title }}</span>
                     <span class="px-1 font-bold text-gray-400">/</span>
@@ -36,6 +36,48 @@
               </ListItem>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="px-4 space-y-1">
+        <div class="flex items-center space-x-1">
+          <div
+            class="flex items-center justify-center w-5 h-5 text-sm font-semibold leading-none text-gray-400 border-2 border-gray-400 rounded-md"
+          >
+            <span class="text-xs font-bold leading-none">#</span>
+          </div>
+          <p class="text-sm font-bold leading-none text-gray-400">
+            Story-Nummer
+          </p>
+        </div>
+        <div class="flex items-center flex-none space-x-1">
+          <div
+            class="flex items-center justify-center w-5 h-5 leading-none text-gray-400 border-2 border-gray-400 rounded-md text-s"
+          >
+            <AppIcon :size="3" icon="LightBulb" color="gray-400" />
+          </div>
+          <p class="text-sm font-bold leading-none text-gray-400">
+            Text-Story
+          </p>
+        </div>
+        <div class="flex items-center flex-none space-x-1">
+          <div
+            class="flex items-center justify-center w-5 h-5 text-sm leading-none text-gray-400 border-2 border-gray-400 rounded-md"
+          >
+            <AppIcon :size="3" icon="Check" color="gray-400" />
+          </div>
+          <p class="text-sm font-bold leading-none text-gray-400">
+            Story mit Quiz
+          </p>
+        </div>
+        <div class="flex items-center flex-none space-x-1">
+          <div
+            class="flex items-center justify-center w-5 h-5 text-sm leading-none text-gray-400 border-2 border-gray-400 rounded-md"
+          >
+            <AppIcon :size="3" icon="MenuAlt" color="gray-400" />
+          </div>
+          <p class="text-sm font-bold leading-none text-gray-400">
+            Story mit Sortieraufgabe
+          </p>
         </div>
       </div>
     </div>
@@ -119,7 +161,8 @@ export default {
                     ].lessons[lessonIndex].stories.push({
                       id: story,
                       ordering:
-                        storiesStore[topic][subtopic][lesson][story].ordering
+                        storiesStore[topic][subtopic][lesson][story].ordering,
+                      type: storiesStore[topic][subtopic][lesson][story].type
                     })
                   }
                 }
