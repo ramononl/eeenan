@@ -20,50 +20,25 @@
             class="absolute inset-0 w-full py-6 overflow-y-auto transform bg-gray-100 border-2 rounded-lg"
             :class="classObject"
           >
-            <component :is="story.type" :story="story" />
+            <component
+              :is="story.type"
+              :story="story"
+              @changed-answer="changedAnswer($event)"
+            />
           </div>
         </transition-group>
         <CheckAnswer :display="check" />
       </div>
-      <div
-        class="flex items-center mt-4 overflow-hidden bg-orange-500 divide-x divide-orange-100 rounded-lg h-14"
-      >
-        <button
-          :disabled="currentStory === 1"
-          type="button"
-          class="flex items-center justify-center flex-1 h-full p-2 focus:outline-none disabled:bg-gray-400 disabled:cursor-not-allowed"
-          @click="prevStory"
-        >
-          <AppIcon :size="5" icon="ArrowLeft" color="orange-100" />
-        </button>
-        <button
-          :disabled="!isQuestion"
-          type="button"
-          class="flex items-center justify-center flex-1 h-full p-2 focus:outline-none disabled:bg-gray-400 disabled:cursor-not-allowed"
-        >
-          <AppIcon :size="5" icon="Eye" color="orange-100" />
-        </button>
-        <button
-          v-if="!lastStory"
-          :disabled="isQuestion"
-          type="button"
-          class="flex items-center justify-center flex-1 h-full p-2 focus:outline-none disabled:bg-gray-400 disabled:cursor-not-allowed"
-          @click="nextStory"
-        >
-          <AppIcon :size="5" icon="ArrowRight" color="orange-100" />
-        </button>
-        <button
-          v-else
-          :disabled="isQuestion"
-          type="button"
-          class="flex items-center justify-center flex-1 h-full p-2 focus:outline-none disabled:bg-gray-400 disabled:cursor-not-allowed"
-          @click="finishLesson"
-        >
-          <span class="font-medium leading-none text-orange-100"
-            >Lektion abschliessen</span
-          >
-        </button>
-      </div>
+      <StoryControls
+        :stories="stories"
+        :current-story="currentStory"
+        :is-correct="isCorrect"
+        :check="check"
+        @prev-story="prevStory"
+        @check-answer="checkAnswer"
+        @next-story="nextStory"
+        @finish-lesson="finishLesson"
+      />
     </div>
     <div v-else class="h-full pt-12 bg-gray-300">
       <MissingContent />
@@ -73,6 +48,7 @@
 
 <script>
 import StoryTitle from '~/components/common/StoryTitle'
+import StoryControls from '~/components/common/StoryControls'
 import CheckAnswer from '~/components/common/CheckAnswer'
 import StoryText from '~/components/common/StoryText'
 import StoryQuiz from '~/components/common/StoryQuiz'
@@ -82,6 +58,7 @@ export default {
   layout: 'fullscreen',
   components: {
     StoryTitle,
+    StoryControls,
     CheckAnswer,
     StoryText,
     StoryQuiz,
@@ -91,6 +68,7 @@ export default {
     return {
       currentStory: 1,
       transitionName: 'cards-next',
+      isCorrect: null,
       check: null
     }
   },
@@ -101,9 +79,6 @@ export default {
         'border-green-500': this.check === 'correct',
         'border-red-500': this.check === 'wrong'
       }
-    },
-    lastStory() {
-      return this.currentStory >= this.stories.length
     },
     lessonTitle() {
       const lessonsStore = this.$store.state.lessons
@@ -145,14 +120,6 @@ export default {
         return false
       }
     },
-    isQuestion() {
-      if (this.stories.length > 0) {
-        const questionTypes = ['StoryQuiz', 'StorySort']
-        return questionTypes.includes(this.stories[this.currentStory - 1].type)
-      } else {
-        return false
-      }
-    },
     bookmarked() {
       if (this.$store.state.user.bookmarks.includes(this.currentStoryId)) {
         return true
@@ -187,6 +154,7 @@ export default {
     },
     nextStory() {
       if (this.currentStory < this.stories.length) {
+        this.check = null
         this.dispatchFinishedStory()
         this.transitionName = 'cards-next'
         this.currentStory++
@@ -194,6 +162,7 @@ export default {
     },
     prevStory() {
       if (this.currentStory > 1) {
+        this.check = null
         this.transitionName = 'cards-prev'
         this.currentStory--
       }
@@ -211,6 +180,27 @@ export default {
           }
         }
       })
+    },
+    changedAnswer(isCorrect) {
+      this.check = null
+      this.isCorrect = isCorrect
+    },
+    checkAnswer() {
+      if (this.isCorrect) {
+        this.check = 'correct'
+      } else if (this.isCorrect === false) {
+        this.check = 'wrong'
+      } else {
+        this.check = null
+      }
+    }
+  },
+  transition(to, from) {
+    if (to.name === 'topics-topic-subtopic') {
+      return {
+        name: 'slide-right',
+        mode: 'in-out'
+      }
     }
   }
 }
