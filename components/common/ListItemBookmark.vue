@@ -10,19 +10,19 @@
         <span class="font-bold">{{ ordering }}</span>
       </div>
       <div
-        v-if="type === 'text'"
+        v-if="type === 'StoryText'"
         class="flex items-center justify-center w-6 h-6 text-sm font-semibold leading-none text-orange-500 border-2 border-orange-500 rounded-md"
       >
         <AppIcon :size="4" icon="LightBulb" color="orange-500" />
       </div>
       <div
-        v-if="type === 'sort'"
+        v-if="type === 'StorySort'"
         class="flex items-center justify-center w-6 h-6 text-sm font-semibold leading-none text-orange-500 border-2 border-orange-500 rounded-md"
       >
         <AppIcon :size="4" icon="MenuAlt" color="orange-500" />
       </div>
       <div
-        v-if="type === 'question'"
+        v-if="type === 'StoryQuiz'"
         class="flex items-center justify-center w-6 h-6 text-sm font-semibold leading-none text-orange-500 border-2 border-orange-500 rounded-md"
       >
         <AppIcon :size="4" icon="Check" color="orange-500" />
@@ -40,7 +40,7 @@ export default {
     },
     type: {
       type: String,
-      default: 'text'
+      default: 'StoryText'
     }
   }
 }
