@@ -1,7 +1,7 @@
 <template>
   <client-only>
     <div
-      class="fixed inset-0 overflow-x-hidden overflow-y-auto custom-h-screen"
+      class="absolute inset-0 overflow-x-hidden overflow-y-auto custom-h-screen"
     >
       <nuxt />
     </div>
@@ -26,7 +26,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .custom-h-screen {
   @apply h-screen;
   height: calc(var(--vh, 1vh) * 100);

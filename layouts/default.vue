@@ -1,6 +1,6 @@
 <template>
   <client-only>
-    <div>
+    <div class="relative custom-h-screen">
       <nuxt />
       <NavTabBar />
       <ModalContainer />

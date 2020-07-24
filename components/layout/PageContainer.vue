@@ -1,6 +1,10 @@
 <template>
-  <div>
-    <TitleBar :title="title" :back-button="backButton" />
+  <div class="absolute inset-0">
+    <TitleBar
+      :title="title"
+      :back-button="backButton"
+      :close-button="closeButton"
+    />
     <ContentBox :class="[paddingX ? 'px-4' : '']">
       <slot />
     </ContentBox>
@@ -24,6 +28,10 @@ export default {
     backButton: {
       type: Object,
       default: null
+    },
+    closeButton: {
+      type: Boolean,
+      default: false
     },
     paddingX: {
       type: Boolean,

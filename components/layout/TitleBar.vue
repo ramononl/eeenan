@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-16 px-2 py-4 bg-white border-b"
+    class="absolute inset-x-0 top-0 flex items-center justify-between h-16 px-2 py-4 bg-white border-b"
   >
     <div v-if="backButton" class="flex-1">
       <button
@@ -18,7 +18,12 @@
     >
       {{ title }}
     </h1>
-    <div v-if="backButton" class="flex-1"></div>
+    <div v-if="backButton && !closeButton" class="flex-1"></div>
+    <div v-if="closeButton" class="flex-1 text-right">
+      <nuxt-link to="/start" class="mr-2">
+        <AppIcon :size="8" icon="X" color="gray-600" />
+      </nuxt-link>
+    </div>
     <div v-if="!backButton" class="flex pr-2 space-x-4">
       <button
         type="button"
@@ -48,6 +53,10 @@ export default {
     backButton: {
       type: Object,
       default: null
+    },
+    closeButton: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
