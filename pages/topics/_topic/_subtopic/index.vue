@@ -5,6 +5,8 @@
       backText: topicTitle,
       backLink: `/topics/${this.$route.params.topic}`
     }"
+    :close-button="fromTodo"
+    class="z-10"
   >
     <div
       v-if="lessons"
@@ -46,6 +48,9 @@ export default {
   },
   mixins: [startWithStory],
   computed: {
+    fromTodo() {
+      return Object.hasOwnProperty.call(this.$route.query, 'from')
+    },
     topicTitle() {
       const topicsStore = this.$store.state.topics
       const topic = this.$getNested(topicsStore, this.$route.params.topic)
@@ -115,8 +120,36 @@ export default {
         return false
       }
     }
+  },
+  transition(to, from) {
+    if (from) {
+      if (from.name === 'start') {
+        return {
+          name: 'slide-up',
+          mode: 'in-out'
+        }
+      }
+    }
+    if (to) {
+      if (to.name === 'start' && from.query.from === 'todo') {
+        return {
+          name: 'slide-down',
+          mode: 'in-out'
+        }
+      }
+    }
   }
 }
 </script>
 
-<style></style>
+<style lang="postcss">
+.slide-up-enter-active,
+.slide-down-leave-active {
+  @apply transform transition-transform duration-500 ease-in-out;
+}
+
+.slide-up-enter,
+.slide-down-leave-to {
+  @apply translate-y-full;
+}
+</style>
