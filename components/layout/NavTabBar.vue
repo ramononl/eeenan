@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="fixed inset-x-0 bottom-0 z-10 flex items-stretch w-full h-24 pb-4 bg-white border-t"
+    class="fixed inset-x-0 bottom-0 z-20 flex items-stretch w-full h-24 pb-4 bg-white border-t"
   >
     <nuxt-link
       to="/start"
