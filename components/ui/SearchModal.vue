@@ -91,9 +91,6 @@ export default {
     this.focusInput()
   },
   methods: {
-    search() {
-      console.log('search')
-    },
     focusInput() {
       this.$refs.search.focus()
     },
