@@ -2,7 +2,7 @@
   <div class="h-full max-h-full overflow-hidden">
     <div
       v-if="stories.length > 0"
-      class="flex flex-col h-full max-h-full px-4 pt-4 pb-10 bg-gray-300"
+      class="flex flex-col h-full max-h-full p-4 pb-10 bg-gray-300"
     >
       <StoryTitle
         :total="stories.length"
@@ -20,112 +20,43 @@
             class="absolute inset-0 w-full py-6 overflow-y-auto transform bg-gray-100 border-2 rounded-lg"
             :class="classObject"
           >
-            <!-- <p>{{ story }}</p> -->
-            <div v-if="story.type === 'text'">
-              <div class="px-4">
-                <p>
-                  No matter how complex or simple, most websites are written in
-                  HTML.
-                </p>
-                <p>Let's have a look behind the scenes of this website.</p>
-              </div>
-              <pre
-                v-highlightjs
-              ><code class="html">&lt;html&gt;&lt;body&gt;Welcome, friend!&lt;/body&gt;&lt;/html&gt;</code></pre>
-            </div>
-            <div v-if="story.type === 'quiz'" class="px-4">
-              <p>Can you remember another tag?</p>
-              <div class="mt-4 space-y-2">
-                <button
-                  v-for="i in 4"
-                  :key="i"
-                  type="button"
-                  class="px-4 py-3 bg-white border rounded-lg shadow-sm focus:outline-none"
-                  :class="[
-                    selectedAnswer === i ? 'border-gray-700 bg-gray-300' : ''
-                  ]"
-                  @click="selectAnswer(i)"
-                >
-                  <span>Das ist die {{ i }}. Antwortmöglichkeit</span>
-                </button>
-              </div>
-            </div>
-            <div v-if="story.type === 'sort'" class="px-4">
-              <p>Sort this</p>
-              <div class="mt-4 overflow-hidden rounded-lg shadow-sm">
-                <draggable>
-                  <div
-                    v-for="i in 4"
-                    :key="i"
-                    class="overflow-hidden text-sm bg-gray-800 border-b border-gray-700 last:border-b-0"
-                  >
-                    <div class="flex items-center justify-between">
-                      <div>
-                        <pre
-                          v-highlightjs
-                        ><code class="html">&lt;html&gt; {{i}}</code></pre>
-                      </div>
-                      <div class="px-2">
-                        <AppIcon :size="8" icon="MenuAlt" color="gray-600" />
-                      </div>
-                    </div>
-                  </div>
-                </draggable>
-              </div>
-            </div>
+            <component :is="story.type" :story="story" />
           </div>
         </transition-group>
-        <div
-          class="absolute bottom-0 flex items-center justify-center w-full mb-px transform translate-y-1/2"
-        >
-          <div
-            class="flex items-center py-1 pl-2 pr-3 space-x-2 bg-green-500 rounded-full"
-          >
-            <div
-              class="flex items-center justify-center w-4 h-4 bg-green-100 rounded-full"
-            >
-              <AppIcon :size="3" icon="Check" color="green-500" />
-            </div>
-            <span
-              class="text-xs font-semibold leading-none tracking-wide text-green-100 uppercase"
-              >Korrekt</span
-            >
-          </div>
-          <div
-            class="flex items-center py-1 pl-2 pr-3 space-x-2 bg-red-500 rounded-full"
-          >
-            <div
-              class="flex items-center justify-center w-4 h-4 bg-red-100 rounded-full"
-            >
-              <AppIcon :size="3" icon="X" color="red-500" />
-            </div>
-            <span
-              class="text-xs font-semibold leading-none tracking-wide text-red-100 uppercase"
-              >Falsch</span
-            >
-          </div>
-        </div>
+        <CheckAnswer :display="check" />
       </div>
       <div
         class="flex items-center mt-4 overflow-hidden bg-orange-500 divide-x divide-orange-100 rounded-lg h-14"
       >
         <button
-          v-if="currentStory !== 1"
-          class="flex items-center justify-center flex-1 h-full p-2 focus:outline-none"
+          :disabled="currentStory === 1"
+          type="button"
+          class="flex items-center justify-center flex-1 h-full p-2 focus:outline-none disabled:bg-gray-400 disabled:cursor-not-allowed"
           @click="prevStory"
         >
           <AppIcon :size="5" icon="ArrowLeft" color="orange-100" />
         </button>
         <button
+          :disabled="!isQuestion"
+          type="button"
+          class="flex items-center justify-center flex-1 h-full p-2 focus:outline-none disabled:bg-gray-400 disabled:cursor-not-allowed"
+        >
+          <AppIcon :size="5" icon="Eye" color="orange-100" />
+        </button>
+        <button
           v-if="!lastStory"
-          class="flex items-center justify-center flex-1 h-full p-2 focus:outline-none"
+          :disabled="isQuestion"
+          type="button"
+          class="flex items-center justify-center flex-1 h-full p-2 focus:outline-none disabled:bg-gray-400 disabled:cursor-not-allowed"
           @click="nextStory"
         >
           <AppIcon :size="5" icon="ArrowRight" color="orange-100" />
         </button>
         <button
           v-else
-          class="flex items-center justify-center flex-1 h-full p-2 focus:outline-none"
+          :disabled="isQuestion"
+          type="button"
+          class="flex items-center justify-center flex-1 h-full p-2 focus:outline-none disabled:bg-gray-400 disabled:cursor-not-allowed"
           @click="finishLesson"
         >
           <span class="font-medium leading-none text-orange-100"
@@ -141,27 +72,34 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable'
 import StoryTitle from '~/components/common/StoryTitle'
+import CheckAnswer from '~/components/common/CheckAnswer'
+import StoryText from '~/components/common/StoryText'
+import StoryQuiz from '~/components/common/StoryQuiz'
+import StorySort from '~/components/common/StorySort'
 
 export default {
   layout: 'fullscreen',
-  components: { StoryTitle, draggable },
+  components: {
+    StoryTitle,
+    CheckAnswer,
+    StoryText,
+    StoryQuiz,
+    StorySort
+  },
   data() {
     return {
       currentStory: 1,
       transitionName: 'cards-next',
-      isCorrect: false,
-      isWrong: false,
-      selectedAnswer: null
+      check: null
     }
   },
   computed: {
     classObject() {
       return {
-        'border-gray-400': !this.isCorrect && !this.isWrong,
-        'border-green-500': this.isCorrect,
-        'border-red-500': this.isWrong
+        'border-gray-400': !this.check,
+        'border-green-500': this.check === 'correct',
+        'border-red-500': this.check === 'wrong'
       }
     },
     lastStory() {
@@ -203,6 +141,14 @@ export default {
     currentStoryId() {
       if (this.stories.length > 0) {
         return this.stories[this.currentStory - 1].id
+      } else {
+        return false
+      }
+    },
+    isQuestion() {
+      if (this.stories.length > 0) {
+        const questionTypes = ['StoryQuiz', 'StorySort']
+        return questionTypes.includes(this.stories[this.currentStory - 1].type)
       } else {
         return false
       }
@@ -265,15 +211,12 @@ export default {
           }
         }
       })
-    },
-    selectAnswer(i) {
-      this.selectedAnswer = i
     }
   }
 }
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
 .cards-next-enter-active,
 .cards-next-leave-active,
 .cards-prev-enter-active,
