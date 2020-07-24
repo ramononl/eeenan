@@ -105,10 +105,7 @@ export default {
   @apply -translate-x-full opacity-0;
 }
 
-.slide-in-enter-active {
-  @apply duration-300 ease-in-out;
-}
-
+.slide-in-enter-active,
 .slide-in-leave-active {
   @apply duration-300 ease-in-out;
 }
