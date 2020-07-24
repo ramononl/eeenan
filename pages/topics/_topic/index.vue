@@ -2,6 +2,7 @@
   <PageContainer
     :title="title"
     :back-button="{ backText: 'Themen', backLink: '/topics' }"
+    class="z-10"
   >
     <div
       v-if="subtopics"
@@ -70,6 +71,21 @@ export default {
       const path = require(`~/assets/images/topics/${this.$route.params.topic}.png`)
       return {
         backgroundImage: `url(${path})`
+      }
+    }
+  },
+  transition(to, from) {
+    if (to) {
+      if (to.name === 'topics') {
+        return {
+          name: 'slide-right',
+          mode: 'in-out'
+        }
+      } else if (to.name === 'topics-topic-subtopic') {
+        return {
+          name: 'slide-left',
+          mode: 'in-out'
+        }
       }
     }
   }

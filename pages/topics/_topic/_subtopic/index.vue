@@ -6,7 +6,7 @@
       backLink: `/topics/${this.$route.params.topic}`
     }"
     :close-button="fromTodo"
-    class="z-10"
+    class="z-20"
   >
     <div
       v-if="lessons"
@@ -134,6 +134,11 @@ export default {
       if (to.name === 'start' && from.query.from === 'todo') {
         return {
           name: 'slide-down',
+          mode: 'in-out'
+        }
+      } else if (to.name === 'topics-topic') {
+        return {
+          name: 'slide-right',
           mode: 'in-out'
         }
       }
