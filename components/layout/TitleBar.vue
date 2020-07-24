@@ -8,8 +8,10 @@
         type="button"
         @click="$router.push(backButton.backLink)"
       >
-        <AppIcon :size="8" icon="ChevronLeft" />
-        <span class="leading-tight text-left">{{ backButton.backText }}</span>
+        <AppIcon :size="8" icon="ChevronLeft" color="gray-600" />
+        <span class="text-sm leading-none text-left text-gray-700">{{
+          backButton.backText
+        }}</span>
       </button>
     </div>
     <h1
