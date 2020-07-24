@@ -7,7 +7,9 @@
         :key="index"
         type="button"
         class="w-full px-4 py-3 text-left bg-white border rounded-lg shadow-sm focus:outline-none"
-        :class="[selectedAnswer === index ? 'border-gray-700 bg-gray-300' : '']"
+        :class="[
+          selectedAnswerIndex === index ? 'border-gray-700 bg-gray-300' : ''
+        ]"
         @click="selectAnswer(index)"
       >
         <span>{{ answer }}</span>
@@ -26,12 +28,14 @@ export default {
   },
   data() {
     return {
-      selectedAnswer: null
+      selectedAnswerIndex: null
     }
   },
   methods: {
     selectAnswer(index) {
-      this.selectedAnswer = index
+      this.selectedAnswerIndex = index
+      const isCorrect = index === this.story.correct
+      this.$emit('changed-answer', isCorrect)
     }
   }
 }
