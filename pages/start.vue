@@ -37,7 +37,7 @@
           <nuxt-link
             v-for="todo in todos"
             :key="todo.id"
-            :to="todo.link"
+            :to="{ path: todo.link, query: { from: 'todo' } }"
             class="flex items-start justify-between space-x-2 list-none"
           >
             <div class="flex items-start space-x-2">
@@ -207,7 +207,7 @@ export default {
           todosArray[index].topic = topics[todo.topicId].title
           todosArray[index].subtopic =
             subtopics[todo.topicId][todo.subtopicId].title
-          const dateFormatted = this.$dateFns.format(todo.dueDate, 'dd.MM')
+          const dateFormatted = this.$dateFns.format(todo.dueDate, 'dd. MMM')
           todosArray[index].dueDate = dateFormatted
           todosArray[index].link = `topics/${todo.topicId}/${todo.subtopicId}`
         })
