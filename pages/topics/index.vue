@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import TopicItem from '~/components/common/TopicItem'
+import TopicItem from '~/components/ui/topics/TopicItem'
 
 export default {
   components: {
@@ -46,7 +46,7 @@ export default {
       if (to.name === 'topics-topic') {
         return {
           name: 'slide-left',
-          mode: 'in-out'
+          mode: ''
         }
       }
     }
@@ -56,12 +56,19 @@ export default {
 
 <style lang="postcss">
 .slide-left-enter-active,
+.slide-left-leave-active,
+.slide-right-enter-active,
 .slide-right-leave-active {
-  @apply transform transition-transform duration-300 ease-out;
+  @apply transform transition-all duration-300 ease-out;
 }
 
 .slide-left-enter,
 .slide-right-leave-to {
   @apply translate-x-full;
+}
+
+.slide-left-leave-to,
+.slide-right-enter {
+  @apply opacity-50;
 }
 </style>

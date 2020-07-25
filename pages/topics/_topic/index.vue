@@ -31,7 +31,7 @@
 <script>
 import subtopicFinished from '~/mixins/subtopicFinished'
 import ListItem from '~/components/common/ListItem'
-import ListItemTopic from '~/components/common/ListItemTopic'
+import ListItemTopic from '~/components/ui/topics/ListItemTopic'
 
 export default {
   components: {
@@ -79,12 +79,12 @@ export default {
       if (to.name === 'topics') {
         return {
           name: 'slide-right',
-          mode: 'in-out'
+          mode: ''
         }
       } else if (to.name === 'topics-topic-subtopic') {
         return {
           name: 'slide-left',
-          mode: 'in-out'
+          mode: ''
         }
       }
     }

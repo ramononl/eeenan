@@ -39,7 +39,7 @@
 <script>
 import startWithStory from '~/mixins/startWithStory'
 import ListItem from '~/components/common/ListItem'
-import ListItemTopic from '~/components/common/ListItemTopic'
+import ListItemTopic from '~/components/ui/topics/ListItemTopic'
 
 export default {
   components: {
@@ -126,7 +126,7 @@ export default {
       if (from.name === 'start') {
         return {
           name: 'slide-up',
-          mode: 'in-out'
+          mode: ''
         }
       }
     }
@@ -134,12 +134,12 @@ export default {
       if (to.name === 'start' && from.query.from === 'todo') {
         return {
           name: 'slide-down',
-          mode: 'in-out'
+          mode: ''
         }
       } else if (to.name === 'topics-topic') {
         return {
           name: 'slide-right',
-          mode: 'in-out'
+          mode: ''
         }
       }
     }
@@ -149,12 +149,19 @@ export default {
 
 <style lang="postcss">
 .slide-up-enter-active,
+.slide-up-leave-active,
+.slide-down-enter-active,
 .slide-down-leave-active {
-  @apply transform transition-transform duration-500 ease-in-out;
+  @apply transform transition-all duration-500 ease-in-out;
 }
 
 .slide-up-enter,
 .slide-down-leave-to {
   @apply translate-y-full;
+}
+
+.slide-up-leave-to,
+.slide-down-enter {
+  @apply opacity-25;
 }
 </style>
