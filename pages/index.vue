@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import LogoColor from '~/components/common/svg/LogoColor'
+import LogoColor from '~/components/common/logos/LogoColor'
 import FormMessage from '~/components/common/FormMessage'
 import SubmitButton from '~/components/common/SubmitButton'
 

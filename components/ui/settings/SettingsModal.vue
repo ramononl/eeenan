@@ -58,11 +58,11 @@
 </template>
 
 <script>
-import SettingsItem from '~/components/common/SettingsItem'
-import SettingsAction from '~/components/common/SettingsAction'
-import ChangePersonal from '~/components/ui/SettingsSecondaryViews/ChangePersonal'
-import ChangeEmail from '~/components/ui/SettingsSecondaryViews/ChangeEmail'
-import ChangePassword from '~/components/ui/SettingsSecondaryViews/ChangePassword'
+import SettingsItem from '~/components/ui/settings/SettingsItem'
+import SettingsAction from '~/components/ui/settings/SettingsAction'
+import ChangePersonal from '~/components/ui/settings/SettingsSecondaryViews/ChangePersonal'
+import ChangeEmail from '~/components/ui/settings/SettingsSecondaryViews/ChangeEmail'
+import ChangePassword from '~/components/ui/settings/SettingsSecondaryViews/ChangePassword'
 
 export default {
   components: {

@@ -38,9 +38,9 @@
 </template>
 
 <script>
-import ModalTitle from './ModalTitle'
-import SearchModal from '~/components/ui/SearchModal'
-import SettingsModal from '~/components/ui/SettingsModal'
+import ModalTitle from '~/components/common/modal/ModalTitle'
+import SearchModal from '~/components/ui/search/SearchModal'
+import SettingsModal from '~/components/ui/settings/SettingsModal'
 
 export default {
   components: {

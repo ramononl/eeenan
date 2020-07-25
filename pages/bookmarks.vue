@@ -87,7 +87,7 @@
 
 <script>
 import ListItem from '~/components/common/ListItem'
-import ListItemBookmark from '~/components/common/ListItemBookmark'
+import ListItemBookmark from '~/components/ui/bookmarks/ListItemBookmark'
 
 export default {
   components: {

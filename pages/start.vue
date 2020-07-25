@@ -81,7 +81,7 @@
 <script>
 import startWithStory from '~/mixins/startWithStory'
 import subtopicFinished from '~/mixins/subtopicFinished'
-import ContinueStory from '~/components/ui/ContinueStory'
+import ContinueStory from '~/components/ui/start/ContinueStory'
 
 export default {
   components: { ContinueStory },

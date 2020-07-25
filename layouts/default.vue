@@ -10,7 +10,7 @@
 
 <script>
 import NavTabBar from '~/components/layout/NavTabBar'
-import ModalContainer from '~/components/common/ModalContainer'
+import ModalContainer from '~/components/common/modal/ModalContainer'
 
 export default {
   components: {

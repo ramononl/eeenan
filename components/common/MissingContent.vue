@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import LogoGray from '~/components/common/svg/LogoGray'
+import LogoGray from '~/components/common/logos/LogoGray'
 export default {
   components: {
     LogoGray

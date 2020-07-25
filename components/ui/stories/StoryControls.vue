@@ -76,6 +76,13 @@ export default {
     }
   },
   computed: {
+    currentStoryId() {
+      if (this.stories.length > 0) {
+        return this.stories[this.currentStory - 1].id
+      } else {
+        return false
+      }
+    },
     lastStory() {
       return this.currentStory >= this.stories.length
     },
