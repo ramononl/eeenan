@@ -66,8 +66,8 @@
         <div>
           <h2>Aktivität nach Thema</h2>
           <p class="text-sm text-gray-700">
-            Folgende Anzahl an Stories hast du dir in dem jeweiligen
-            Themenbereich angesehen
+            Folgende Anzahl an Stories hast du dir in den jeweiligen
+            Themenbereichen angesehen
           </p>
         </div>
         <div class="pt-2 divide-y">
