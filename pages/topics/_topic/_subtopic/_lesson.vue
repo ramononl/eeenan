@@ -27,13 +27,13 @@
             />
           </div>
         </transition-group>
-        <CheckAnswer :display="check" />
+        <CheckAnswer :display="check[currentStoryId]" />
       </div>
       <StoryControls
         :stories="stories"
         :current-story="currentStory"
-        :is-correct="isCorrect"
-        :check="check"
+        :is-correct="isCorrect[currentStoryId]"
+        :check="check[currentStoryId]"
         @prev-story="prevStory"
         @check-answer="checkAnswer"
         @next-story="nextStory"
@@ -47,12 +47,12 @@
 </template>
 
 <script>
-import StoryTitle from '~/components/common/StoryTitle'
-import StoryControls from '~/components/common/StoryControls'
-import CheckAnswer from '~/components/common/CheckAnswer'
-import StoryText from '~/components/common/StoryText'
-import StoryQuiz from '~/components/common/StoryQuiz'
-import StorySort from '~/components/common/StorySort'
+import StoryTitle from '~/components/ui/stories/StoryTitle'
+import StoryControls from '~/components/ui/stories/StoryControls'
+import CheckAnswer from '~/components/ui/stories/CheckAnswer'
+import StoryText from '~/components/ui/stories/StoryText'
+import StoryQuiz from '~/components/ui/stories/StoryQuiz'
+import StorySort from '~/components/ui/stories/StorySort'
 
 export default {
   layout: 'fullscreen',
@@ -68,16 +68,16 @@ export default {
     return {
       currentStory: 1,
       transitionName: 'cards-next',
-      isCorrect: null,
-      check: null
+      isCorrect: {},
+      check: {}
     }
   },
   computed: {
     classObject() {
       return {
-        'border-gray-400': !this.check,
-        'border-green-500': this.check === 'correct',
-        'border-red-500': this.check === 'wrong'
+        'border-gray-400': !this.check[this.currentStoryId],
+        'border-green-500': this.check[this.currentStoryId] === 'correct',
+        'border-red-500': this.check[this.currentStoryId] === 'wrong'
       }
     },
     lessonTitle() {
@@ -154,7 +154,6 @@ export default {
     },
     nextStory() {
       if (this.currentStory < this.stories.length) {
-        this.check = null
         this.dispatchFinishedStory()
         this.transitionName = 'cards-next'
         this.currentStory++
@@ -162,7 +161,6 @@ export default {
     },
     prevStory() {
       if (this.currentStory > 1) {
-        this.check = null
         this.transitionName = 'cards-prev'
         this.currentStory--
       }
@@ -181,17 +179,17 @@ export default {
         }
       })
     },
-    changedAnswer(isCorrect) {
-      this.check = null
-      this.isCorrect = isCorrect
+    changedAnswer({ id, isCorrect }) {
+      this.$set(this.isCorrect, id, isCorrect)
+      this.$set(this.check, id, null)
     },
     checkAnswer() {
-      if (this.isCorrect) {
-        this.check = 'correct'
-      } else if (this.isCorrect === false) {
-        this.check = 'wrong'
+      if (this.isCorrect[this.currentStoryId]) {
+        this.check[this.currentStoryId] = 'correct'
+      } else if (this.isCorrect[this.currentStoryId] === false) {
+        this.check[this.currentStoryId] = 'wrong'
       } else {
-        this.check = null
+        this.check[this.currentStoryId] = null
       }
     }
   },
