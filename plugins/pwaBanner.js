@@ -1,5 +1,3 @@
-// https://www.netguru.com/codestories/few-tips-that-will-make-your-pwa-on-ios-feel-like-native
-
 // Detects if device is on iOS
 const isIos = () => {
   const userAgent = window.navigator.userAgent.toLowerCase()
@@ -10,7 +8,7 @@ const isInStandaloneMode = () =>
   'standalone' in window.navigator && window.navigator.standalone
 
 export default ({ store }) => {
-  // Checks if should display install popup notification:
+  // Checks if should display install popup notification
   if (isIos() && !isInStandaloneMode()) {
     store.commit('showInstallMessage', true)
   }
