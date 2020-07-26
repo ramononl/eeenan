@@ -4,7 +4,7 @@
     <pre
       v-if="story.example"
       v-highlightjs="story.example"
-      class="mt-2"
+      class="mt-4"
     ><code :class="story.language"></code></pre>
   </div>
 </template>
@@ -20,4 +20,12 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="postcss" scoped>
+>>> p:not(:first-of-type) {
+  @apply mt-2;
+}
+
+>>> ul {
+  @apply mr-1 list-outside list-disc pl-6 text-sm mt-2;
+}
+</style>
