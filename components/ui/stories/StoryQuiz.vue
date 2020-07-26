@@ -12,7 +12,7 @@
         ]"
         @click="checkAnswer(index)"
       >
-        <span>{{ answer }}</span>
+        <span class="text-sm">{{ answer }}</span>
       </button>
     </div>
   </div>
