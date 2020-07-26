@@ -11,8 +11,9 @@
           <div class="flex items-center justify-between">
             <pre
               v-highlightjs="item"
+              class="flex-shrink overflow-x-auto"
             ><code :class="story.language"></code></pre>
-            <div class="px-2 handle">
+            <div class="flex-none px-2 handle">
               <AppIcon :size="8" icon="MenuAlt" color="gray-600" />
             </div>
           </div>
