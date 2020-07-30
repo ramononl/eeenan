@@ -13,7 +13,8 @@
       </p>
     </div>
     <div>
-      <AppIcon :size="8" icon="ChevronRight" />
+      <AppIcon v-if="iconOpen" :size="8" icon="Newspaper" color="gray-500" />
+      <AppIcon v-else :size="8" icon="ChevronRight" color="gray-600" />
     </div>
   </div>
 </template>
@@ -22,6 +23,10 @@
 export default {
   props: {
     finished: {
+      type: Boolean,
+      default: false
+    },
+    iconOpen: {
       type: Boolean,
       default: false
     }

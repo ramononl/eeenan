@@ -27,7 +27,7 @@
         :query="
           startWithStory($route.params.topic, $route.params.subtopic, lesson.id)
         "
-        ><ListItemTopic :finished="finished(lesson.id)">{{
+        ><ListItemTopic :finished="finished(lesson.id)" :icon-open="true">{{
           lesson.title
         }}</ListItemTopic></ListItem
       >
