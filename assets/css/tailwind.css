@@ -65,9 +65,9 @@ h2 {
 }
 
 .hljs-emphasis {
-  font-style: italic;
+  @apply italic;
 }
 
 .hljs-strong {
-  font-weight: bold;
+  @apply font-bold;
 }
