@@ -222,8 +222,6 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    ['@nuxtjs/axios'],
     ['@nuxtjs/pwa'],
     [
       '@nuxtjs/firebase',
@@ -250,11 +248,6 @@ export default {
   router: {
     middleware: ['checkAuth']
   },
-  /*
-   ** Axios module configuration
-   ** See https://axios.nuxtjs.org/options
-   */
-  axios: {},
   /*
    ** Nuxt PWA module configuration
    ** See https://pwa.nuxtjs.org/
