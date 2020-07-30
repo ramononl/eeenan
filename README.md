@@ -34,10 +34,6 @@
   - [Cloud Firestore](#cloud-firestore)
   - [Deployment](#deployment)
 - [Design/Styling](#-designstyling)
-  - [tailwind.config.js](#tailwindconfigjs)
-  - [tailwind.css](#tailwindcss)
-  - [Logos](#logos)
-  - [Schriftfamilie](#schriftfamilie)
 - [Erweiterungsmöglichkeiten](#-erweiterungsmöglichkeiten)
 
 ## 🌟 Funktionen/Inhalte
