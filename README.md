@@ -670,3 +670,9 @@ Gamification in Lern-Apps kann die Motivation der Lernenden fördern. Einige Bil
 ### Push-Mitteilungen
 
 Um den Microlearning-Aspekt der App zu fördern, wären für einige Nutzer möglicherweise optionale Push-Mitteilungen nützlich. Nach wie vor ist dies eine Einschränkung für Progressive Web Apps mit dem Betriebssystem iOS, welches diese Funktionalität nicht unterstützt.
+
+## Bemerkung
+
+Lehrprojekt für die Bachelorarbeit im Studiengang Multimedia Production/Media Engineering
+
+FHGR – Fachhochschule Graubünden, IMP – Institut für Multimedia Production
